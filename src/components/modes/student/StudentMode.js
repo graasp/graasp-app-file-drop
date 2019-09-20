@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import StudentView from './StudentView';
@@ -13,6 +14,14 @@ class StudentMode extends Component {
     activity: PropTypes.number,
     dispatchGetAppInstanceResources: PropTypes.func.isRequired,
     userId: PropTypes.string,
+    appInstanceResources: PropTypes.arrayOf(
+      PropTypes.shape({
+        // we need to specify number to avoid warnings with local server
+        _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        appInstanceId: PropTypes.string,
+        data: PropTypes.object,
+      }),
+    ),
   };
 
   static defaultProps = {
@@ -20,6 +29,7 @@ class StudentMode extends Component {
     appInstanceId: null,
     activity: 0,
     userId: null,
+    appInstanceResources: [],
   };
 
   constructor(props) {
@@ -43,7 +53,7 @@ class StudentMode extends Component {
   }
 
   render() {
-    const { view, activity } = this.props;
+    const { view, activity, appInstanceResources } = this.props;
     if (activity) {
       return <Loader />;
     }
@@ -51,7 +61,7 @@ class StudentMode extends Component {
       case FEEDBACK_VIEW:
       case DEFAULT_VIEW:
       default:
-        return <StudentView />;
+        return <StudentView appInstanceResources={appInstanceResources} />;
     }
   }
 }
@@ -61,6 +71,9 @@ const mapStateToProps = ({ context, appInstanceResources }) => {
     userId,
     appInstanceId,
     activity: appInstanceResources.activity.length,
+    appInstanceResources: _.sortBy(appInstanceResources.content, [
+      'createdAt',
+    ]).reverse(),
   };
 };
 

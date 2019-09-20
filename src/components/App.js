@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import StudentView from './modes/student/StudentView';
 import { getContext } from '../actions';
 import { DEFAULT_LANG, DEFAULT_MODE } from '../config/settings';
 import { DEFAULT_VIEW } from '../config/views';
@@ -10,6 +9,7 @@ import { getAppInstance } from '../actions/appInstance';
 import TeacherMode from './modes/teacher/TeacherMode';
 import Header from './layout/Header';
 import Loader from './common/Loader';
+import StudentMode from './modes/student/StudentMode';
 
 export class App extends Component {
   static propTypes = {
@@ -93,7 +93,7 @@ export class App extends Component {
         return (
           <>
             {headerVisible ? <Header /> : null}
-            <StudentView />
+            <StudentMode />
           </>
         );
     }
