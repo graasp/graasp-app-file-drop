@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Switch from '@material-ui/core/Switch';
+import { Tooltip } from '@material-ui/core';
 import { connect } from 'react-redux';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { withTranslation } from 'react-i18next';
@@ -43,6 +44,7 @@ class Settings extends Component {
     activity: PropTypes.bool.isRequired,
     settings: PropTypes.shape({
       headerVisible: PropTypes.bool.isRequired,
+      publicStudentUploads: PropTypes.bool.isRequired,
     }).isRequired,
     t: PropTypes.func.isRequired,
     dispatchCloseSettings: PropTypes.func.isRequired,
@@ -73,6 +75,16 @@ class Settings extends Component {
     this.saveSettings(settingsToChange);
   };
 
+  handleChangeStudentUploadVisibility = () => {
+    const {
+      settings: { publicStudentUploads },
+    } = this.props;
+    const settingsToChange = {
+      publicStudentUploads: !publicStudentUploads,
+    };
+    this.saveSettings(settingsToChange);
+  };
+
   handleClose = () => {
     const { dispatchCloseSettings } = this.props;
     dispatchCloseSettings();
@@ -80,13 +92,13 @@ class Settings extends Component {
 
   renderModalContent() {
     const { t, settings, activity } = this.props;
-    const { headerVisible } = settings;
+    const { headerVisible, publicStudentUploads } = settings;
 
     if (activity) {
       return <Loader />;
     }
 
-    const switchControl = (
+    const headerVisibilitySwitch = (
       <Switch
         color="primary"
         checked={headerVisible}
@@ -95,12 +107,31 @@ class Settings extends Component {
       />
     );
 
+    const studentUploadVisibilitySwitch = (
+      <Switch
+        color="primary"
+        checked={publicStudentUploads}
+        onChange={this.handleChangeStudentUploadVisibility}
+        value="headerVisibility"
+      />
+    );
+
     return (
       <>
         <FormControlLabel
-          control={switchControl}
+          control={headerVisibilitySwitch}
           label={t('Show Header to Students')}
         />
+        <Tooltip
+          title={t(
+            'When enabled, student uploads will be visible to other students. Teacher uploads are always visible to all students.',
+          )}
+        >
+          <FormControlLabel
+            control={studentUploadVisibilitySwitch}
+            label={t('Student Uploads are Public')}
+          />
+        </Tooltip>
       </>
     );
   }
@@ -134,6 +165,7 @@ const mapStateToProps = ({ layout, appInstance }) => {
     settings: {
       // by default this is true
       headerVisible: appInstance.content.settings.headerVisible,
+      publicStudentUploads: appInstance.content.settings.publicStudentUploads,
     },
     activity: Boolean(appInstance.activity.length),
   };

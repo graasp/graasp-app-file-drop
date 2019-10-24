@@ -1,5 +1,14 @@
 {
   "translations": {
-    "Drop Here or Click to Browse": "Glissez Ici ou Cliquez pour Parcourir"
+    "Drop Here or Click to Browse": "Glissez Ici ou Cliquez pour Parcourir",
+    "No files have been uploaded.": "Aucun fichier a été téléchargé.",
+    "File Drop": "File Drop",
+    "Settings": "Paramètres",
+    "Show Header to Students": "Montrer l'en-tête aux étudiants.",
+    "Student Uploads are Public": "Les fichier téléchargés par les étudiants sont publiques.",
+    "User": "Nom d'Utilisateur",
+    "Date": "Date",
+    "File Name": "Nom du Fichier",
+    "Actions": "Actions Possibles"
   }
 }

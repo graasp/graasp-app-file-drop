@@ -13,9 +13,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import Table from '@material-ui/core/Table';
 import Tooltip from '@material-ui/core/Tooltip';
+import Paper from '@material-ui/core/Paper';
 import Uploader from '../../common/Uploader';
 import { deleteAppInstanceResource } from '../../../actions';
 import { deleteFile } from '../../../actions/file';
+import { PUBLIC_VISIBILITY } from '../../../config/settings';
 
 class StudentView extends Component {
   static propTypes = {
@@ -25,11 +27,18 @@ class StudentView extends Component {
     classes: PropTypes.shape({
       main: PropTypes.string,
       table: PropTypes.string,
+      root: PropTypes.string,
     }).isRequired,
+    currentUserId: PropTypes.string.isRequired,
     appInstanceResources: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   };
 
   static styles = theme => ({
+    root: {
+      width: '100%',
+      marginTop: theme.spacing.unit * 3,
+      overflowX: 'auto',
+    },
     main: {
       textAlign: 'center',
       margin: theme.spacing.unit,
@@ -52,50 +61,62 @@ class StudentView extends Component {
     }
   };
 
-  renderActions({ visibility, id, uri }) {
-    const { t } = this.props;
-    if (visibility === 'public') {
-      return (
+  renderActions({ visibility, id, uri, user }) {
+    const { t, currentUserId } = this.props;
+    const actions = [];
+    if (visibility === PUBLIC_VISIBILITY) {
+      actions.push(
         <Tooltip title={t('This file was uploaded for everyone.')}>
-          <div>
-            <IconButton color="primary" disabled>
+          <span>
+            <IconButton color="primary">
               <VerifiedUserIcon />
             </IconButton>
-          </div>
-        </Tooltip>
+          </span>
+        </Tooltip>,
       );
     }
-    return (
-      <IconButton
-        color="primary"
-        onClick={() => this.handleDelete({ id, uri })}
-      >
-        <DeleteIcon />
-      </IconButton>
-    );
+
+    // students can always delete their own files
+    if (user === currentUserId) {
+      actions.push(
+        <IconButton
+          color="primary"
+          onClick={() => this.handleDelete({ id, uri })}
+        >
+          <DeleteIcon />
+        </IconButton>,
+      );
+    }
+    return actions;
   }
 
   renderAppInstanceResources() {
-    const { appInstanceResources } = this.props;
+    const { t, appInstanceResources } = this.props;
     // if there are no resources, show an empty table
     if (!appInstanceResources.length) {
       return (
         <TableRow>
-          <TableCell colSpan={4}>No App Instance Resources</TableCell>
+          <TableCell colSpan={3} align="center">
+            {t('No files have been uploaded.')}
+          </TableCell>
         </TableRow>
       );
     }
     // map each app instance resource to a row in the table
     return appInstanceResources.map(
-      ({ _id: id, data: { name, uri }, visibility, createdAt }) => (
+      ({ _id: id, data: { name, uri }, visibility, createdAt, user }) => (
         <TableRow key={id}>
-          <TableCell scope="row">{createdAt}</TableCell>
+          <TableCell scope="row">
+            {createdAt && new Date(createdAt).toLocaleString()}
+          </TableCell>
           <TableCell>
             <a href={uri} target="_blank" rel="noopener noreferrer">
               {name}
             </a>
           </TableCell>
-          <TableCell>{this.renderActions({ visibility, id, uri })}</TableCell>
+          <TableCell>
+            {this.renderActions({ visibility, id, uri, user })}
+          </TableCell>
         </TableRow>
       ),
     );
@@ -106,24 +127,33 @@ class StudentView extends Component {
     return (
       <Grid container spacing={0}>
         <Grid item xs={12} className={classes.main}>
-          <Uploader />
-        </Grid>
-        <Grid item xs={12} className={classes.main}>
-          <Table className={classes.table} size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>{t('Date')}</TableCell>
-                <TableCell>{t('Name')}</TableCell>
-                <TableCell>{t('Actions')}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>{this.renderAppInstanceResources()}</TableBody>
-          </Table>
+          <Grid item xs={12} className={classes.main}>
+            <Uploader />
+          </Grid>
+          <Paper className={classes.root}>
+            <Table className={classes.table} size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>{t('Date')}</TableCell>
+                  <TableCell>{t('File Name')}</TableCell>
+                  <TableCell>{t('Actions')}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{this.renderAppInstanceResources()}</TableBody>
+            </Table>
+          </Paper>
         </Grid>
       </Grid>
     );
   }
 }
+
+const mapStateToProps = ({ context }) => {
+  const { userId } = context;
+  return {
+    currentUserId: userId,
+  };
+};
 
 const mapDispatchToProps = {
   dispatchDeleteAppInstanceResource: deleteAppInstanceResource,
@@ -135,6 +165,6 @@ const StyledComponent = withStyles(StudentView.styles)(StudentView);
 const TranslatedComponent = withTranslation()(StyledComponent);
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(TranslatedComponent);

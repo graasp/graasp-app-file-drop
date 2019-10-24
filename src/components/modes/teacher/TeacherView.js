@@ -13,18 +13,17 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Tooltip from '@material-ui/core/Tooltip';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import './TeacherView.css';
-import {
-  patchAppInstanceResource,
-  postAppInstanceResource,
-  deleteAppInstanceResource,
-  openSettings,
-} from '../../../actions';
+import { deleteAppInstanceResource, openSettings } from '../../../actions';
 import { getUsers } from '../../../actions/users';
 import Settings from './Settings';
 import Uploader from '../../common/Uploader';
+import { deleteFile } from '../../../actions/file';
+import { PUBLIC_VISIBILITY } from '../../../config/settings';
 
 export class TeacherView extends Component {
   static propTypes = {
@@ -39,6 +38,8 @@ export class TeacherView extends Component {
       fab: PropTypes.string,
     }).isRequired,
     dispatchGetUsers: PropTypes.func.isRequired,
+    dispatchDeleteAppInstanceResource: PropTypes.func.isRequired,
+    dispatchDeleteFile: PropTypes.func.isRequired,
     // inside the shape method you should put the shape
     // that the resources your app uses will have
     appInstanceResources: PropTypes.arrayOf(
@@ -93,37 +94,75 @@ export class TeacherView extends Component {
     dispatchGetUsers();
   }
 
+  handleDelete = async ({ id, uri }) => {
+    const {
+      dispatchDeleteAppInstanceResource,
+      dispatchDeleteFile,
+    } = this.props;
+    try {
+      await dispatchDeleteAppInstanceResource(id);
+      await dispatchDeleteFile(uri);
+    } catch (e) {
+      // do something
+    }
+  };
+
+  renderActions({ visibility, id, uri }) {
+    const { t } = this.props;
+    const actions = [
+      <IconButton
+        key="delete"
+        color="primary"
+        onClick={() => this.handleDelete({ id, uri })}
+      >
+        <DeleteIcon />
+      </IconButton>,
+    ];
+    if (visibility === PUBLIC_VISIBILITY) {
+      actions.push(
+        <Tooltip
+          key="visibility"
+          title={t('This file was uploaded for everyone.')}
+        >
+          <span>
+            <IconButton color="primary">
+              <VisibilityIcon />
+            </IconButton>
+          </span>
+        </Tooltip>,
+      );
+    }
+    return actions;
+  }
+
   renderAppInstanceResources() {
     const { appInstanceResources, users, t } = this.props;
     // if there are no resources, show an empty table
     if (!appInstanceResources.length) {
       return (
         <TableRow>
-          <TableCell colSpan={4}>No App Instance Resources</TableCell>
+          <TableCell colSpan={4} align="center">
+            {t('No files have been uploaded.')}
+          </TableCell>
         </TableRow>
       );
     }
     // map each app instance resource to a row in the table
     return appInstanceResources.map(
-      ({ _id: id, data: { name, uri }, user, createdAt }) => {
+      ({ _id: id, data: { name, uri }, user, createdAt, visibility }) => {
         const userObj = users.find(student => student.id === user) || {};
         return (
           <TableRow key={id}>
+            <TableCell scope="row">
+              {createdAt && new Date(createdAt).toLocaleString()}
+            </TableCell>
             <TableCell>{userObj.name || t('Anonymous')}</TableCell>
-            <TableCell scope="row">{createdAt}</TableCell>
             <TableCell>
               <a href={uri} target="_blank" rel="noopener noreferrer">
                 {name}
               </a>
             </TableCell>
-            <TableCell>
-              <IconButton
-                color="primary"
-                onClick={() => this.handleDelete({ id, uri })}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </TableCell>
+            <TableCell>{this.renderActions({ visibility, id, uri })}</TableCell>
           </TableRow>
         );
       },
@@ -140,13 +179,13 @@ export class TeacherView extends Component {
               <Uploader visibility="public" />
             </Grid>
             <Paper className={classes.root}>
-              <Table className={classes.table}>
+              <Table className={classes.table} size="small">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>User</TableCell>
-                    <TableCell>File Name</TableCell>
-                    <TableCell>Actions</TableCell>
+                    <TableCell>{t('Date')}</TableCell>
+                    <TableCell>{t('User')}</TableCell>
+                    <TableCell>{t('File Name')}</TableCell>
+                    <TableCell>{t('Actions')}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>{this.renderAppInstanceResources()}</TableBody>
@@ -180,10 +219,9 @@ const mapStateToProps = ({ users, appInstanceResources }) => ({
 // request to create an app instance resource
 const mapDispatchToProps = {
   dispatchGetUsers: getUsers,
-  dispatchPostAppInstanceResource: postAppInstanceResource,
-  dispatchPatchAppInstanceResource: patchAppInstanceResource,
   dispatchDeleteAppInstanceResource: deleteAppInstanceResource,
   dispatchOpenSettings: openSettings,
+  dispatchDeleteFile: deleteFile,
 };
 
 const ConnectedComponent = connect(

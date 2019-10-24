@@ -55,6 +55,9 @@ const getAppInstanceResources = async ({
       subSpaceId,
     } = getApiContext(getState);
 
+    // always include public resources
+    const includePublic = true;
+
     // if offline send message to parent requesting resources
     if (offline) {
       return postMessage({
@@ -68,8 +71,9 @@ const getAppInstanceResources = async ({
       });
     }
 
-    let url = `//${apiHost +
-      APP_INSTANCE_RESOURCES_ENDPOINT}?appInstanceId=${appInstanceId}`;
+    const queryParams = `appInstanceId=${appInstanceId}&includePublic=${includePublic}`;
+
+    let url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}?${queryParams}`;
 
     // only add userId or sessionId, not both
     if (userId) {

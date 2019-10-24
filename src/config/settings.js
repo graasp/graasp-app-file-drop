@@ -22,3 +22,4 @@ export const MAX_NUM_FILES = 10;
 export const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
 export const DEFAULT_VISIBILITY = 'private';
+export const PUBLIC_VISIBILITY = 'public';

@@ -9,6 +9,7 @@ import {
   DEFAULT_VISIBILITY,
   MAX_FILE_SIZE,
   MAX_NUM_FILES,
+  PUBLIC_VISIBILITY,
 } from '../../config/settings';
 import { FILE_UPLOAD_ENDPOINT } from '../../config/api';
 import '@uppy/core/dist/style.css';
@@ -87,7 +88,23 @@ class Uploader extends Component {
   }
 }
 
-const mapStateToProps = ({ context: { userId } }) => ({ userId });
+const mapStateToProps = state => {
+  const {
+    context: { userId },
+    appInstance: {
+      content: {
+        settings: { publicStudentUploads },
+      },
+    },
+  } = state;
+  const visibility = publicStudentUploads
+    ? PUBLIC_VISIBILITY
+    : DEFAULT_VISIBILITY;
+  return {
+    userId,
+    visibility,
+  };
+};
 
 const mapDispatchToProps = {
   dispatchPostAppInstanceResource: postAppInstanceResource,
