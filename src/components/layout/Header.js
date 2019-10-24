@@ -45,7 +45,7 @@ class Header extends Component {
 
   handleRefresh = () => {
     const { dispatchGetAppInstanceResources, dispatchGetUsers } = this.props;
-    dispatchGetAppInstanceResources();
+    dispatchGetAppInstanceResources({ includePublic: false });
     dispatchGetUsers();
   };
 

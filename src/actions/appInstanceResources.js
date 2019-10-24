@@ -44,6 +44,8 @@ const getAppInstanceResources = async ({
   userId,
   sessionId,
   type,
+  // include public resources by default
+  includePublic = true,
 } = {}) => async (dispatch, getState) => {
   dispatch(flagGettingAppInstanceResources(true));
   try {
@@ -54,9 +56,6 @@ const getAppInstanceResources = async ({
       spaceId,
       subSpaceId,
     } = getApiContext(getState);
-
-    // always include public resources
-    const includePublic = true;
 
     // if offline send message to parent requesting resources
     if (offline) {
