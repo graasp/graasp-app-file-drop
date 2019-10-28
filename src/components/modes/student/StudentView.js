@@ -25,13 +25,12 @@ import {
 class StudentView extends Component {
   static styles = theme => ({
     root: {
-      width: '100%',
       marginTop: theme.spacing.unit * 3,
       overflowX: 'auto',
     },
     main: {
       textAlign: 'center',
-      margin: theme.spacing.unit,
+      padding: theme.spacing.unit,
     },
     table: {
       minWidth: 700,

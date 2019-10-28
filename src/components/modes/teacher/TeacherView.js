@@ -28,13 +28,12 @@ import { PUBLIC_VISIBILITY } from '../../../config/settings';
 export class TeacherView extends Component {
   static styles = theme => ({
     root: {
-      width: '100%',
       marginTop: theme.spacing.unit * 3,
       overflowX: 'auto',
     },
     main: {
       textAlign: 'center',
-      margin: theme.spacing.unit,
+      padding: theme.spacing.unit,
     },
     button: {
       marginTop: theme.spacing.unit * 3,
@@ -54,6 +53,9 @@ export class TeacherView extends Component {
       bottom: theme.spacing.unit * 2,
       right: theme.spacing.unit * 2,
     },
+    teacherView: {
+      marginBottom: '100px',
+    },
   });
 
   static propTypes = {
@@ -66,6 +68,7 @@ export class TeacherView extends Component {
       button: PropTypes.string,
       message: PropTypes.string,
       fab: PropTypes.string,
+      teacherView: PropTypes.string,
     }).isRequired,
     dispatchGetUsers: PropTypes.func.isRequired,
     dispatchDeleteAppInstanceResource: PropTypes.func.isRequired,
@@ -172,7 +175,7 @@ export class TeacherView extends Component {
   render() {
     const { classes, t, dispatchOpenSettings } = this.props;
     return (
-      <>
+      <div className={classes.teacherView}>
         <Grid container spacing={0}>
           <Grid item xs={12} className={classes.main}>
             <Grid item xs={12} className={classes.main}>
@@ -202,7 +205,7 @@ export class TeacherView extends Component {
         >
           <SettingsIcon />
         </Fab>
-      </>
+      </div>
     );
   }
 }
