@@ -26,6 +26,36 @@ import { deleteFile } from '../../../actions/file';
 import { PUBLIC_VISIBILITY } from '../../../config/settings';
 
 export class TeacherView extends Component {
+  static styles = theme => ({
+    root: {
+      width: '100%',
+      marginTop: theme.spacing.unit * 3,
+      overflowX: 'auto',
+    },
+    main: {
+      textAlign: 'center',
+      margin: theme.spacing.unit,
+    },
+    button: {
+      marginTop: theme.spacing.unit * 3,
+    },
+    table: {
+      minWidth: 700,
+    },
+    message: {
+      padding: theme.spacing.unit,
+      backgroundColor: theme.status.danger.background[500],
+      color: theme.status.danger.color,
+      marginBottom: theme.spacing.unit * 2,
+    },
+    fab: {
+      margin: theme.spacing.unit,
+      position: 'fixed',
+      bottom: theme.spacing.unit * 2,
+      right: theme.spacing.unit * 2,
+    },
+  });
+
   static propTypes = {
     t: PropTypes.func.isRequired,
     dispatchOpenSettings: PropTypes.func.isRequired,
@@ -57,36 +87,6 @@ export class TeacherView extends Component {
   static defaultProps = {
     appInstanceResources: [],
   };
-
-  static styles = theme => ({
-    root: {
-      width: '100%',
-      marginTop: theme.spacing.unit * 3,
-      overflowX: 'auto',
-    },
-    main: {
-      textAlign: 'center',
-      margin: theme.spacing.unit,
-    },
-    button: {
-      marginTop: theme.spacing.unit * 3,
-    },
-    table: {
-      minWidth: 700,
-    },
-    message: {
-      padding: theme.spacing.unit,
-      backgroundColor: theme.status.danger.background[500],
-      color: theme.status.danger.color,
-      marginBottom: theme.spacing.unit * 2,
-    },
-    fab: {
-      margin: theme.spacing.unit,
-      position: 'fixed',
-      bottom: theme.spacing.unit * 2,
-      right: theme.spacing.unit * 2,
-    },
-  });
 
   constructor(props) {
     super(props);
@@ -176,7 +176,7 @@ export class TeacherView extends Component {
         <Grid container spacing={0}>
           <Grid item xs={12} className={classes.main}>
             <Grid item xs={12} className={classes.main}>
-              <Uploader visibility="public" />
+              <Uploader visibility={PUBLIC_VISIBILITY} />
             </Grid>
             <Paper className={classes.root}>
               <Table className={classes.table} size="small">

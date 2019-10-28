@@ -17,22 +17,12 @@ import Paper from '@material-ui/core/Paper';
 import Uploader from '../../common/Uploader';
 import { deleteAppInstanceResource } from '../../../actions';
 import { deleteFile } from '../../../actions/file';
-import { PUBLIC_VISIBILITY } from '../../../config/settings';
+import {
+  DEFAULT_VISIBILITY,
+  PUBLIC_VISIBILITY,
+} from '../../../config/settings';
 
 class StudentView extends Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    dispatchDeleteAppInstanceResource: PropTypes.func.isRequired,
-    dispatchDeleteFile: PropTypes.func.isRequired,
-    classes: PropTypes.shape({
-      main: PropTypes.string,
-      table: PropTypes.string,
-      root: PropTypes.string,
-    }).isRequired,
-    currentUserId: PropTypes.string.isRequired,
-    appInstanceResources: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  };
-
   static styles = theme => ({
     root: {
       width: '100%',
@@ -47,6 +37,24 @@ class StudentView extends Component {
       minWidth: 700,
     },
   });
+
+  static propTypes = {
+    t: PropTypes.func.isRequired,
+    dispatchDeleteAppInstanceResource: PropTypes.func.isRequired,
+    dispatchDeleteFile: PropTypes.func.isRequired,
+    classes: PropTypes.shape({
+      main: PropTypes.string,
+      table: PropTypes.string,
+      root: PropTypes.string,
+    }).isRequired,
+    currentUserId: PropTypes.string.isRequired,
+    appInstanceResources: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    visibility: PropTypes.string,
+  };
+
+  static defaultProps = {
+    visibility: DEFAULT_VISIBILITY,
+  };
 
   handleDelete = async ({ id, uri }) => {
     const {
@@ -123,12 +131,12 @@ class StudentView extends Component {
   }
 
   render() {
-    const { t, classes } = this.props;
+    const { t, classes, visibility } = this.props;
     return (
       <Grid container spacing={0}>
         <Grid item xs={12} className={classes.main}>
           <Grid item xs={12} className={classes.main}>
-            <Uploader />
+            <Uploader visibility={visibility} />
           </Grid>
           <Paper className={classes.root}>
             <Table className={classes.table} size="small">
@@ -148,9 +156,18 @@ class StudentView extends Component {
   }
 }
 
-const mapStateToProps = ({ context }) => {
+const mapStateToProps = ({ context, appInstance }) => {
   const { userId } = context;
+  const {
+    content: {
+      settings: { publicStudentUploads },
+    },
+  } = appInstance;
+  const visibility = publicStudentUploads
+    ? PUBLIC_VISIBILITY
+    : DEFAULT_VISIBILITY;
   return {
+    visibility,
     currentUserId: userId,
   };
 };

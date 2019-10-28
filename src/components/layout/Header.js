@@ -14,18 +14,6 @@ import './Header.css';
 import { getAppInstanceResources, getUsers } from '../../actions';
 
 class Header extends Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    dispatchGetAppInstanceResources: PropTypes.func.isRequired,
-    dispatchGetUsers: PropTypes.func.isRequired,
-    classes: PropTypes.shape({
-      root: PropTypes.string,
-      grow: PropTypes.string,
-      logo: PropTypes.string,
-    }).isRequired,
-    mode: PropTypes.string,
-  };
-
   static styles = theme => ({
     root: {
       flexGrow: 1,
@@ -38,6 +26,18 @@ class Header extends Component {
       marginRight: theme.spacing.unit * 2,
     },
   });
+
+  static propTypes = {
+    t: PropTypes.func.isRequired,
+    dispatchGetAppInstanceResources: PropTypes.func.isRequired,
+    dispatchGetUsers: PropTypes.func.isRequired,
+    classes: PropTypes.shape({
+      root: PropTypes.string,
+      grow: PropTypes.string,
+      logo: PropTypes.string,
+    }).isRequired,
+    mode: PropTypes.string,
+  };
 
   static defaultProps = {
     mode: DEFAULT_MODE,
