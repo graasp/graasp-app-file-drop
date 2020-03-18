@@ -10,7 +10,7 @@ import {
 import { showErrorToast } from '../utils/toasts';
 
 const DEFAULT_SETTINGS = {
-  headerVisible: true,
+  headerVisible: false,
   publicStudentUploads: false,
 };
 

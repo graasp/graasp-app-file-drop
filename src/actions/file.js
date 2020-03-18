@@ -1,9 +1,16 @@
 import { DEFAULT_DELETE_REQUEST } from '../config/api';
-import { isErrorResponse } from './common';
+import { getApiContext, isErrorResponse } from './common';
 import { DELETE_FILE_SUCCEEDED, DELETE_FILE_FAILED } from '../types';
 
-const deleteFile = async uri => async dispatch => {
+const deleteFile = async uri => async (dispatch, getState) => {
   try {
+    const { standalone } = getApiContext(getState);
+
+    // if standalone, you cannot connect to api
+    if (standalone) {
+      return false;
+    }
+
     const response = await fetch(uri, {
       ...DEFAULT_DELETE_REQUEST,
       credentials: undefined,

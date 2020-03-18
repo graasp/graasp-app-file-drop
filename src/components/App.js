@@ -25,6 +25,7 @@ export class App extends Component {
     view: PropTypes.string,
     headerVisible: PropTypes.bool.isRequired,
     ready: PropTypes.bool.isRequired,
+    standalone: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -66,9 +67,9 @@ export class App extends Component {
   };
 
   render() {
-    const { mode, view, headerVisible, ready } = this.props;
+    const { mode, view, headerVisible, ready, standalone } = this.props;
 
-    if (!ready) {
+    if (!standalone && !ready) {
       return <Loader />;
     }
 
@@ -92,7 +93,7 @@ export class App extends Component {
       default:
         return (
           <>
-            {headerVisible ? <Header /> : null}
+            {headerVisible || standalone ? <Header /> : null}
             <StudentMode />
           </>
         );
@@ -107,6 +108,7 @@ const mapStateToProps = ({ context, appInstance }) => ({
   view: context.view,
   appInstanceId: context.appInstanceId,
   ready: appInstance.ready,
+  standalone: context.standalone,
 });
 
 const mapDispatchToProps = {

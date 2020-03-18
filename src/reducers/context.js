@@ -18,6 +18,8 @@ const INITIAL_STATE = {
   subSpaceId: null,
   userId: null,
   offline: false,
+  standalone: false,
+  dev: false,
 };
 
 export default (state = INITIAL_STATE, { type, payload }) => {

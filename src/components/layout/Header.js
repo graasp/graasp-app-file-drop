@@ -5,8 +5,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import WarningIcon from '@material-ui/icons/Warning';
 import { withTranslation } from 'react-i18next';
 import { ReactComponent as Logo } from '../../resources/logo.svg';
 import { DEFAULT_MODE, TEACHER_MODES } from '../../config/settings';
@@ -37,6 +38,7 @@ class Header extends Component {
       logo: PropTypes.string,
     }).isRequired,
     mode: PropTypes.string,
+    standalone: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -50,7 +52,17 @@ class Header extends Component {
   };
 
   renderViewButtons() {
-    const { mode } = this.props;
+    const { t, mode, standalone } = this.props;
+
+    if (standalone) {
+      return (
+        <Tooltip
+          title={t('This is just a preview. No files will be uploaded.')}
+        >
+          <WarningIcon color="secondary" />
+        </Tooltip>
+      );
+    }
 
     if (TEACHER_MODES.includes(mode)) {
       return [
@@ -85,6 +97,7 @@ const mapStateToProps = ({ context }) => ({
   spaceId: context.spaceId,
   mode: context.mode,
   view: context.view,
+  standalone: context.standalone,
 });
 
 const mapDispatchToProps = {

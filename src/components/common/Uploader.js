@@ -15,7 +15,7 @@ import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
 import { postAppInstanceResource } from '../../actions';
 import { FILE } from '../../config/appInstanceResourceTypes';
-import { showErrorToast } from '../../utils/toasts';
+import { showErrorToast, showWarningToast } from '../../utils/toasts';
 
 class Uploader extends Component {
   static propTypes = {
@@ -23,6 +23,7 @@ class Uploader extends Component {
     dispatchPostAppInstanceResource: PropTypes.func.isRequired,
     userId: PropTypes.string.isRequired,
     visibility: PropTypes.string,
+    standalone: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -32,7 +33,13 @@ class Uploader extends Component {
   constructor(props) {
     super(props);
 
-    const { dispatchPostAppInstanceResource, userId, visibility } = props;
+    const {
+      dispatchPostAppInstanceResource,
+      userId,
+      visibility,
+      standalone,
+      t,
+    } = props;
 
     this.uppy = Uppy({
       restrictions: {
@@ -43,7 +50,10 @@ class Uploader extends Component {
     });
 
     // endpoint
-    this.uppy.use(XHRUpload, { endpoint: FILE_UPLOAD_ENDPOINT });
+    this.uppy.use(XHRUpload, {
+      // on standalone flag upload should fail
+      endpoint: standalone || FILE_UPLOAD_ENDPOINT,
+    });
 
     this.uppy.on('complete', ({ successful }) => {
       successful.forEach(({ response: { body: uri }, name }) => {
@@ -60,15 +70,33 @@ class Uploader extends Component {
     });
 
     this.uppy.on('error', (file, error) => {
-      showErrorToast(error);
+      if (standalone) {
+        showWarningToast(
+          t('This is just a preview. No files can be uploaded.'),
+        );
+      } else {
+        showErrorToast(error);
+      }
     });
 
     this.uppy.on('upload-error', (file, error, response) => {
-      showErrorToast(response);
+      if (standalone) {
+        showWarningToast(
+          t('This is just a preview. No files can be uploaded.'),
+        );
+      } else {
+        showErrorToast(response);
+      }
     });
 
     this.uppy.on('restriction-failed', (file, error) => {
-      showErrorToast(error);
+      if (standalone) {
+        showWarningToast(
+          t('This is just a preview. No files can be uploaded.'),
+        );
+      } else {
+        showErrorToast(error);
+      }
     });
   }
 
@@ -89,9 +117,10 @@ class Uploader extends Component {
 
 const mapStateToProps = state => {
   const {
-    context: { userId },
+    context: { userId, standalone },
   } = state;
   return {
+    standalone,
     userId,
   };
 };
