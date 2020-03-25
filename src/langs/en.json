@@ -1,6 +1,18 @@
 {
   "translations": {
+    "Drop Here or Click to Browse": "Drop Here or Click to Browse",
     "No files have been uploaded.": "No files have been uploaded.",
-    "File Drop": "File Drop"
+    "File Drop": "File Drop",
+    "Settings": "Settings",
+    "Show Header to Students": "Show Header to Students",
+    "Student Uploads are Public": "Student Uploads are Public",
+    "User": "User",
+    "Date": "Date",
+    "File Name": "File Name",
+    "Actions": "Actions",
+    "Anonymous": "Anonymous",
+    "This is just a preview. No files can be uploaded.": "This is just a preview. No files can be uploaded.",
+    "This is just a preview. No files will be uploaded.": "This is just a preview. No files will be uploaded.",
+    "This file was uploaded for everyone.": "This file was uploaded for everyone."
   }
 }
