@@ -24,6 +24,7 @@ class Uploader extends Component {
     userId: PropTypes.string.isRequired,
     visibility: PropTypes.string,
     standalone: PropTypes.bool.isRequired,
+    offline: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -38,6 +39,7 @@ class Uploader extends Component {
       userId,
       visibility,
       standalone,
+      offline,
       t,
     } = props;
 
@@ -48,6 +50,32 @@ class Uploader extends Component {
       },
       autoProceed: true,
     });
+
+    // when offline override upload to post corresponding resources
+    if (offline) {
+      this.uppy.upload = () => {
+        const files = this.uppy.getFiles();
+        files.forEach(file => {
+          const {
+            data: { path, name },
+          } = file;
+
+          // send as action
+          dispatchPostAppInstanceResource({
+            data: {
+              name,
+              path,
+            },
+            userId,
+            type: FILE,
+            visibility,
+          });
+        });
+
+        // cancel upload
+        return Promise.resolve({ successful: files });
+      };
+    }
 
     // endpoint
     this.uppy.use(XHRUpload, {
@@ -117,10 +145,11 @@ class Uploader extends Component {
 
 const mapStateToProps = state => {
   const {
-    context: { userId, standalone },
+    context: { userId, standalone, offline },
   } = state;
   return {
     standalone,
+    offline,
     userId,
   };
 };
