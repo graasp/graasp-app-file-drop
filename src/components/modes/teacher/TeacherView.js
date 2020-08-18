@@ -18,7 +18,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import './TeacherView.css';
-import { deleteAppInstanceResource, openSettings } from '../../../actions';
+import { openSettings } from '../../../actions';
 import { getUsers } from '../../../actions/users';
 import Settings from './Settings';
 import Uploader from '../../common/Uploader';
@@ -71,13 +71,13 @@ export class TeacherView extends Component {
       teacherView: PropTypes.string,
     }).isRequired,
     dispatchGetUsers: PropTypes.func.isRequired,
-    dispatchDeleteAppInstanceResource: PropTypes.func.isRequired,
     dispatchDeleteFile: PropTypes.func.isRequired,
     // inside the shape method you should put the shape
     // that the resources your app uses will have
     appInstanceResources: PropTypes.arrayOf(
       PropTypes.shape({
         // we need to specify number to avoid warnings with local server
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         appInstanceId: PropTypes.string,
         data: PropTypes.object,
@@ -98,13 +98,9 @@ export class TeacherView extends Component {
   }
 
   handleDelete = async ({ id, uri }) => {
-    const {
-      dispatchDeleteAppInstanceResource,
-      dispatchDeleteFile,
-    } = this.props;
+    const { dispatchDeleteFile } = this.props;
     try {
-      await dispatchDeleteAppInstanceResource(id);
-      await dispatchDeleteFile(uri);
+      await dispatchDeleteFile({ id, uri });
     } catch (e) {
       // do something
     }
@@ -152,10 +148,11 @@ export class TeacherView extends Component {
     }
     // map each app instance resource to a row in the table
     return appInstanceResources.map(
-      ({ _id: id, data: { name, uri }, user, createdAt, visibility }) => {
+      ({ _id, id, data: { name, uri }, user, createdAt, visibility }) => {
         const userObj = users.find(student => student.id === user) || {};
+        const identifier = id || _id;
         return (
-          <TableRow key={id}>
+          <TableRow key={identifier}>
             <TableCell scope="row">
               {createdAt && new Date(createdAt).toLocaleString()}
             </TableCell>
@@ -165,7 +162,9 @@ export class TeacherView extends Component {
                 {name}
               </a>
             </TableCell>
-            <TableCell>{this.renderActions({ visibility, id, uri })}</TableCell>
+            <TableCell>
+              {this.renderActions({ visibility, id: identifier, uri })}
+            </TableCell>
           </TableRow>
         );
       },
@@ -222,7 +221,6 @@ const mapStateToProps = ({ users, appInstanceResources }) => ({
 // request to create an app instance resource
 const mapDispatchToProps = {
   dispatchGetUsers: getUsers,
-  dispatchDeleteAppInstanceResource: deleteAppInstanceResource,
   dispatchOpenSettings: openSettings,
   dispatchDeleteFile: deleteFile,
 };

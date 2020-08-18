@@ -18,6 +18,7 @@ class StudentMode extends Component {
       PropTypes.shape({
         // we need to specify number to avoid warnings with local server
         _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         appInstanceId: PropTypes.string,
         data: PropTypes.object,
       }),

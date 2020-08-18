@@ -58,7 +58,9 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         ...state,
         // we only replace the element that has been replaced
         content: state.content.map(appInstanceResource => {
-          if (appInstanceResource._id !== payload._id) {
+          const { id, _id } = appInstanceResource;
+          const appInstanceResourceId = _id || id;
+          if (appInstanceResourceId !== payload._id) {
             return appInstanceResource;
           }
           return payload;
@@ -69,9 +71,11 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         // we do not want to mutate the state object, so we destructure it here
         ...state,
         content: [
-          ...state.content.filter(
-            appInstanceResource => appInstanceResource._id !== payload,
-          ),
+          ...state.content.filter(appInstanceResource => {
+            const { id, _id } = appInstanceResource;
+            const identifier = id || _id;
+            return identifier !== payload;
+          }),
         ],
       };
 

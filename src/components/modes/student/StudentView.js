@@ -15,7 +15,6 @@ import Table from '@material-ui/core/Table';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
 import Uploader from '../../common/Uploader';
-import { deleteAppInstanceResource } from '../../../actions';
 import { deleteFile } from '../../../actions/file';
 import {
   DEFAULT_VISIBILITY,
@@ -39,7 +38,6 @@ class StudentView extends Component {
 
   static propTypes = {
     t: PropTypes.func.isRequired,
-    dispatchDeleteAppInstanceResource: PropTypes.func.isRequired,
     dispatchDeleteFile: PropTypes.func.isRequired,
     classes: PropTypes.shape({
       main: PropTypes.string,
@@ -55,20 +53,17 @@ class StudentView extends Component {
     visibility: DEFAULT_VISIBILITY,
   };
 
-  handleDelete = async ({ id, uri }) => {
-    const {
-      dispatchDeleteAppInstanceResource,
-      dispatchDeleteFile,
-    } = this.props;
+  handleDelete = async ({ _id, id, uri }) => {
+    const { dispatchDeleteFile } = this.props;
+    const fileId = _id || id;
     try {
-      await dispatchDeleteAppInstanceResource(id);
-      await dispatchDeleteFile(uri);
+      await dispatchDeleteFile({ id: fileId, uri });
     } catch (e) {
       // do something
     }
   };
 
-  renderActions({ visibility, id, uri, user }) {
+  renderActions({ visibility, id, _id, uri, user }) {
     const { t, currentUserId } = this.props;
     const actions = [];
     if (visibility === PUBLIC_VISIBILITY) {
@@ -88,7 +83,7 @@ class StudentView extends Component {
       actions.push(
         <IconButton
           color="primary"
-          onClick={() => this.handleDelete({ id, uri })}
+          onClick={() => this.handleDelete({ id, _id, uri })}
         >
           <DeleteIcon />
         </IconButton>,
@@ -111,21 +106,24 @@ class StudentView extends Component {
     }
     // map each app instance resource to a row in the table
     return appInstanceResources.map(
-      ({ _id: id, data: { name, uri }, visibility, createdAt, user }) => (
-        <TableRow key={id}>
-          <TableCell scope="row">
-            {createdAt && new Date(createdAt).toLocaleString()}
-          </TableCell>
-          <TableCell>
-            <a href={uri} target="_blank" rel="noopener noreferrer">
-              {name}
-            </a>
-          </TableCell>
-          <TableCell>
-            {this.renderActions({ visibility, id, uri, user })}
-          </TableCell>
-        </TableRow>
-      ),
+      ({ _id, id, data: { name, uri }, visibility, createdAt, user }) => {
+        const identifier = id || _id;
+        return (
+          <TableRow key={identifier}>
+            <TableCell scope="row">
+              {createdAt && new Date(createdAt).toLocaleString()}
+            </TableCell>
+            <TableCell>
+              <a href={uri} target="_blank" rel="noopener noreferrer">
+                {name}
+              </a>
+            </TableCell>
+            <TableCell>
+              {this.renderActions({ visibility, id: identifier, uri, user })}
+            </TableCell>
+          </TableRow>
+        );
+      },
     );
   }
 
@@ -172,7 +170,6 @@ const mapStateToProps = ({ context, appInstance }) => {
 };
 
 const mapDispatchToProps = {
-  dispatchDeleteAppInstanceResource: deleteAppInstanceResource,
   dispatchDeleteFile: deleteFile,
 };
 

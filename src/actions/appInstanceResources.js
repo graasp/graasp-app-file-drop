@@ -255,37 +255,55 @@ const patchAppInstanceResource = async ({ id, data } = {}) => async (
   }
 };
 
-const deleteAppInstanceResource = async id => async (dispatch, getState) => {
+const deleteAppInstanceResource = async ({ id, _id }) => async (
+  dispatch,
+  getState,
+) => {
   dispatch(flagDeletingAppInstanceResource(true));
   try {
-    const { apiHost, offline, standalone } = await getApiContext(getState);
+    const {
+      apiHost,
+      offline,
+      standalone,
+      spaceId,
+      subSpaceId,
+      appInstanceId,
+    } = await getApiContext(getState);
 
     // if standalone, you cannot connect to api
     if (standalone) {
       return false;
     }
-
-    // if offline send message to parent requesting to delete a resource
-    if (offline) {
-      return postMessage({
-        type: DELETE_APP_INSTANCE_RESOURCE,
-      });
-    }
-
-    if (!id) {
+    const identifier = id || _id;
+    if (!identifier) {
       return showErrorToast(MISSING_APP_INSTANCE_RESOURCE_ID_MESSAGE);
     }
 
-    const url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}/${id}`;
+    // if offline send message to parent requesting to delete a resource
+    if (offline) {
+      postMessage({
+        type: DELETE_APP_INSTANCE_RESOURCE,
+        payload: {
+          spaceId,
+          subSpaceId,
+          appInstanceId,
+          id,
+          _id,
+        },
+      });
+    } else {
+      const url = `//${apiHost +
+        APP_INSTANCE_RESOURCES_ENDPOINT}/${identifier}`;
 
-    const response = await fetch(url, DEFAULT_DELETE_REQUEST);
+      const response = await fetch(url, DEFAULT_DELETE_REQUEST);
 
-    // throws if it is an error
-    await isErrorResponse(response);
+      // throws if it is an error
+      await isErrorResponse(response);
+    }
 
     return dispatch({
       type: DELETE_APP_INSTANCE_RESOURCE_SUCCEEDED,
-      payload: id,
+      payload: identifier,
     });
   } catch (err) {
     return dispatch({
