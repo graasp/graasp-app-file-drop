@@ -14,8 +14,10 @@ import { FILE_UPLOAD_ENDPOINT } from '../../config/api';
 import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
 import { postAppInstanceResource } from '../../actions';
-import { FILE } from '../../config/appInstanceResourceTypes';
 import { showErrorToast, showWarningToast } from '../../utils/toasts';
+import { POST_FILE } from '../../types';
+import { postMessage } from '../../actions/common';
+import { FILE } from '../../config/appInstanceResourceTypes';
 
 class Uploader extends Component {
   static propTypes = {
@@ -23,6 +25,8 @@ class Uploader extends Component {
     dispatchPostAppInstanceResource: PropTypes.func.isRequired,
     userId: PropTypes.string.isRequired,
     visibility: PropTypes.string,
+    spaceId: PropTypes.string.isRequired,
+    appInstanceId: PropTypes.string.isRequired,
     standalone: PropTypes.bool.isRequired,
     offline: PropTypes.bool.isRequired,
   };
@@ -40,6 +44,8 @@ class Uploader extends Component {
       visibility,
       standalone,
       offline,
+      spaceId,
+      appInstanceId,
       t,
     } = props;
 
@@ -60,20 +66,23 @@ class Uploader extends Component {
             data: { path, name },
           } = file;
 
-          // send as action
-          dispatchPostAppInstanceResource({
-            data: {
-              name,
-              path,
+          return postMessage({
+            type: POST_FILE,
+            // the payload will be used in the resulting appInstanceResource
+            payload: {
+              data: { name, path },
+              appInstanceId,
+              userId,
+              spaceId,
+              type: FILE,
+              visibility,
             },
-            userId,
-            type: FILE,
-            visibility,
           });
         });
 
-        // cancel upload
-        return Promise.resolve({ successful: files });
+        // remove files from stack and cancel upload
+        this.uppy.cancelAll();
+        return Promise.resolve({ files });
       };
     }
 
@@ -91,7 +100,6 @@ class Uploader extends Component {
             uri,
           },
           userId,
-          type: FILE,
           visibility,
         });
       });
@@ -145,12 +153,14 @@ class Uploader extends Component {
 
 const mapStateToProps = state => {
   const {
-    context: { userId, standalone, offline },
+    context: { userId, standalone, offline, appInstanceId, spaceId },
   } = state;
   return {
     standalone,
     offline,
     userId,
+    spaceId,
+    appInstanceId,
   };
 };
 
