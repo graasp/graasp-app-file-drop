@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { DEFAULT_DELETE_REQUEST } from '../config/api';
 import { getApiContext, isErrorResponse } from './common';
 import {
@@ -22,8 +23,9 @@ const receiveFile = dispatch => event => {
         return dispatch(postAppInstanceResource(payload));
       case POST_FILE_FAILED: {
         // the error message may be passed in payload
-        const errorMessage =
-          typeof payload === 'string' ? payload : FILE_UPLOAD_FAILED_MESSAGE;
+        const errorMessage = _.isString(payload)
+          ? payload
+          : FILE_UPLOAD_FAILED_MESSAGE;
         return showWarningToast(errorMessage);
       }
       default:
