@@ -15,11 +15,12 @@ import Table from '@material-ui/core/Table';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
 import Uploader from '../../common/Uploader';
-import { deleteFile } from '../../../actions/file';
+import { deleteAppInstanceResource } from '../../../actions';
 import {
   DEFAULT_VISIBILITY,
   PUBLIC_VISIBILITY,
 } from '../../../config/settings';
+import { FILE } from '../../../config/appInstanceResourceTypes';
 
 class StudentView extends Component {
   static styles = theme => ({
@@ -38,7 +39,7 @@ class StudentView extends Component {
 
   static propTypes = {
     t: PropTypes.func.isRequired,
-    dispatchDeleteFile: PropTypes.func.isRequired,
+    dispatchDeleteAppInstanceResource: PropTypes.func.isRequired,
     classes: PropTypes.shape({
       main: PropTypes.string,
       table: PropTypes.string,
@@ -54,10 +55,14 @@ class StudentView extends Component {
   };
 
   handleDelete = async ({ _id, id, uri }) => {
-    const { dispatchDeleteFile } = this.props;
-    const fileId = _id || id;
+    const { dispatchDeleteAppInstanceResource } = this.props;
+    const appInstanceResourceId = _id || id;
     try {
-      await dispatchDeleteFile({ id: fileId, uri });
+      await dispatchDeleteAppInstanceResource({
+        id: appInstanceResourceId,
+        data: { uri },
+        type: FILE,
+      });
     } catch (e) {
       // do something
     }
@@ -170,7 +175,7 @@ const mapStateToProps = ({ context, appInstance }) => {
 };
 
 const mapDispatchToProps = {
-  dispatchDeleteFile: deleteFile,
+  dispatchDeleteAppInstanceResource: deleteAppInstanceResource,
 };
 
 const StyledComponent = withStyles(StudentView.styles)(StudentView);

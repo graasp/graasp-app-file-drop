@@ -255,7 +255,7 @@ const patchAppInstanceResource = async ({ id, data } = {}) => async (
   }
 };
 
-const deleteAppInstanceResource = async ({ id, _id }) => async (
+const deleteAppInstanceResource = async payload => async (
   dispatch,
   getState,
 ) => {
@@ -274,6 +274,7 @@ const deleteAppInstanceResource = async ({ id, _id }) => async (
     if (standalone) {
       return false;
     }
+    const { id, _id } = payload;
     const identifier = id || _id;
     if (!identifier) {
       return showErrorToast(MISSING_APP_INSTANCE_RESOURCE_ID_MESSAGE);
@@ -284,11 +285,10 @@ const deleteAppInstanceResource = async ({ id, _id }) => async (
       postMessage({
         type: DELETE_APP_INSTANCE_RESOURCE,
         payload: {
+          ...payload,
           spaceId,
           subSpaceId,
           appInstanceId,
-          id,
-          _id,
         },
       });
     } else {

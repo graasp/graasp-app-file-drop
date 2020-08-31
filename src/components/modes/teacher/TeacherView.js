@@ -18,12 +18,12 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import './TeacherView.css';
-import { openSettings } from '../../../actions';
+import { openSettings, deleteAppInstanceResource } from '../../../actions';
 import { getUsers } from '../../../actions/users';
 import Settings from './Settings';
 import Uploader from '../../common/Uploader';
-import { deleteFile } from '../../../actions/file';
 import { PUBLIC_VISIBILITY } from '../../../config/settings';
+import { FILE } from '../../../config/appInstanceResourceTypes';
 
 export class TeacherView extends Component {
   static styles = theme => ({
@@ -71,7 +71,7 @@ export class TeacherView extends Component {
       teacherView: PropTypes.string,
     }).isRequired,
     dispatchGetUsers: PropTypes.func.isRequired,
-    dispatchDeleteFile: PropTypes.func.isRequired,
+    dispatchDeleteAppInstanceResource: PropTypes.func.isRequired,
     // inside the shape method you should put the shape
     // that the resources your app uses will have
     appInstanceResources: PropTypes.arrayOf(
@@ -97,22 +97,27 @@ export class TeacherView extends Component {
     dispatchGetUsers();
   }
 
-  handleDelete = async ({ id, uri }) => {
-    const { dispatchDeleteFile } = this.props;
+  handleDelete = async ({ id, _id, uri }) => {
+    const { dispatchDeleteAppInstanceResource } = this.props;
+    const appInstanceResourceId = _id || id;
     try {
-      await dispatchDeleteFile({ id, uri });
+      await dispatchDeleteAppInstanceResource({
+        id: appInstanceResourceId,
+        data: { uri },
+        type: FILE,
+      });
     } catch (e) {
       // do something
     }
   };
 
-  renderActions({ visibility, id, uri }) {
+  renderActions({ visibility, id, _id, uri }) {
     const { t } = this.props;
     const actions = [
       <IconButton
         key="delete"
         color="primary"
-        onClick={() => this.handleDelete({ id, uri })}
+        onClick={() => this.handleDelete({ id, _id, uri })}
       >
         <DeleteIcon />
       </IconButton>,
@@ -222,7 +227,7 @@ const mapStateToProps = ({ users, appInstanceResources }) => ({
 const mapDispatchToProps = {
   dispatchGetUsers: getUsers,
   dispatchOpenSettings: openSettings,
-  dispatchDeleteFile: deleteFile,
+  dispatchDeleteAppInstanceResource: deleteAppInstanceResource,
 };
 
 const ConnectedComponent = connect(
