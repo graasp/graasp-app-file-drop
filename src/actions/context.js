@@ -5,6 +5,7 @@ import {
   GET_CONTEXT_SUCCEEDED,
 } from '../types';
 import { flag, receiveMessage } from './common';
+import { receiveFile } from './file';
 import { DEFAULT_API_HOST, DEFAULT_MODE } from '../config/settings';
 import { DEFAULT_VIEW } from '../config/views';
 import isInFrame from '../utils/isInFrame';
@@ -56,6 +57,7 @@ const getContext = () => dispatch => {
     // if offline, we need to set up the listeners here
     if (offlineBool) {
       window.addEventListener('message', receiveMessage(dispatch));
+      window.addEventListener('message', receiveFile(dispatch));
     }
 
     dispatch({

@@ -14,8 +14,10 @@ import { FILE_UPLOAD_ENDPOINT } from '../../config/api';
 import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
 import { postAppInstanceResource } from '../../actions';
-import { FILE } from '../../config/appInstanceResourceTypes';
 import { showErrorToast, showWarningToast } from '../../utils/toasts';
+import { POST_FILE } from '../../types';
+import { postMessage } from '../../actions/common';
+import { FILE } from '../../config/appInstanceResourceTypes';
 
 class Uploader extends Component {
   static propTypes = {
@@ -23,7 +25,10 @@ class Uploader extends Component {
     dispatchPostAppInstanceResource: PropTypes.func.isRequired,
     userId: PropTypes.string.isRequired,
     visibility: PropTypes.string,
+    spaceId: PropTypes.string.isRequired,
+    appInstanceId: PropTypes.string.isRequired,
     standalone: PropTypes.bool.isRequired,
+    offline: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -38,6 +43,9 @@ class Uploader extends Component {
       userId,
       visibility,
       standalone,
+      offline,
+      spaceId,
+      appInstanceId,
       t,
     } = props;
 
@@ -48,6 +56,35 @@ class Uploader extends Component {
       },
       autoProceed: true,
     });
+
+    // when offline override upload to post corresponding resources
+    if (offline) {
+      this.uppy.upload = () => {
+        const files = this.uppy.getFiles();
+        files.forEach(file => {
+          const {
+            data: { path, name },
+          } = file;
+
+          return postMessage({
+            type: POST_FILE,
+            // the payload will be used in the resulting appInstanceResource
+            payload: {
+              data: { name, path },
+              appInstanceId,
+              userId,
+              spaceId,
+              type: FILE,
+              visibility,
+            },
+          });
+        });
+
+        // remove files from stack and cancel upload
+        this.uppy.cancelAll();
+        return Promise.resolve({ files });
+      };
+    }
 
     // endpoint
     this.uppy.use(XHRUpload, {
@@ -63,7 +100,6 @@ class Uploader extends Component {
             uri,
           },
           userId,
-          type: FILE,
           visibility,
         });
       });
@@ -117,11 +153,14 @@ class Uploader extends Component {
 
 const mapStateToProps = state => {
   const {
-    context: { userId, standalone },
+    context: { userId, standalone, offline, appInstanceId, spaceId },
   } = state;
   return {
     standalone,
+    offline,
     userId,
+    spaceId,
+    appInstanceId,
   };
 };
 

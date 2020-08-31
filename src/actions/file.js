@@ -1,6 +1,41 @@
+import _ from 'lodash';
 import { DEFAULT_DELETE_REQUEST } from '../config/api';
 import { getApiContext, isErrorResponse } from './common';
-import { DELETE_FILE_SUCCEEDED, DELETE_FILE_FAILED } from '../types';
+import {
+  DELETE_FILE_SUCCEEDED,
+  DELETE_FILE_FAILED,
+  POST_FILE_FAILED,
+  POST_FILE_SUCCEEDED,
+} from '../types';
+import { postAppInstanceResource } from './appInstanceResources';
+import { showWarningToast } from '../utils/toasts';
+import { FILE_UPLOAD_FAILED_MESSAGE } from '../constants/messages';
+
+const receiveFile = dispatch => event => {
+  const { data } = event;
+  try {
+    const message = JSON.parse(data);
+
+    const { type, payload } = message;
+
+    switch (type) {
+      case POST_FILE_SUCCEEDED:
+        return dispatch(postAppInstanceResource(payload));
+      case POST_FILE_FAILED: {
+        // the error message may be passed in payload
+        const errorMessage = _.isString(payload)
+          ? payload
+          : FILE_UPLOAD_FAILED_MESSAGE;
+        return showWarningToast(errorMessage);
+      }
+      default:
+        return false;
+    }
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
 
 const deleteFile = async uri => async (dispatch, getState) => {
   try {
@@ -29,7 +64,4 @@ const deleteFile = async uri => async (dispatch, getState) => {
   }
 };
 
-export {
-  // eslint-disable-next-line import/prefer-default-export
-  deleteFile,
-};
+export { receiveFile, deleteFile };
