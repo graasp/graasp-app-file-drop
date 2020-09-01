@@ -36,7 +36,7 @@ const receiveMessage = dispatch => event => {
           type,
           payload,
         });
-      case DELETE_APP_INSTANCE_RESOURCE_SUCCEEDED: {
+      case DELETE_APP_INSTANCE_RESOURCE_SUCCEEDED:
         if (payload.type === FILE) {
           dispatch(deleteFile(payload));
         }
@@ -44,7 +44,6 @@ const receiveMessage = dispatch => event => {
           type,
           payload,
         });
-      }
       case DELETE_APP_INSTANCE_RESOURCE_FAILED: {
         // the error message may be passed in payload
         const errorMessage = _.isString(payload)
@@ -80,7 +79,7 @@ const receiveFile = dispatch => event => {
       }
       case DELETE_FILE_SUCCEEDED:
       case DELETE_FILE_FAILED:
-        // do nothing: on faile, the file will still be on the server
+        // do nothing: on failed, the file will still be on the server
         return false;
       default:
         return false;

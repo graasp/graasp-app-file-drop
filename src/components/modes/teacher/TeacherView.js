@@ -97,12 +97,11 @@ export class TeacherView extends Component {
     dispatchGetUsers();
   }
 
-  handleDelete = async ({ id, _id, uri }) => {
+  handleDelete = async ({ id, uri }) => {
     const { dispatchDeleteAppInstanceResource } = this.props;
-    const appInstanceResourceId = _id || id;
     try {
       await dispatchDeleteAppInstanceResource({
-        id: appInstanceResourceId,
+        id,
         data: { uri },
         type: FILE,
       });
@@ -111,13 +110,13 @@ export class TeacherView extends Component {
     }
   };
 
-  renderActions({ visibility, id, _id, uri }) {
+  renderActions({ visibility, id, uri }) {
     const { t } = this.props;
     const actions = [
       <IconButton
         key="delete"
         color="primary"
-        onClick={() => this.handleDelete({ id, _id, uri })}
+        onClick={() => this.handleDelete({ id, uri })}
       >
         <DeleteIcon />
       </IconButton>,

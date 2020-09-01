@@ -54,12 +54,11 @@ class StudentView extends Component {
     visibility: DEFAULT_VISIBILITY,
   };
 
-  handleDelete = async ({ _id, id, uri }) => {
+  handleDelete = async ({ id, uri }) => {
     const { dispatchDeleteAppInstanceResource } = this.props;
-    const appInstanceResourceId = _id || id;
     try {
       await dispatchDeleteAppInstanceResource({
-        id: appInstanceResourceId,
+        id,
         data: { uri },
         type: FILE,
       });
@@ -68,7 +67,7 @@ class StudentView extends Component {
     }
   };
 
-  renderActions({ visibility, id, _id, uri, user }) {
+  renderActions({ visibility, id, uri, user }) {
     const { t, currentUserId } = this.props;
     const actions = [];
     if (visibility === PUBLIC_VISIBILITY) {
@@ -88,7 +87,7 @@ class StudentView extends Component {
       actions.push(
         <IconButton
           color="primary"
-          onClick={() => this.handleDelete({ id, _id, uri })}
+          onClick={() => this.handleDelete({ id, uri })}
         >
           <DeleteIcon />
         </IconButton>,
