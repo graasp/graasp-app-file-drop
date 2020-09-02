@@ -21,6 +21,11 @@ import {
   PUBLIC_VISIBILITY,
 } from '../../../config/settings';
 import { FILE } from '../../../config/appInstanceResourceTypes';
+import {
+  TABLE_CELL_FILE_NAME,
+  TABLE_CELL_FILE_ACTION_DELETE,
+  TABLE_CELL_FILE_CREATED_AT,
+} from '../../../constants/selectors';
 
 class StudentView extends Component {
   static styles = theme => ({
@@ -86,6 +91,7 @@ class StudentView extends Component {
     if (user === currentUserId) {
       actions.push(
         <IconButton
+          data-cy={TABLE_CELL_FILE_ACTION_DELETE}
           color="primary"
           onClick={() => this.handleDelete({ id, uri })}
         >
@@ -114,11 +120,16 @@ class StudentView extends Component {
         const identifier = id || _id;
         return (
           <TableRow key={identifier}>
-            <TableCell scope="row">
+            <TableCell scope="row" data-cy={TABLE_CELL_FILE_CREATED_AT}>
               {createdAt && new Date(createdAt).toLocaleString()}
             </TableCell>
             <TableCell>
-              <a href={uri} target="_blank" rel="noopener noreferrer">
+              <a
+                data-cy={TABLE_CELL_FILE_NAME}
+                href={uri}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {name}
               </a>
             </TableCell>

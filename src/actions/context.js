@@ -32,12 +32,14 @@ const getContext = () => dispatch => {
       sessionId = null,
       offline = 'false',
       dev = 'false',
+      test = 'false',
     } = Qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
     const offlineBool = offline === 'true';
     const devBool = dev === 'true';
 
-    const standalone = !devBool && !isInFrame();
+    const testBool = test === 'true';
+    const standalone = !devBool && (testBool || !isInFrame());
 
     const context = {
       mode,
@@ -52,6 +54,7 @@ const getContext = () => dispatch => {
       standalone,
       offline: offlineBool,
       dev: devBool,
+      test: testBool,
     };
 
     // if offline, we need to set up the listeners here
