@@ -16,11 +16,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
 import Uploader from '../../common/Uploader';
 import { deleteAppInstanceResource } from '../../../actions';
-import { deleteFile } from '../../../actions/file';
 import {
   DEFAULT_VISIBILITY,
   PUBLIC_VISIBILITY,
 } from '../../../config/settings';
+import { FILE } from '../../../config/appInstanceResourceTypes';
 
 class StudentView extends Component {
   static styles = theme => ({
@@ -40,7 +40,6 @@ class StudentView extends Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     dispatchDeleteAppInstanceResource: PropTypes.func.isRequired,
-    dispatchDeleteFile: PropTypes.func.isRequired,
     classes: PropTypes.shape({
       main: PropTypes.string,
       table: PropTypes.string,
@@ -56,13 +55,13 @@ class StudentView extends Component {
   };
 
   handleDelete = async ({ id, uri }) => {
-    const {
-      dispatchDeleteAppInstanceResource,
-      dispatchDeleteFile,
-    } = this.props;
+    const { dispatchDeleteAppInstanceResource } = this.props;
     try {
-      await dispatchDeleteAppInstanceResource(id);
-      await dispatchDeleteFile(uri);
+      await dispatchDeleteAppInstanceResource({
+        id,
+        data: { uri },
+        type: FILE,
+      });
     } catch (e) {
       // do something
     }
@@ -111,21 +110,24 @@ class StudentView extends Component {
     }
     // map each app instance resource to a row in the table
     return appInstanceResources.map(
-      ({ _id: id, data: { name, uri }, visibility, createdAt, user }) => (
-        <TableRow key={id}>
-          <TableCell scope="row">
-            {createdAt && new Date(createdAt).toLocaleString()}
-          </TableCell>
-          <TableCell>
-            <a href={uri} target="_blank" rel="noopener noreferrer">
-              {name}
-            </a>
-          </TableCell>
-          <TableCell>
-            {this.renderActions({ visibility, id, uri, user })}
-          </TableCell>
-        </TableRow>
-      ),
+      ({ _id, id, data: { name, uri }, visibility, createdAt, user }) => {
+        const identifier = id || _id;
+        return (
+          <TableRow key={identifier}>
+            <TableCell scope="row">
+              {createdAt && new Date(createdAt).toLocaleString()}
+            </TableCell>
+            <TableCell>
+              <a href={uri} target="_blank" rel="noopener noreferrer">
+                {name}
+              </a>
+            </TableCell>
+            <TableCell>
+              {this.renderActions({ visibility, id: identifier, uri, user })}
+            </TableCell>
+          </TableRow>
+        );
+      },
     );
   }
 
@@ -173,7 +175,6 @@ const mapStateToProps = ({ context, appInstance }) => {
 
 const mapDispatchToProps = {
   dispatchDeleteAppInstanceResource: deleteAppInstanceResource,
-  dispatchDeleteFile: deleteFile,
 };
 
 const StyledComponent = withStyles(StudentView.styles)(StudentView);

@@ -4,8 +4,8 @@ import {
   GET_CONTEXT_FAILED,
   GET_CONTEXT_SUCCEEDED,
 } from '../types';
-import { flag, receiveMessage } from './common';
-import { receiveFile } from './file';
+import { receiveMessage, receiveFile } from './listener';
+import { flag } from './common';
 import { DEFAULT_API_HOST, DEFAULT_MODE } from '../config/settings';
 import { DEFAULT_VIEW } from '../config/views';
 import isInFrame from '../utils/isInFrame';
