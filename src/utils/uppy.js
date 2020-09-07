@@ -7,7 +7,7 @@ import { POST_FILE } from '../types';
 import { postMessage } from '../actions/common';
 import { FILE } from '../config/appInstanceResourceTypes';
 
-const configUppy = ({
+const configureUppy = ({
   t,
   offline,
   standalone,
@@ -100,4 +100,4 @@ const configUppy = ({
   return uppy;
 };
 
-export default configUppy;
+export default configureUppy;

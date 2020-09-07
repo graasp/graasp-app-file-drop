@@ -1,5 +1,4 @@
-import 'cypress-file-upload';
-import configUppy from '../../src/utils/uppy';
+import configureUppy from '../../src/utils/uppy';
 import {
   POST_FILE,
   POST_FILE_SUCCEEDED,
@@ -13,26 +12,22 @@ import {
   TABLE_CELL_FILE_CREATED_AT,
 } from '../../src/constants/selectors';
 import { DEFAULT_VISIBILITY } from '../../src/config/settings';
-
-const userId = '5b56e70ab253020033364416';
-const spaceId = '5b56e70ab253020033364411';
-const appInstanceId = '6156e70ab253020033364411';
+import { appQueryParameters, studentUserId } from '../fixtures/queryParameters';
 
 describe('<StudentView />', () => {
   describe('when offline = true', () => {
     beforeEach(() => {
-      cy.offlineVisit();
+      cy.visitOffline({ appQueryParameters, userId: studentUserId });
     });
 
     // when standalone and offline,
     // the input app cannot save data
     it('upload file save file locally and save corresponding appInstanceResource', () => {
       // create another identical uppy to simulate behavior
-      const uppy = configUppy({
+      const uppy = configureUppy({
         offline: true,
-        spaceId,
-        appInstanceId,
-        userId,
+        ...appQueryParameters,
+        userId: studentUserId,
       });
 
       // programmatically add file to uppy, it will trigger the upload automatically
@@ -58,7 +53,7 @@ describe('<StudentView />', () => {
         data: { name, uri },
         createdAt,
         visibility,
-        user: userId,
+        user: studentUserId,
         type: FILE,
       };
       const message = {

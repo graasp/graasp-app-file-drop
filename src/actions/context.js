@@ -39,6 +39,9 @@ const getContext = () => dispatch => {
     const devBool = dev === 'true';
 
     const testBool = test === 'true';
+
+    // the standalone mode is set to true when the application is not in dev mode and in not embedded inside a frame
+    // this parameter is false in case of test (in dev mode), where a frame is mocked
     const standalone = !devBool && (testBool || !isInFrame());
 
     const context = {

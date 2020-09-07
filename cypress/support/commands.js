@@ -18,25 +18,27 @@ Cypress.Commands.add('postMessage', message => {
   cy.window().then(win => win.postMessage(msg, '*'));
 });
 
-Cypress.Commands.add('offlineVisit', (mode = DEFAULT_MODE) => {
-  cy.visit('/', {
-    qs: {
-      spaceId: '5b56e70ab253020033364411',
-      appInstanceId: '6156e70ab253020033364411',
-      mode,
-      userId: '5b56e70ab253020033364416',
-      offline: true,
-      test: true,
-      dev: true,
-    },
-    onBeforeLoad(win) {
-      // start spying parent postMessage
-      cy.spy(win.parent, 'postMessage').as('postMessage');
-    },
-  });
-  cy.wait(LOAD_PAGE_PAUSE);
+Cypress.Commands.add(
+  'visitOffline',
+  ({ appQueryParameters, userId }, mode = DEFAULT_MODE) => {
+    cy.visit('/', {
+      qs: {
+        ...appQueryParameters,
+        mode,
+        userId,
+        offline: true,
+        test: true,
+        dev: true,
+      },
+      onBeforeLoad(win) {
+        // start spying parent postMessage
+        cy.spy(win.parent, 'postMessage').as('postMessage');
+      },
+    });
+    cy.wait(LOAD_PAGE_PAUSE);
 
-  // simulate get appInstance
-  const msg = { type: GET_APP_INSTANCE_SUCCEEDED, payload: {} };
-  cy.postMessage(msg);
-});
+    // simulate get appInstance
+    const msg = { type: GET_APP_INSTANCE_SUCCEEDED, payload: {} };
+    cy.postMessage(msg);
+  },
+);
