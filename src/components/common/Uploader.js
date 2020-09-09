@@ -7,7 +7,7 @@ import { DEFAULT_VISIBILITY } from '../../config/settings';
 import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
 import { postAppInstanceResource } from '../../actions';
-import configUppy from '../../utils/uppy';
+import configureUppy from '../../utils/uppy';
 
 class Uploader extends Component {
   static propTypes = {
@@ -39,7 +39,7 @@ class Uploader extends Component {
       t,
     } = props;
 
-    this.uppy = configUppy({
+    this.uppy = configureUppy({
       t,
       offline,
       standalone,

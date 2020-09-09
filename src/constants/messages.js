@@ -11,5 +11,3 @@ export const MISSING_APP_INSTANCE_RESOURCE_ID_MESSAGE =
   'No app instance resource id specified.';
 export const FILE_UPLOAD_FAILED_MESSAGE =
   'There was an error uploading the file.';
-export const FILE_DELETE_FAILED_MESSAGE =
-  'There was an error deleting the file.';

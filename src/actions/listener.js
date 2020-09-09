@@ -1,8 +1,5 @@
 import _ from 'lodash';
-import {
-  FILE_DELETE_FAILED_MESSAGE,
-  FILE_UPLOAD_FAILED_MESSAGE,
-} from '../constants/messages';
+import { FILE_UPLOAD_FAILED_MESSAGE } from '../constants/messages';
 import {
   GET_APP_INSTANCE_RESOURCES_SUCCEEDED,
   GET_APP_INSTANCE_SUCCEEDED,
@@ -14,8 +11,9 @@ import {
   DELETE_FILE_FAILED,
   POST_FILE_FAILED,
   POST_FILE_SUCCEEDED,
+  POST_APP_INSTANCE_RESOURCE_FAILED,
 } from '../types';
-import { showWarningToast } from '../utils/toasts';
+import { showErrorToast } from '../utils/toasts';
 import { deleteFile } from './file';
 import { FILE } from '../config/appInstanceResourceTypes';
 import { postAppInstanceResource } from './appInstanceResources';
@@ -42,14 +40,14 @@ const receiveMessage = dispatch => event => {
         }
         return dispatch({
           type,
+          payload: payload.id || payload._id,
+        });
+      case POST_APP_INSTANCE_RESOURCE_FAILED:
+      case DELETE_APP_INSTANCE_RESOURCE_FAILED: {
+        return dispatch({
+          type,
           payload,
         });
-      case DELETE_APP_INSTANCE_RESOURCE_FAILED: {
-        // the error message may be passed in payload
-        const errorMessage = _.isString(payload)
-          ? payload
-          : FILE_DELETE_FAILED_MESSAGE;
-        return showWarningToast(errorMessage);
       }
       default:
         return false;
@@ -75,7 +73,7 @@ const receiveFile = dispatch => event => {
         const errorMessage = _.isString(payload)
           ? payload
           : FILE_UPLOAD_FAILED_MESSAGE;
-        return showWarningToast(errorMessage);
+        return showErrorToast(errorMessage);
       }
       case DELETE_FILE_SUCCEEDED:
       case DELETE_FILE_FAILED:

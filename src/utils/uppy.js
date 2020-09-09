@@ -1,6 +1,10 @@
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
-import { MAX_FILE_SIZE, MAX_NUM_FILES } from '../config/settings';
+import {
+  MAX_FILE_SIZE,
+  MAX_NUM_FILES,
+  DEFAULT_VISIBILITY,
+} from '../config/settings';
 import { FILE_UPLOAD_ENDPOINT } from '../config/api';
 import { showErrorToast, showWarningToast } from './toasts';
 import { POST_FILE } from '../types';
@@ -13,7 +17,7 @@ const configureUppy = ({
   standalone,
   spaceId,
   appInstanceId,
-  visibility,
+  visibility = DEFAULT_VISIBILITY,
   dispatchPostAppInstanceResource,
   userId,
 }) => {

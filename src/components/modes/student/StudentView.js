@@ -25,6 +25,7 @@ import {
   TABLE_CELL_FILE_NAME,
   TABLE_CELL_FILE_ACTION_DELETE,
   TABLE_CELL_FILE_CREATED_AT,
+  ROW_NO_FILES_UPLOADED_ID,
 } from '../../../constants/selectors';
 
 class StudentView extends Component {
@@ -107,7 +108,7 @@ class StudentView extends Component {
     // if there are no resources, show an empty table
     if (!appInstanceResources.length) {
       return (
-        <TableRow>
+        <TableRow id={ROW_NO_FILES_UPLOADED_ID}>
           <TableCell colSpan={3} align="center">
             {t('No files have been uploaded.')}
           </TableCell>
@@ -119,7 +120,7 @@ class StudentView extends Component {
       ({ _id, id, data: { name, uri }, visibility, createdAt, user }) => {
         const identifier = id || _id;
         return (
-          <TableRow key={identifier}>
+          <TableRow id={identifier} key={identifier}>
             <TableCell scope="row" data-cy={TABLE_CELL_FILE_CREATED_AT}>
               {createdAt && new Date(createdAt).toLocaleString()}
             </TableCell>
