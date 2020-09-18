@@ -32,12 +32,17 @@ const getContext = () => dispatch => {
       sessionId = null,
       offline = 'false',
       dev = 'false',
+      test = 'false',
     } = Qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
     const offlineBool = offline === 'true';
     const devBool = dev === 'true';
 
-    const standalone = !devBool && !isInFrame();
+    const testBool = test === 'true';
+
+    // the standalone mode is set to true when the application is not in dev mode and in not embedded inside a frame
+    // this parameter is false in case of test (in dev mode), where a frame is mocked
+    const standalone = !devBool && (testBool || !isInFrame());
 
     const context = {
       mode,
@@ -52,6 +57,7 @@ const getContext = () => dispatch => {
       standalone,
       offline: offlineBool,
       dev: devBool,
+      test: testBool,
     };
 
     // if offline, we need to set up the listeners here

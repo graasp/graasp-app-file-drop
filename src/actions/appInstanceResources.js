@@ -282,7 +282,7 @@ const deleteAppInstanceResource = async payload => async (
 
     // if offline send message to parent requesting to delete a resource
     if (offline) {
-      postMessage({
+      return postMessage({
         type: DELETE_APP_INSTANCE_RESOURCE,
         payload: {
           ...payload,
@@ -291,15 +291,13 @@ const deleteAppInstanceResource = async payload => async (
           appInstanceId,
         },
       });
-    } else {
-      const url = `//${apiHost +
-        APP_INSTANCE_RESOURCES_ENDPOINT}/${identifier}`;
-
-      const response = await fetch(url, DEFAULT_DELETE_REQUEST);
-
-      // throws if it is an error
-      await isErrorResponse(response);
     }
+    const url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}/${identifier}`;
+
+    const response = await fetch(url, DEFAULT_DELETE_REQUEST);
+
+    // throws if it is an error
+    await isErrorResponse(response);
 
     return dispatch({
       type: DELETE_APP_INSTANCE_RESOURCE_SUCCEEDED,
