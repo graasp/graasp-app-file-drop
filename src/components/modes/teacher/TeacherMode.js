@@ -5,6 +5,7 @@ import TeacherView from './TeacherView';
 import { DEFAULT_VIEW, DASHBOARD_VIEW } from '../../../config/views';
 import { getAppInstanceResources } from '../../../actions';
 import Loader from '../../common/Loader';
+import Header from '../../layout/Header';
 
 class TeacherMode extends Component {
   static propTypes = {
@@ -47,7 +48,12 @@ class TeacherMode extends Component {
       case DASHBOARD_VIEW:
       case DEFAULT_VIEW:
       default:
-        return <TeacherView />;
+        return (
+          <>
+            <Header />
+            <TeacherView />
+          </>
+        );
     }
   }
 }
