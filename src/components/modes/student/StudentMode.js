@@ -6,6 +6,7 @@ import StudentView from './StudentView';
 import { DEFAULT_VIEW, FEEDBACK_VIEW } from '../../../config/views';
 import { getAppInstanceResources } from '../../../actions';
 import Loader from '../../common/Loader';
+import Header from '../../layout/Header';
 
 class StudentMode extends Component {
   static propTypes = {
@@ -23,6 +24,8 @@ class StudentMode extends Component {
         data: PropTypes.object,
       }),
     ),
+    headerVisible: PropTypes.bool.isRequired,
+    standalone: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -54,7 +57,13 @@ class StudentMode extends Component {
   }
 
   render() {
-    const { view, activity, appInstanceResources } = this.props;
+    const {
+      view,
+      activity,
+      appInstanceResources,
+      headerVisible,
+      standalone,
+    } = this.props;
     if (activity) {
       return <Loader />;
     }
@@ -62,11 +71,16 @@ class StudentMode extends Component {
       case FEEDBACK_VIEW:
       case DEFAULT_VIEW:
       default:
-        return <StudentView appInstanceResources={appInstanceResources} />;
+        return (
+          <>
+            {headerVisible || standalone ? <Header /> : null}
+            <StudentView appInstanceResources={appInstanceResources} />
+          </>
+        );
     }
   }
 }
-const mapStateToProps = ({ context, appInstanceResources }) => {
+const mapStateToProps = ({ context, appInstance, appInstanceResources }) => {
   const { userId, appInstanceId } = context;
   return {
     userId,
@@ -75,6 +89,8 @@ const mapStateToProps = ({ context, appInstanceResources }) => {
     appInstanceResources: _.sortBy(appInstanceResources.content, [
       'createdAt',
     ]).reverse(),
+    headerVisible: appInstance.content.settings.headerVisible,
+    standalone: context.standalone,
   };
 };
 

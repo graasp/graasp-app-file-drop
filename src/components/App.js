@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { getContext } from '../actions';
+import { getContext, getAppInstance } from '../actions';
 import { DEFAULT_LANG, DEFAULT_MODE } from '../config/settings';
 import { DEFAULT_VIEW } from '../config/views';
-import { getAppInstance } from '../actions/appInstance';
 import TeacherMode from './modes/teacher/TeacherMode';
-import Header from './layout/Header';
 import Loader from './common/Loader';
 import StudentMode from './modes/student/StudentMode';
+import USER_TYPES from '../config/userTypes';
 
 export class App extends Component {
   static propTypes = {
@@ -23,7 +22,7 @@ export class App extends Component {
     lang: PropTypes.string,
     mode: PropTypes.string,
     view: PropTypes.string,
-    headerVisible: PropTypes.bool.isRequired,
+    userType: PropTypes.string,
     ready: PropTypes.bool.isRequired,
     standalone: PropTypes.bool.isRequired,
   };
@@ -33,6 +32,7 @@ export class App extends Component {
     mode: DEFAULT_MODE,
     view: DEFAULT_VIEW,
     appInstanceId: null,
+    userType: null,
   };
 
   constructor(props) {
@@ -67,7 +67,7 @@ export class App extends Component {
   };
 
   render() {
-    const { mode, view, headerVisible, ready, standalone } = this.props;
+    const { mode, view, ready, standalone, userType } = this.props;
 
     if (!standalone && !ready) {
       return <Loader />;
@@ -79,36 +79,31 @@ export class App extends Component {
       case 'producer':
       case 'educator':
       case 'admin':
-        return (
-          <>
-            <Header />
-            <TeacherMode view={view} />
-          </>
-        );
+        // unless the user is a viewer
+        if (userType === USER_TYPES.VIEWER) {
+          return <StudentMode />;
+        }
+        return <TeacherMode view={view} />;
 
       // by default go with the consumer (learner) mode
       case 'student':
       case 'consumer':
       case 'learner':
       default:
-        return (
-          <>
-            {headerVisible || standalone ? <Header /> : null}
-            <StudentMode />
-          </>
-        );
+        return <StudentMode />;
     }
   }
 }
 
 const mapStateToProps = ({ context, appInstance }) => ({
   headerVisible: appInstance.content.settings.headerVisible,
+  standalone: context.standalone,
   lang: context.lang,
   mode: context.mode,
   view: context.view,
+  userType: context.userType,
   appInstanceId: context.appInstanceId,
   ready: appInstance.ready,
-  standalone: context.standalone,
 });
 
 const mapDispatchToProps = {

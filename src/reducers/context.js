@@ -20,6 +20,7 @@ const INITIAL_STATE = {
   offline: false,
   standalone: false,
   dev: false,
+  userType: null,
 };
 
 export default (state = INITIAL_STATE, { type, payload }) => {
