@@ -1,6 +1,6 @@
 {
   "name": "graasp-app-file-drop",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "author": "React EPFL",
   "contributors": [
@@ -56,7 +56,7 @@
     "test:ci": "run-s test:coverage report",
     "report": "cat ./coverage/lcov.info | codacy-coverage",
     "eject": "react-scripts eject",
-    "release": "git add CHANGELOG.md && standard-version -a",
+    "release": "git fetch --tags && git add CHANGELOG.md && standard-version -a",
     "cypress:open": "cypress open",
     "cypress": "npm-run-all --parallel start cypress:open"
   },

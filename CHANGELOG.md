@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/graasp/graasp-app-file-drop/compare/v0.1.3...v0.1.4) (2020-12-02)
+
+### Features
+
+- delete local files when offline, refactor delete process ([603f3a0](https://github.com/graasp/graasp-app-file-drop/commit/603f3a00701e31072c7779d75684cedecc8f994a))
+- show student mode when userType is observer ([b3a1abc](https://github.com/graasp/graasp-app-file-drop/commit/b3a1abc93612362d89a98d8fcc84bca4e128c6fa)), closes [#12](https://github.com/graasp/graasp-app-file-drop/issues/12)
+- when offline send appInstanceResources instead of xhr request ([dcbea88](https://github.com/graasp/graasp-app-file-drop/commit/dcbea88e7e1e333516222d7f694a3064a592011e))
+
+### Bug Fixes
+
+- update translation files ([ffa22c2](https://github.com/graasp/graasp-app-file-drop/commit/ffa22c2748613cae9b0959747ef1698385b3608e))
+
 ### [0.1.3](https://github.com/graasp/graasp-app-file-drop/compare/v0.1.2...v0.1.3) (2020-03-18)
 
 ### Features
