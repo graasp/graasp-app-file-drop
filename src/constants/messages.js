@@ -11,3 +11,5 @@ export const MISSING_APP_INSTANCE_RESOURCE_ID_MESSAGE =
   'No app instance resource id specified.';
 export const FILE_UPLOAD_FAILED_MESSAGE =
   'There was an error uploading the file.';
+export const REFETCH_AUTH_TOKEN_MESSAGE =
+  'Your session is being updated, please retry.';

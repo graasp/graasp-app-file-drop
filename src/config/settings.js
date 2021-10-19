@@ -23,3 +23,4 @@ export const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
 export const DEFAULT_VISIBILITY = 'private';
 export const PUBLIC_VISIBILITY = 'public';
+export const GRAASP_APP_ID = process.env.REACT_APP_GRAASP_APP_ID;

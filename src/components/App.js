@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { getContext, getAppInstance } from '../actions';
+import { getContext, getAuthToken } from '../actions';
 import { DEFAULT_LANG, DEFAULT_MODE } from '../config/settings';
 import { DEFAULT_VIEW } from '../config/views';
 import TeacherMode from './modes/teacher/TeacherMode';
@@ -17,21 +17,24 @@ export class App extends Component {
       changeLanguage: PropTypes.func,
     }).isRequired,
     dispatchGetContext: PropTypes.func.isRequired,
-    dispatchGetAppInstance: PropTypes.func.isRequired,
-    appInstanceId: PropTypes.string,
+    // dispatchGetAppInstance: PropTypes.func.isRequired,
+    // dispatchGetAppData: PropTypes.func.isRequired,
+    dispatchGetAuthToken: PropTypes.func.isRequired,
+    // appInstanceId: PropTypes.string,
     lang: PropTypes.string,
     mode: PropTypes.string,
     view: PropTypes.string,
     userType: PropTypes.string,
     ready: PropTypes.bool.isRequired,
     standalone: PropTypes.bool.isRequired,
+    contextIsLoading: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
     lang: DEFAULT_LANG,
     mode: DEFAULT_MODE,
     view: DEFAULT_VIEW,
-    appInstanceId: null,
+    // appInstanceId: null,
     userType: null,
   };
 
@@ -40,25 +43,45 @@ export class App extends Component {
     // first thing to do is get the context
     props.dispatchGetContext();
     // then get the app instance
-    props.dispatchGetAppInstance();
+    // props.dispatchGetAppInstance();
   }
 
   componentDidMount() {
-    const { lang } = this.props;
+    const {
+      lang,
+      // ready,
+      // dispatchGetAppData,
+      dispatchGetAuthToken,
+      contextIsLoading,
+    } = this.props;
     // set the language on first load
     this.handleChangeLang(lang);
+
+    if (!contextIsLoading) {
+      dispatchGetAuthToken();
+    }
+
+    // if (ready) {
+    //   dispatchGetAppData();
+    // }
   }
 
-  componentDidUpdate({ lang: prevLang, appInstanceId: prevAppInstanceId }) {
-    const { lang, appInstanceId, dispatchGetAppInstance } = this.props;
+  componentDidUpdate({ lang: prevLang }) {
+    const { lang, contextIsLoading, dispatchGetAuthToken, ready } = this.props;
+
     // handle a change of language
     if (lang !== prevLang) {
       this.handleChangeLang(lang);
     }
-    // handle receiving the app instance id
-    if (appInstanceId !== prevAppInstanceId) {
-      dispatchGetAppInstance();
+
+    // get item context
+    if (!contextIsLoading && !ready) {
+      dispatchGetAuthToken();
     }
+
+    // if (ready && ready !== prevReady) {
+    //   dispatchGetAppData();
+    // }
   }
 
   handleChangeLang = lang => {
@@ -102,13 +125,15 @@ const mapStateToProps = ({ context, appInstance }) => ({
   mode: context.mode,
   view: context.view,
   userType: context.userType,
-  appInstanceId: context.appInstanceId,
-  ready: appInstance.ready,
+  ready: Boolean(context.token),
+  // isAppDataReady: appData.ready,
+  contextIsLoading: Boolean(context.activity.length),
 });
 
 const mapDispatchToProps = {
   dispatchGetContext: getContext,
-  dispatchGetAppInstance: getAppInstance,
+  // dispatchGetAppData: getAppData,
+  dispatchGetAuthToken: getAuthToken,
 };
 
 const ConnectedApp = connect(

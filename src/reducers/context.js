@@ -1,4 +1,9 @@
-import { GET_CONTEXT_FAILED, GET_CONTEXT_SUCCEEDED } from '../types';
+import {
+  FLAG_GETTING_CONTEXT,
+  GET_AUTH_TOKEN_SUCCEEDED,
+  GET_CONTEXT_FAILED,
+  GET_CONTEXT_SUCCEEDED,
+} from '../types';
 import {
   DEFAULT_API_HOST,
   DEFAULT_LANG,
@@ -9,7 +14,6 @@ import { DEFAULT_VIEW } from '../config/views';
 
 const INITIAL_STATE = {
   apiHost: DEFAULT_API_HOST,
-  // the properties below come from the context via the query string
   lang: DEFAULT_LANG,
   mode: DEFAULT_MODE,
   view: DEFAULT_VIEW,
@@ -21,10 +25,21 @@ const INITIAL_STATE = {
   standalone: false,
   dev: false,
   userType: null,
+  itemId: null,
+  activity: [],
+  token: null,
 };
 
 export default (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
+    case FLAG_GETTING_CONTEXT:
+      return {
+        ...state,
+        activity: payload
+          ? [...state.activity, payload]
+          : [...state.activity.slice(1)],
+      };
+
     case GET_CONTEXT_SUCCEEDED:
       return {
         ...state,
@@ -35,6 +50,9 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       // show error to user
       showErrorToast(payload);
       return state;
+
+    case GET_AUTH_TOKEN_SUCCEEDED:
+      return { ...state, token: payload };
 
     default:
       return state;

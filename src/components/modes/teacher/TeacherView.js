@@ -80,7 +80,8 @@ export class TeacherView extends Component {
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         appInstanceId: PropTypes.string,
-        data: PropTypes.object,
+        // data: PropTypes.objectOf(PropTypes.object()),
+        data: PropTypes.oneOfType([PropTypes.object]).isRequired,
       }),
     ),
     // this is the shape of the select options for students

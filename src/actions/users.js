@@ -1,4 +1,4 @@
-import { flag, getApiContext, isErrorResponse, postMessage } from './common';
+import { flag, isErrorResponse, postMessage } from './common';
 import {
   FLAG_GETTING_USERS,
   GET_USERS,
@@ -6,9 +6,10 @@ import {
   GET_USERS_SUCCEEDED,
 } from '../types';
 import {
+  APP_ITEMS_ENDPOINT,
   DEFAULT_GET_REQUEST,
-  SPACES_ENDPOINT,
-  USERS_ENDPOINT,
+  // SPACES_ENDPOINT,
+  // USERS_ENDPOINT,
 } from '../config/api';
 
 const flagGettingUsers = flag(FLAG_GETTING_USERS);
@@ -16,7 +17,8 @@ const flagGettingUsers = flag(FLAG_GETTING_USERS);
 const getUsers = async () => async (dispatch, getState) => {
   dispatch(flagGettingUsers(true));
   try {
-    const { spaceId, apiHost, offline, standalone } = getApiContext(getState);
+    // const { spaceId, apiHost, offline, standalone } = getApiContext(getState);
+    const { apiHost, offline, standalone, itemId, token } = getState().context;
 
     // if standalone, you cannot connect to api
     if (standalone) {
@@ -30,14 +32,25 @@ const getUsers = async () => async (dispatch, getState) => {
       });
     }
 
-    const url = `//${apiHost + SPACES_ENDPOINT}/${spaceId}/${USERS_ENDPOINT}`;
+    // const url = `//${apiHost + SPACES_ENDPOINT}/${spaceId}/${USERS_ENDPOINT}`;
 
-    const response = await fetch(url, DEFAULT_GET_REQUEST);
+    // const response = await fetch(url, DEFAULT_GET_REQUEST);
+
+    const response = await fetch(
+      `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/context`,
+      {
+        ...DEFAULT_GET_REQUEST,
+        headers: {
+          ...DEFAULT_GET_REQUEST.headers,
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
 
     // throws if it is an error
     await isErrorResponse(response);
 
-    const users = response.json();
+    const users = (await response.json())?.members;
     return dispatch({
       type: GET_USERS_SUCCEEDED,
       payload: users,
