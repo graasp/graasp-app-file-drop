@@ -24,7 +24,7 @@ const INITIAL_STATE = {
   offline: false,
   standalone: false,
   dev: false,
-  userType: null,
+  // userType: null,
   itemId: null,
   activity: [],
   token: null,
@@ -52,7 +52,10 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       return state;
 
     case GET_AUTH_TOKEN_SUCCEEDED:
-      return { ...state, token: payload };
+      return {
+        ...state,
+        token: payload,
+      };
 
     default:
       return state;

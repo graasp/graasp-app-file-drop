@@ -32,10 +32,6 @@ const getUsers = async () => async (dispatch, getState) => {
       });
     }
 
-    // const url = `//${apiHost + SPACES_ENDPOINT}/${spaceId}/${USERS_ENDPOINT}`;
-
-    // const response = await fetch(url, DEFAULT_GET_REQUEST);
-
     const response = await fetch(
       `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/context`,
       {
