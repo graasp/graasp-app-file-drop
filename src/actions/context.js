@@ -1,3 +1,4 @@
+// import Qs from 'qs';
 import {
   FLAG_GETTING_CONTEXT,
   GET_CONTEXT_FAILED,
@@ -7,7 +8,10 @@ import {
   GET_AUTH_TOKEN_SUCCEEDED,
   GET_AUTH_TOKEN,
 } from '../types';
-import { flag, receiveMessage, postMessage } from './common';
+// import { flag, receiveMessage, postMessage } from './common';
+import { flag, postMessage } from './common';
+// eslint-disable-next-line import/no-cycle
+import { receiveMessage } from './listener';
 import {
   DEFAULT_API_HOST,
   DEFAULT_MODE,
@@ -71,13 +75,13 @@ const onMessage = dispatch => event => {
   if (type === GET_AUTH_TOKEN_SUCCEEDED) {
     dispatch({ type: GET_AUTH_TOKEN_SUCCEEDED, payload: payload.token });
     dispatch(flagGettingAuthToken(false));
-    console.log(payload);
   }
 };
 
 const getAuthToken = () => async dispatch => {
   dispatch(flagGettingAuthToken(true));
 
+  console.debug('---- GET AUTH TOKEN');
   // request parent to provide item data (item id, settings...) and access token
   // eslint-disable-next-line no-unused-expressions
   port2?.postMessage(
@@ -100,7 +104,6 @@ const getContext = () => dispatch => {
   try {
     const receiveContextMessage = event => {
       const { type, payload } = event?.data || {};
-      console.log(event.data);
       // get init message getting the Message Channel port
       if (type === GET_CONTEXT_SUCCEEDED) {
         const context = buildContext(payload);
@@ -124,26 +127,79 @@ const getContext = () => dispatch => {
 
         dispatch(flagGettingContext(false));
       }
+      // const {
+      //   mode = DEFAULT_MODE,
+      //   view = DEFAULT_VIEW,
+      //   lang = 'en',
+      //   apiHost = DEFAULT_API_HOST,
+      //   appInstanceId = null,
+      //   spaceId = null,
+      //   subSpaceId = null,
+      //   userId = null,
+      //   sessionId = null,
+      //   userType = null,
+      //   offline = 'false',
+      //   dev = 'false',
+      //   test = 'false',
+      // } = Qs.parse(window.location.search, { ignoreQueryPrefix: true });
+
+      // const offlineBool = offline === 'true';
+      // const devBool = dev === 'true';
+
+      // const testBool = test === 'true';
+
+      // // the standalone mode is set to true when the application is not in dev mode and in not embedded inside a frame
+      // // this parameter is false in case of test (in dev mode), where a frame is mocked
+      // const standalone = !devBool && (testBool || !isInFrame());
+
+      // const context = {
+      //   mode,
+      //   view,
+      //   lang,
+      //   apiHost,
+      //   appInstanceId,
+      //   userId,
+      //   sessionId,
+      //   spaceId,
+      //   subSpaceId,
+      //   standalone,
+      //   userType,
+      //   offline: offlineBool,
+      //   dev: devBool,
+      //   test: testBool,
     };
-
     window.addEventListener('message', receiveContextMessage);
-
-    // window.addEventListener('message', receiveFile(dispatch));
-
     // request parent to provide item data (item id, settings...) and access token
+    console.debug('----- GET CONTEXT');
     postMessage({
       type: GET_CONTEXT,
       payload: {
         app: GRAASP_APP_ID,
         origin: window.location.origin,
       },
+      // // if offline, we need to set up the listeners here
+      // if (offlineBool) {
+      //   window.addEventListener('message', receiveMessage(dispatch));
+      //   window.addEventListener('message', receiveFile(dispatch));
+      // }
+
+      // dispatch({
+      //   type: GET_CONTEXT_SUCCEEDED,
+      //   payload: context,
     });
   } catch (err) {
     dispatch({
       type: GET_CONTEXT_FAILED,
       payload: err,
     });
+    // } finally {
+    //   dispatch(flagGettingContext(false));
   }
 };
 
-export { getContext, getAuthToken };
+export {
+  // todo: remove with more exports
+  // eslint-disable-next-line import/prefer-default-export
+  getContext,
+  getAuthToken,
+};

@@ -4,12 +4,6 @@ import {
   // MISSING_SPACE_ID_MESSAGE,
   UNEXPECTED_ERROR_MESSAGE,
 } from '../constants/messages';
-import {
-  GET_APP_INSTANCE_RESOURCES_SUCCEEDED,
-  GET_APP_INSTANCE_SUCCEEDED,
-  PATCH_APP_INSTANCE_RESOURCE_SUCCEEDED,
-  POST_APP_INSTANCE_RESOURCE_SUCCEEDED,
-} from '../types';
 
 const flag = type => payload => dispatch =>
   dispatch({
@@ -82,32 +76,8 @@ const postMessage = data => {
   if (window.parent.postMessage) {
     window.parent.postMessage(message, '*');
   } else {
-    console.error('unable to find postMessage');
-  }
-};
-const receiveMessage = dispatch => event => {
-  const { data } = event;
-  try {
-    const message = JSON.parse(data);
-
-    const { type, payload } = message;
-
-    switch (type) {
-      case GET_APP_INSTANCE_RESOURCES_SUCCEEDED:
-      case GET_APP_INSTANCE_SUCCEEDED:
-      case PATCH_APP_INSTANCE_RESOURCE_SUCCEEDED:
-      case POST_APP_INSTANCE_RESOURCE_SUCCEEDED:
-        return dispatch({
-          type,
-          payload,
-        });
-      default:
-        return false;
-    }
-  } catch (err) {
-    console.error(err);
-    return false;
+    // console.error('unable to find postMessage');
   }
 };
 
-export { flag, isErrorResponse, getApiContext, postMessage, receiveMessage };
+export { flag, isErrorResponse, getApiContext, postMessage };

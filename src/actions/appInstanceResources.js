@@ -3,7 +3,9 @@ import {
   DEFAULT_POST_REQUEST,
   DEFAULT_PATCH_REQUEST,
   DEFAULT_DELETE_REQUEST,
-  APP_INSTANCE_RESOURCES_ENDPOINT,
+  // APP_INSTANCE_RESOURCES_ENDPOINT,
+  APP_DATA_ENDPOINT,
+  APP_ITEMS_ENDPOINT,
 } from '../config/api';
 import {
   FLAG_GETTING_APP_INSTANCE_RESOURCES,
@@ -24,8 +26,13 @@ import {
   DELETE_APP_INSTANCE_RESOURCE,
 } from '../types';
 import { flag, getApiContext, isErrorResponse, postMessage } from './common';
+// eslint-disable-next-line import/no-cycle
+import { getAuthToken } from './context';
 import { showErrorToast } from '../utils/toasts';
-import { MISSING_APP_INSTANCE_RESOURCE_ID_MESSAGE } from '../constants/messages';
+import {
+  MISSING_APP_INSTANCE_RESOURCE_ID_MESSAGE,
+  REFETCH_AUTH_TOKEN_MESSAGE,
+} from '../constants/messages';
 import { APP_INSTANCE_RESOURCE_FORMAT } from '../config/formats';
 import { DEFAULT_VISIBILITY } from '../config/settings';
 
@@ -40,12 +47,24 @@ const flagDeletingAppInstanceResource = flag(
   FLAG_DELETING_APP_INSTANCE_RESOURCE,
 );
 
+const refreshExpiredToken = (response, dispatch) => {
+  if (
+    // todo: refactor using global constants
+    response.status === 401 &&
+    response.message === 'Auth token does not match targeted item'
+  ) {
+    dispatch(getAuthToken());
+
+    showErrorToast(REFETCH_AUTH_TOKEN_MESSAGE);
+  }
+};
+
 const getAppInstanceResources = async ({
   userId,
   sessionId,
   type,
   // include public resources by default
-  includePublic = true,
+  // includePublic = true,
 } = {}) => async (dispatch, getState) => {
   dispatch(flagGettingAppInstanceResources(true));
   try {
@@ -57,6 +76,10 @@ const getAppInstanceResources = async ({
       subSpaceId,
       standalone,
     } = getApiContext(getState);
+
+    const {
+      context: { token, itemId },
+    } = getState();
 
     // if standalone, you cannot connect to api
     if (standalone) {
@@ -76,9 +99,10 @@ const getAppInstanceResources = async ({
       });
     }
 
-    const queryParams = `appInstanceId=${appInstanceId}&includePublic=${includePublic}`;
+    // const queryParams = `appInstanceId=${appInstanceId}&includePublic=${includePublic}`;
 
-    let url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}?${queryParams}`;
+    // let url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}?${queryParams}`;
+    let url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}`;
 
     // only add userId or sessionId, not both
     if (userId) {
@@ -91,7 +115,14 @@ const getAppInstanceResources = async ({
       url += `&type=${type}`;
     }
 
-    const response = await fetch(url, DEFAULT_GET_REQUEST);
+    const response = await fetch(url, {
+      ...DEFAULT_GET_REQUEST,
+      headers: {
+        ...DEFAULT_GET_REQUEST.headers,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    refreshExpiredToken(response, dispatch);
 
     // throws if it is an error
     await isErrorResponse(response);
@@ -127,6 +158,9 @@ const postAppInstanceResource = async ({
       subSpaceId,
       standalone,
     } = await getApiContext(getState);
+    const {
+      context: { token, itemId },
+    } = getState();
 
     // if standalone, you cannot connect to api
     if (standalone) {
@@ -150,7 +184,8 @@ const postAppInstanceResource = async ({
       });
     }
 
-    const url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}`;
+    // const url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}`;
+    const url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}`;
 
     const body = {
       data,
@@ -162,20 +197,29 @@ const postAppInstanceResource = async ({
       user: userId,
       visibility,
     };
+    // const type2 = { type };
 
     const response = await fetch(url, {
+      body: JSON.stringify({
+        data: body,
+        type: 'file',
+      }),
       ...DEFAULT_POST_REQUEST,
-      body: JSON.stringify(body),
+      headers: {
+        ...DEFAULT_POST_REQUEST.headers,
+        Authorization: `Bearer ${token}`,
+      },
     });
+    refreshExpiredToken(response, dispatch);
 
     // throws if it is an error
     await isErrorResponse(response);
 
-    const appInstanceResource = await response.json();
+    const appData = await response.json();
 
     return dispatch({
       type: POST_APP_INSTANCE_RESOURCE_SUCCEEDED,
-      payload: appInstanceResource,
+      payload: appData,
     });
   } catch (err) {
     return dispatch({
@@ -201,6 +245,9 @@ const patchAppInstanceResource = async ({ id, data } = {}) => async (
       subSpaceId,
       standalone,
     } = await getApiContext(getState);
+    const {
+      context: { token, itemId },
+    } = getState();
 
     // if standalone, you cannot connect to api
     if (standalone) {
@@ -225,7 +272,8 @@ const patchAppInstanceResource = async ({ id, data } = {}) => async (
       return showErrorToast(MISSING_APP_INSTANCE_RESOURCE_ID_MESSAGE);
     }
 
-    const url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}/${id}`;
+    // const url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}/${id}`;
+    const url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}/${id}`;
 
     const body = {
       data,
@@ -234,16 +282,21 @@ const patchAppInstanceResource = async ({ id, data } = {}) => async (
     const response = await fetch(url, {
       ...DEFAULT_PATCH_REQUEST,
       body: JSON.stringify(body),
+      headers: {
+        ...DEFAULT_PATCH_REQUEST.headers,
+        Authorization: `Bearer ${token}`,
+      },
     });
+    refreshExpiredToken(response, dispatch);
 
     // throws if it is an error
     await isErrorResponse(response);
 
-    const appInstanceResource = await response.json();
+    const appData = await response.json();
 
     return dispatch({
       type: PATCH_APP_INSTANCE_RESOURCE_SUCCEEDED,
-      payload: appInstanceResource,
+      payload: appData,
     });
   } catch (err) {
     return dispatch({
@@ -269,6 +322,9 @@ const deleteAppInstanceResource = async payload => async (
       subSpaceId,
       appInstanceId,
     } = await getApiContext(getState);
+    const {
+      context: { token, itemId },
+    } = getState();
 
     // if standalone, you cannot connect to api
     if (standalone) {
@@ -292,9 +348,17 @@ const deleteAppInstanceResource = async payload => async (
         },
       });
     }
-    const url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}/${identifier}`;
+    // const url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}/${identifier}`;
+    const url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}/${identifier}`;
 
-    const response = await fetch(url, DEFAULT_DELETE_REQUEST);
+    const response = await fetch(url, {
+      ...DEFAULT_DELETE_REQUEST,
+      headers: {
+        ...DEFAULT_PATCH_REQUEST.headers,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    refreshExpiredToken(response, dispatch);
 
     // throws if it is an error
     await isErrorResponse(response);

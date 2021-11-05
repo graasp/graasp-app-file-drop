@@ -9,7 +9,6 @@ import TeacherMode from './modes/teacher/TeacherMode';
 import Loader from './common/Loader';
 import StudentMode from './modes/student/StudentMode';
 import USER_TYPES from '../config/userTypes';
-import { getAppData } from '../actions/appData';
 
 export class App extends Component {
   static propTypes = {
@@ -19,7 +18,6 @@ export class App extends Component {
     }).isRequired,
     dispatchGetContext: PropTypes.func.isRequired,
     // dispatchGetAppInstance: PropTypes.func.isRequired,
-    dispatchGetAppData: PropTypes.func.isRequired,
     dispatchGetAuthToken: PropTypes.func.isRequired,
     // appInstanceId: PropTypes.string,
     lang: PropTypes.string,
@@ -48,13 +46,7 @@ export class App extends Component {
   }
 
   componentDidMount() {
-    const {
-      lang,
-      ready,
-      dispatchGetAppData,
-      dispatchGetAuthToken,
-      contextIsLoading,
-    } = this.props;
+    const { lang, ready, dispatchGetAuthToken, contextIsLoading } = this.props;
     // set the language on first load
     this.handleChangeLang(lang);
 
@@ -63,14 +55,16 @@ export class App extends Component {
     }
 
     if (ready) {
-      dispatchGetAppData();
+      // dispatchGetAppInstance();
     }
   }
 
+  // componentDidUpdate({ lang: prevLang, appInstanceId: prevAppInstanceId }) {
   componentDidUpdate({ lang: prevLang, ready: prevReady }) {
     const {
       lang,
-      dispatchGetAppData,
+      // appInstanceId,
+      // dispatchGetAppInstance,
       contextIsLoading,
       dispatchGetAuthToken,
       ready,
@@ -86,8 +80,12 @@ export class App extends Component {
       dispatchGetAuthToken();
     }
 
+    // handle receiving the app instance id
+    // if (appInstanceId !== prevAppInstanceId) {
+    //   dispatchGetAppInstance();
+    // }
     if (ready && ready !== prevReady) {
-      dispatchGetAppData();
+      // dispatchGetAppInstance();
     }
   }
 
@@ -125,7 +123,7 @@ export class App extends Component {
   }
 }
 
-const mapStateToProps = ({ context, appInstance, appData }) => ({
+const mapStateToProps = ({ context, appInstance }) => ({
   headerVisible: appInstance.content.settings.headerVisible,
   standalone: context.standalone,
   lang: context.lang,
@@ -133,13 +131,12 @@ const mapStateToProps = ({ context, appInstance, appData }) => ({
   view: context.view,
   userType: context.userType,
   ready: Boolean(context.token),
-  isAppDataReady: appData.ready,
   contextIsLoading: Boolean(context.activity.length),
 });
 
 const mapDispatchToProps = {
   dispatchGetContext: getContext,
-  dispatchGetAppData: getAppData,
+  // dispatchGetAppInstance: getAppInstance,
   dispatchGetAuthToken: getAuthToken,
 };
 

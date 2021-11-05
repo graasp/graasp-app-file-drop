@@ -3,6 +3,8 @@ export const LOCAL_API_HOST = 'localhost:3636';
 
 // files upload api
 export const FILE_UPLOAD_ENDPOINT = 'https://graasp.eu/files';
+// TO DO
+// export const FILE_UPLOAD_ENDPOINT = 'http://localhost:3002';
 
 // endpoints
 export const ACTIONS_ENDPOINT = 'app-action';

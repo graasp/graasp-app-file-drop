@@ -17,7 +17,6 @@ const flagGettingUsers = flag(FLAG_GETTING_USERS);
 const getUsers = async () => async (dispatch, getState) => {
   dispatch(flagGettingUsers(true));
   try {
-    // const { spaceId, apiHost, offline, standalone } = getApiContext(getState);
     const { apiHost, offline, standalone, itemId, token } = getState().context;
 
     // if standalone, you cannot connect to api
@@ -32,6 +31,9 @@ const getUsers = async () => async (dispatch, getState) => {
       });
     }
 
+    // const url = `//${apiHost + SPACES_ENDPOINT}/${spaceId}/${USERS_ENDPOINT}`;
+
+    // const response = await fetch(url, DEFAULT_GET_REQUEST);
     const response = await fetch(
       `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/context`,
       {
@@ -46,6 +48,7 @@ const getUsers = async () => async (dispatch, getState) => {
     // throws if it is an error
     await isErrorResponse(response);
 
+    // const users = response.json();
     const users = (await response.json())?.members;
     return dispatch({
       type: GET_USERS_SUCCEEDED,

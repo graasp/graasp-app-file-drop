@@ -14,6 +14,7 @@ import { DEFAULT_VIEW } from '../config/views';
 
 const INITIAL_STATE = {
   apiHost: DEFAULT_API_HOST,
+  // the properties below come from the context via the query string
   lang: DEFAULT_LANG,
   mode: DEFAULT_MODE,
   view: DEFAULT_VIEW,
@@ -24,7 +25,7 @@ const INITIAL_STATE = {
   offline: false,
   standalone: false,
   dev: false,
-  // userType: null,
+  userType: null,
   itemId: null,
   activity: [],
   token: null,
