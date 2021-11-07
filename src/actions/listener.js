@@ -16,6 +16,7 @@ import {
 import { showErrorToast } from '../utils/toasts';
 import { deleteFile } from './file';
 import { FILE } from '../config/appInstanceResourceTypes';
+// eslint-disable-next-line import/no-cycle
 import { postAppInstanceResource } from './appInstanceResources';
 
 const receiveMessage = dispatch => event => {

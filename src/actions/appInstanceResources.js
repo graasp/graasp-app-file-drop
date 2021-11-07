@@ -60,7 +60,7 @@ const refreshExpiredToken = (response, dispatch) => {
 };
 
 const getAppInstanceResources = async ({
-  userId,
+  // userId,
   sessionId,
   type,
   // include public resources by default
@@ -105,9 +105,10 @@ const getAppInstanceResources = async ({
     let url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}`;
 
     // only add userId or sessionId, not both
-    if (userId) {
-      url += `&userId=${userId}`;
-    } else if (sessionId) {
+    // if (userId) {
+    //   url += `&userId=${userId}`;
+    // } else
+    if (sessionId) {
       url += `&sessionId=${sessionId}`;
     }
     // add type if present
