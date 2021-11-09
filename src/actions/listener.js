@@ -54,7 +54,6 @@ const receiveMessage = dispatch => event => {
         return false;
     }
   } catch (err) {
-    console.error(err);
     return false;
   }
 };
@@ -84,7 +83,6 @@ const receiveFile = dispatch => event => {
         return false;
     }
   } catch (err) {
-    console.error(err);
     return false;
   }
 };
