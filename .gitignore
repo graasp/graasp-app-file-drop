@@ -28,6 +28,9 @@ yarn-error.log*
 # include encrypted environment variables
 !.env*.encrypted
 
+# cache
+.eslintcache
+
 # exclude keys
 *.aes
 
