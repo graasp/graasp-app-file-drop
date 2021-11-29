@@ -5,14 +5,14 @@ import React from 'react';
 // import Loader from '../../common/Loader';
 
 import Header from './Header';
-import AppResources from './AppResources';
+import TeacherAppResources from './TeacherAppResources';
 
 const TeacherMode = () => {
   return (
     <>
       <Header />
       <div>
-        <AppResources />
+        <TeacherAppResources />
       </div>
     </>
   );

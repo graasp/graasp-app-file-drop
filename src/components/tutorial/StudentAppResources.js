@@ -8,8 +8,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import Paper from '@material-ui/core/Paper';
 import TableRow from '@material-ui/core/TableRow';
-import Fab from '@material-ui/core/Fab';
-import SettingsIcon from '@material-ui/icons/Settings';
 // import { useAppDataContext } from "../context/AppDataContext";
 
 import {
@@ -22,7 +20,7 @@ import {
 // import { AppDataContext } from '../context/AppDataContext';
 import Loader from '../common/Loader';
 import Uploader from './Uploader';
-import Resource from './Resource';
+import StudentResource from './StudentResource';
 // import Settings from './Settings';
 
 import { AppDataContext } from '../context/AppDataContext';
@@ -37,26 +35,8 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     padding: theme.spacing.unit,
   },
-  button: {
-    marginTop: theme.spacing.unit * 3,
-  },
   table: {
     minWidth: 700,
-  },
-  message: {
-    padding: theme.spacing.unit,
-    backgroundColor: theme.status.danger.background[500],
-    color: theme.status.danger.color,
-    marginBottom: theme.spacing.unit * 2,
-  },
-  fab: {
-    margin: theme.spacing.unit,
-    position: 'fixed',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-  },
-  teacherView: {
-    marginBottom: '100px',
   },
 }));
 
@@ -111,14 +91,13 @@ const AppResources = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell>Date</TableCell>
-                      <TableCell>User</TableCell>
                       <TableCell>File Name</TableCell>
                       <TableCell>Actions</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {data.map(resource => (
-                      <Resource key={resource.id} resource={resource} />
+                      <StudentResource key={resource.id} resource={resource} />
                     ))}
                   </TableBody>
                 </Table>
@@ -126,15 +105,6 @@ const AppResources = () => {
             )}
           </Grid>
         </Grid>
-        {/* <Settings /> */}
-        <Fab
-          color="primary"
-          aria-label="Settings"
-          className={classes.fab}
-          // onClick={}
-        >
-          <SettingsIcon />
-        </Fab>
       </div>
     </div>
   );

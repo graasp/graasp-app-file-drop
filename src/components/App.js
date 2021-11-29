@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 // import ModalProviders from './context/ModalProviders';
 // import Tutorial from './tutorial/Tutorial';
 import TeacherMode from './tutorial/TeacherMode';
+import StudentMode from './tutorial/StudentMode';
+import { AppDataContext } from './context/AppDataContext';
+
 // import { GRAASP_APP_ID } from '../config/settings';
 
 // import { connect } from 'react-redux';
@@ -18,9 +21,7 @@ import TeacherMode from './tutorial/TeacherMode';
 // import TeacherMode from './modes/teacher/TeacherMode';
 // // import TeacherMode2 from './modes/teacher/TeacherMode2';
 // import Loader from './common/Loader';
-// import StudentMode from './modes/student/StudentMode';
 // import USER_TYPES from '../config/userTypes';
-// import ModalProviders from './context/ModalProviders';
 // import Authorization from './common/Authorization';
 
 // const postMessage = data => {
@@ -34,44 +35,42 @@ import TeacherMode from './tutorial/TeacherMode';
 
 // eslint-disable-next-line react/prefer-stateless-function
 const App = () => {
-  // state = { port2: null };
-
-  // const { port2 } = this.state;
-  // if (!port2) {
-  //   window.addEventListener('message', event => {
-  //     console.log(event);
-  //     const { type, payload } = event.data || {};
-  //     console.log(type);
-  //     console.log(payload);
-  //     console.log(event.ports);
-  //     // get init message getting the Message Channel port
-  //     // const context = buildContext(payload);
-  //     // dispatch({
-  //     //   type: GET_CONTEXT_SUCCEEDED,
-  //     //   payload: context,
-  //     // });
-  //     if (type === 'GET_CONTEXT_SUCCEEDED') {
-  //       console.log('get context');
-  //       const [port] = event.ports;
-  //       this.setState({ port2 :port});
-  //       port.onmessage = data3 => {
-  //         console.log(data3);
-  //       };
-  //     }
-  //   });
-  //   postMessage({
-  //     type: 'GET_CONTEXT',
-  //     payload: {
-  //       app: GRAASP_APP_ID,
-  //       origin: window.location.origin,
-  //     },
-  //   });
+  const context = useContext(AppDataContext);
+  console.log(context);
+  const { mode, view } = context; // function checkToken() {
+  //   let check;
+  //   if (context.token == null) {
+  //     check = false;
+  //   } else {
+  //     check = true;
+  //   }
+  //   return check;
   // }
-  return (
-    // <ModalProviders>
-    <TeacherMode />
-    // </ModalProviders>
-  );
+
+  switch (mode) {
+    // show teacher view when in producer (educator) mode
+    case 'teacher':
+    case 'producer':
+    case 'educator':
+    case 'admin':
+      // unless the user is a viewer
+      // if (userType === USER_TYPES.VIEWER) {
+      //   // return <StudentMode />;
+      // }
+      return <TeacherMode view={view} />;
+
+    // by default go with the consumer (learner) mode
+    case 'student':
+    case 'consumer':
+    case 'learner':
+    default:
+      return <StudentMode />;
+  }
+  // return (
+  //   // <ModalProviders>
+  //   <TeacherMode />
+  //   // </ModalProviders>
+  // );
 };
 export default App;
 // export default withTranslation()(ConnectedApp);
