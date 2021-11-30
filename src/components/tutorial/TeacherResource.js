@@ -16,10 +16,11 @@ import {
   // USERS_ENDPOINT,
 } from '../../config/api';
 import { AppDataContext } from '../context/AppDataContext';
+import { buildDownloadFileRoute } from '../../api/routes';
 
 const getUsers = async key => {
   const token = key.queryKey[1];
-  const url = `http://localhost:3002/${APP_ITEMS_ENDPOINT}/86a0eed7-70c6-47ba-8584-00c898c0d134/context`;
+  const url = `http://localhost:3000/${APP_ITEMS_ENDPOINT}/86a0eed7-70c6-47ba-8584-00c898c0d134/context`;
 
   // const url = `//${apiHost + SPACES_ENDPOINT}/${spaceId}/${USERS_ENDPOINT}`;
 
@@ -65,7 +66,6 @@ const Resource = ({ resource }) => {
     userObj =
       members.find(member => member.id === resource.memberId) || anonymousUser;
   }
-  console.log(userObj);
 
   // eslint-disable-next-line no-unused-vars
   function renderActions(visibility, id, uri) {
@@ -93,25 +93,25 @@ const Resource = ({ resource }) => {
   }
 
   return (
-    <TableRow key={resource.data.id}>
+    <TableRow key={resource.id}>
       <TableCell scope="row">
         {resource.createdAt && new Date(resource.createdAt).toLocaleString()}
       </TableCell>
       <TableCell>{userObj.name || 'Anonymous'}</TableCell>
       <TableCell>
         <a
-          href={resource.data.data.uri}
+          href={buildDownloadFileRoute(resource.id)}
           target="_blank"
           rel="noopener noreferrer"
         >
-          {resource.data.data.name}
+          {resource.data.name}
         </a>
       </TableCell>
       <TableCell>
         {renderActions(
           resource.data.visibility,
           resource.id,
-          resource.data.data.uri,
+          // resource.data.data.uri,
         )}
       </TableCell>
     </TableRow>
@@ -127,8 +127,8 @@ Resource.propTypes = {
       id: PropTypes.string,
       user: PropTypes.string,
       visibility: PropTypes.string,
+      name: PropTypes.string,
       data: PropTypes.shape({
-        name: PropTypes.string,
         uri: PropTypes.string,
       }).isRequired,
     }).isRequired,

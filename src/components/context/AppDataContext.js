@@ -76,6 +76,7 @@ const AppDataContextProvider = ({ children }) => {
   const [dev, setDev] = useState('false');
   const [itemId, setItemId] = useState(null);
   const [token, setToken] = useState(null);
+  const [reFetch, setReFetch] = useState(false);
 
   const dispatch = () => {};
 
@@ -159,14 +160,14 @@ const AppDataContextProvider = ({ children }) => {
         setItemId,
         token,
         setToken,
+        reFetch,
+        setReFetch,
       }}
     >
       {children}
     </AppDataContext.Provider>
   );
 };
-// const context = getContext();
-// const token = getAuthToken();
 
 AppDataContextProvider.propTypes = {
   children: PropTypes.node,

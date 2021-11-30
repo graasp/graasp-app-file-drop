@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import TeacherMode from './tutorial/TeacherMode';
 import StudentMode from './tutorial/StudentMode';
 import { AppDataContext } from './context/AppDataContext';
+import ModalProviders from './context/ModalProviders';
 
 // import { GRAASP_APP_ID } from '../config/settings';
 
@@ -35,9 +36,8 @@ import { AppDataContext } from './context/AppDataContext';
 
 // eslint-disable-next-line react/prefer-stateless-function
 const App = () => {
-  const context = useContext(AppDataContext);
-  console.log(context);
-  const { mode, view } = context; // function checkToken() {
+  const { mode, view } = useContext(AppDataContext);
+  // function checkToken() {
   //   let check;
   //   if (context.token == null) {
   //     check = false;
@@ -57,14 +57,22 @@ const App = () => {
       // if (userType === USER_TYPES.VIEWER) {
       //   // return <StudentMode />;
       // }
-      return <TeacherMode view={view} />;
+      return (
+        <ModalProviders>
+          <TeacherMode view={view} />
+        </ModalProviders>
+      );
 
     // by default go with the consumer (learner) mode
     case 'student':
     case 'consumer':
     case 'learner':
     default:
-      return <StudentMode />;
+      return (
+        <ModalProviders>
+          <StudentMode />
+        </ModalProviders>
+      );
   }
   // return (
   //   // <ModalProviders>

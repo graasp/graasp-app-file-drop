@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
-// import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 // import { actions } from 'react-redux-toastr';
@@ -18,14 +18,16 @@ import {
 import { AppDataContext } from '../context/AppDataContext';
 import {
   TABLE_CELL_FILE_NAME,
-  // TABLE_CELL_FILE_ACTION_DELETE,
+  TABLE_CELL_FILE_ACTION_DELETE,
   TABLE_CELL_FILE_CREATED_AT,
   // ROW_NO_FILES_UPLOADED_ID,
 } from '../../constants/selectors';
+import { buildDownloadFileRoute } from '../../api/routes';
+import DeleteResourceDialog from './DeleteResourceDialog';
 
 const getUsers = async key => {
   const token = key.queryKey[1];
-  const url = `http://localhost:3002/${APP_ITEMS_ENDPOINT}/86a0eed7-70c6-47ba-8584-00c898c0d134/context`;
+  const url = `http://localhost:3000/${APP_ITEMS_ENDPOINT}/86a0eed7-70c6-47ba-8584-00c898c0d134/context`;
 
   // const url = `//${apiHost + SPACES_ENDPOINT}/${spaceId}/${USERS_ENDPOINT}`;
 
@@ -42,7 +44,18 @@ const getUsers = async key => {
 };
 
 const Resource = ({ resource }) => {
-  const context = useContext(AppDataContext);
+  const { userId, token } = useContext(AppDataContext);
+  console.log('userId');
+  console.log(userId);
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   // eslint-disable-next-line no-unused-vars
   const anonymousUser = {
@@ -50,19 +63,16 @@ const Resource = ({ resource }) => {
   };
   let userObj = anonymousUser;
 
-  // function handleDelete ({ id, uri }) {
-
-  // }
   function checkToken() {
     let check;
-    if (context.token == null) {
+    if (token == null) {
       check = false;
     } else {
       check = true;
     }
     return check;
   }
-  const { data, status } = useQuery(['users', context.token], getUsers, {
+  const { data, status } = useQuery(['users', token], getUsers, {
     enabled: checkToken(),
   });
   if (status === 'success') {
@@ -71,22 +81,29 @@ const Resource = ({ resource }) => {
     userObj =
       members.find(member => member.id === resource.memberId) || anonymousUser;
   }
-  console.log(userObj);
 
   // eslint-disable-next-line no-unused-vars
   function renderActions(visibility, id, uri) {
     const actions = [];
-    // if (memberId === currentUserId) {
-    //   actions.push(
-    // <IconButton
-    // data-cy={TABLE_CELL_FILE_ACTION_DELETE}
-    // color="primary"
-    //       // onClick={() => handleDelete({ id, uri })}
-    //     >
-    //       <DeleteIcon />
-    //     </IconButton>,
-    //   );
-    // }
+    if (resource.memberId === userId) {
+      actions.push(
+        <>
+          <IconButton
+            data-cy={TABLE_CELL_FILE_ACTION_DELETE}
+            color="primary"
+            // onClick={() => handleDelete({ id, uri })}
+            onClick={handleClickOpen}
+          >
+            <DeleteIcon />
+          </IconButton>
+          <DeleteResourceDialog
+            open={open}
+            handleClose={handleClose}
+            resourceId={resource.id}
+          />
+        </>,
+      );
+    }
     if (visibility === PUBLIC_VISIBILITY) {
       actions.push(
         <Tooltip key="visibility" title="This file was uploaded for everyone.">
@@ -102,7 +119,8 @@ const Resource = ({ resource }) => {
   }
 
   return (
-    <TableRow key={resource.data.id}>
+    <TableRow key={resource.id}>
+      {console.log(resource)}
       <TableCell scope="row" data-cy={TABLE_CELL_FILE_CREATED_AT}>
         {resource.createdAt && new Date(resource.createdAt).toLocaleString()}
       </TableCell>
@@ -110,18 +128,18 @@ const Resource = ({ resource }) => {
       <TableCell>
         <a
           data-cy={TABLE_CELL_FILE_NAME}
-          href={resource.data.data.uri}
+          href={buildDownloadFileRoute(resource.id)}
           target="_blank"
           rel="noopener noreferrer"
         >
-          {resource.data.data.name}
+          {resource.data.name}
         </a>
       </TableCell>
       <TableCell>
         {renderActions(
-          resource.data.visibility,
+          resource.visibility,
           resource.id,
-          resource.data.data.uri,
+          // resource.data.data.uri,
         )}
       </TableCell>
     </TableRow>
@@ -131,15 +149,18 @@ const Resource = ({ resource }) => {
 Resource.propTypes = {
   resource: PropTypes.shape({
     id: PropTypes.string,
-    createdAt: PropTypes.string,
+    itemId: PropTypes.string,
     memberId: PropTypes.string,
+    type: PropTypes.string,
+    visibility: PropTypes.string,
+    createdAt: PropTypes.string,
+    creator: PropTypes.string,
+    updatedAt: PropTypes.string,
     data: PropTypes.shape({
-      id: PropTypes.string,
-      user: PropTypes.string,
-      visibility: PropTypes.string,
-      data: PropTypes.shape({
-        name: PropTypes.string,
-        uri: PropTypes.string,
+      name: PropTypes.string,
+      type: PropTypes.string,
+      extra: PropTypes.shape({
+        file: PropTypes.shape({}).isRequired,
       }).isRequired,
     }).isRequired,
   }).isRequired,

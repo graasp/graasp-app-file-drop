@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 
 const getAppResources = async key => {
   const token = key.queryKey[1];
-  const url = `http://localhost:3002/${APP_ITEMS_ENDPOINT}/86a0eed7-70c6-47ba-8584-00c898c0d134/${APP_DATA_ENDPOINT}`;
+  const url = `http://localhost:3000/${APP_ITEMS_ENDPOINT}/86a0eed7-70c6-47ba-8584-00c898c0d134/${APP_DATA_ENDPOINT}`;
 
   const response = await fetch(url, {
     ...DEFAULT_GET_REQUEST,
@@ -56,12 +56,12 @@ const getAppResources = async key => {
 };
 
 const AppResources = () => {
-  const context = useContext(AppDataContext);
+  const { token, reFetch } = useContext(AppDataContext);
   const classes = useStyles();
 
   function checkToken() {
     let check;
-    if (context.token == null) {
+    if (token == null) {
       check = false;
     } else {
       check = true;
@@ -70,7 +70,7 @@ const AppResources = () => {
   }
 
   const { data, status } = useQuery(
-    ['resources', context.token],
+    ['resources', token, reFetch],
     getAppResources,
     { enabled: checkToken() },
   );

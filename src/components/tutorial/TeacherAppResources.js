@@ -10,7 +10,6 @@ import Paper from '@material-ui/core/Paper';
 import TableRow from '@material-ui/core/TableRow';
 import Fab from '@material-ui/core/Fab';
 import SettingsIcon from '@material-ui/icons/Settings';
-// import { useAppDataContext } from "../context/AppDataContext";
 
 import {
   DEFAULT_GET_REQUEST,
@@ -20,12 +19,15 @@ import {
 // import { GET_APP_INSTANCE_RESOURCES_SUCCEEDED } from '../../types';
 // import { AppDataContext } from '../context/AppDataContext';
 import Loader from '../common/Loader';
-import Uploader from './Uploader';
+// import Uploader from './Uploader';
+import FileUploader from './FileUploader';
 import TeacherResource from './TeacherResource';
 // import Settings from './Settings';
+import SettingsButton from './SettingsButton';
 
 import { AppDataContext } from '../context/AppDataContext';
 import { PUBLIC_VISIBILITY } from '../../config/settings';
+import { SettingsModalContext } from '../context/SettingsModalContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -61,7 +63,7 @@ const useStyles = makeStyles(theme => ({
 
 const getAppResources = async key => {
   const token = key.queryKey[1];
-  const url = `http://localhost:3002/${APP_ITEMS_ENDPOINT}/86a0eed7-70c6-47ba-8584-00c898c0d134/${APP_DATA_ENDPOINT}`;
+  const url = `http://localhost:3000/${APP_ITEMS_ENDPOINT}/86a0eed7-70c6-47ba-8584-00c898c0d134/${APP_DATA_ENDPOINT}`;
 
   const response = await fetch(url, {
     ...DEFAULT_GET_REQUEST,
@@ -75,12 +77,29 @@ const getAppResources = async key => {
 };
 
 const AppResources = () => {
-  const context = useContext(AppDataContext);
+  // eslint-disable-next-line no-unused-vars
+  const {
+    apiHost,
+    appInstanceId,
+    dev,
+    itemId,
+    lang,
+    mode,
+    offline,
+    userId,
+    view,
+    token,
+  } = useContext(AppDataContext);
   const classes = useStyles();
+  const { openModal } = useContext(SettingsModalContext);
+
+  const handleSettings = () => {
+    openModal(itemId);
+  };
 
   function checkToken() {
     let check;
-    if (context.token == null) {
+    if (token == null) {
       check = false;
     } else {
       check = true;
@@ -88,11 +107,9 @@ const AppResources = () => {
     return check;
   }
 
-  const { data, status } = useQuery(
-    ['resources', context.token],
-    getAppResources,
-    { enabled: checkToken() },
-  );
+  const { data, status } = useQuery(['resources', token], getAppResources, {
+    enabled: checkToken(),
+  });
 
   return (
     <div>
@@ -100,7 +117,7 @@ const AppResources = () => {
         <Grid container spacing={0}>
           <Grid item xs={12} className={classes.main}>
             <Grid item xs={12} className={classes.main}>
-              <Uploader visibility={PUBLIC_VISIBILITY} />
+              <FileUploader visibility={PUBLIC_VISIBILITY} />
             </Grid>
             {status === 'loading' && <Loader />}
             {status === 'error' && <div>Error fetching data</div>}
@@ -125,12 +142,12 @@ const AppResources = () => {
             )}
           </Grid>
         </Grid>
-        {/* <Settings /> */}
+        <SettingsButton />
         <Fab
           color="primary"
           aria-label="Settings"
           className={classes.fab}
-          // onClick={}
+          onClick={handleSettings}
         >
           <SettingsIcon />
         </Fab>
