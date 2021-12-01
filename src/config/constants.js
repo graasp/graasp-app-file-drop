@@ -59,3 +59,6 @@ export const UPLOAD_METHOD =
   ENV_UPLOAD_METHOD ||
   process.env.REACT_APP_UPLOAD_METHOD ||
   UPLOAD_FILES_METHODS.DEFAULT;
+
+export const HEADER_HEIGHT = 64;
+export const FILE_UPLOAD_MAX_FILES = 5;

@@ -48,11 +48,6 @@ const DeleteResourceDialog = ({ resourceId, open, handleClose }) => {
 
   // const { mutate: deleteResource } = useMutation(DELETE_RESOURCE);
   const { mutateAsync, isloading } = useMutation(id => {
-    // return fetch(
-    //   // `${API_HOST}/${buildDeleteResourceRoute(itemId, id)}`,
-    //   `${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}/${id}`,
-    //   DEFAULT_DELETE,
-    // )
     const url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}/${id}`;
 
     // eslint-disable-next-line no-unused-vars
@@ -70,10 +65,6 @@ const DeleteResourceDialog = ({ resourceId, open, handleClose }) => {
   const classes = useStyles();
 
   const onDelete = () => {
-    // if (itemIds.length > 1) {
-    //   deleteItems(itemIds);
-    // } else {
-    // deleteResource(itemIds);
     console.log('onDelete');
     console.log(reFetch);
     // eslint-disable-next-line no-unused-vars

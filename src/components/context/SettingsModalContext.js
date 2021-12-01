@@ -1,15 +1,19 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
+import { useMutation } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import { Tooltip, makeStyles } from '@material-ui/core';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
-import { MUTATION_KEYS } from '@graasp/query-client';
 import Modal from '@material-ui/core/Modal';
 // eslint-disable-next-line no-unused-vars
 import Switch from '@material-ui/core/Switch';
-import { useMutation } from '../../config/queryClient';
+// import { MUTATION_KEYS } from '@graasp/query-client';
+// import { useMutation } from '../../config/queryClient';
 import { AppDataContext } from './AppDataContext';
+import { DEFAULT_PATCH_REQUEST } from '../../config/api';
+// import { DEFAULT_PATCH } from '../../api/utils';
+import { ITEMS_ROUTE } from '../../api/routes';
 
 // import FolderForm from '../item/form/FolderForm';
 // import { ITEM_TYPES } from '../../enums';
@@ -51,33 +55,41 @@ const SettingsModalProvider = ({ children }) => {
   // eslint-disable-next-line no-unused-vars
   const {
     apiHost,
-    appInstanceId,
-    dev,
     itemId,
-    lang,
-    mode,
-    offline,
-    userId,
-    view,
     token,
+    reFetch,
+    setReFetch,
+    headerVisible,
+    setHeaderVisible,
+    publicStudentUploads,
+    setPublicStudentUploads,
   } = useContext(AppDataContext);
+  console.log('initialheaderVisible');
+  console.log(headerVisible);
+  console.log('initialpublicStudentUploads');
+  console.log(publicStudentUploads);
   const classes = useStyles();
-  const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
+  // const mutation = useMutation(MUTATION_KEYS.EDIT_ITEM);
 
   // updated properties are separated from the original item
   // so only necessary properties are sent when editing
   const [updatedProperties, setUpdatedItem] = useState({});
+  // eslint-disable-next-line no-unused-vars
+  const [updatedHeaderVisibility, setHeaderVisibility] = useState({});
+  // eslint-disable-next-line no-unused-vars
+  const [updatedStudentUploadVisibility, setStudentUploadVisibility] = useState(
+    {},
+  );
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(null);
-  // const { headerVisible, publicStudentUploads } = settings;
-  const settings = null;
-  // const { headerVisible, publicStudentUploads } = null;
-  const publicStudentUploads = null;
-  const headerVisible = null;
+  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars
 
   const openModal = newItem => {
     setOpen(true);
     setItem(newItem);
+    console.log('newItem');
+    console.log(newItem);
   };
 
   const onClose = () => {
@@ -86,23 +98,42 @@ const SettingsModalProvider = ({ children }) => {
     setUpdatedItem(null);
   };
   // eslint-disable-next-line no-unused-vars
-  const submit = () => {
-    // add id to changed properties
-    mutation.mutate({ id: item.id, ...updatedProperties });
-    onClose();
-  };
-  // eslint-disable-next-line no-unused-vars
-  const saveSettings = settingsToChange => {
-    // const { settings, dispatchPatchAppInstance } = this.props;
+  const { mutateAsync, isloading } = useMutation(id => {
+    const url = `${apiHost}/${ITEMS_ROUTE}/${id}`;
+    console.log(url);
+
     // eslint-disable-next-line no-unused-vars
-    const newSettings = {
-      ...settings,
-      ...settingsToChange,
-    };
-    // dispatchPatchAppInstance({
-    //   data: newSettings,
-    // });
-  };
+    const req = fetch(url, {
+      ...DEFAULT_PATCH_REQUEST,
+      body: JSON.stringify({
+        ...item,
+        extra: {
+          app: {
+            url: 'http://app.localhost:3334',
+            settings: {
+              headerVisible: { headerVisible },
+              studentUploadVisibility: publicStudentUploads,
+            },
+          },
+        },
+      }),
+      headers: {
+        ...DEFAULT_PATCH_REQUEST.headers,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return req;
+  });
+
+  // // eslint-disable-next-line no-unused-vars
+  // const saveSettings = settingsToChange => {
+  //   // const { settings, dispatchPatchAppInstance } = this.props;
+  //   // eslint-disable-next-line no-unused-vars
+  //   const newSettings = {
+  //     ...settings,
+  //     ...settingsToChange,
+  //   };
+  // };
 
   const handleChangeHeaderVisibility = () => {
     // const {
@@ -112,10 +143,18 @@ const SettingsModalProvider = ({ children }) => {
     //   headerVisible: !headerVisible,
     // };
     // saveSettings(settingsToChange);
-    console.log('handleChangeHeaderVisibility');
+    setHeaderVisible(!headerVisible);
+    console.log('---headerVisible');
+    console.log(headerVisible);
   };
 
   const handleChangeStudentUploadVisibility = () => {
+    // mutateAsync({id: itemId, ...updatedProperties}).then(async response => {
+    // eslint-disable-next-line no-unused-vars
+    mutateAsync(itemId).then(async response => {
+      setReFetch(!reFetch);
+      console.log(reFetch);
+    });
     // const {
     //   settings: { publicStudentUploads },
     // } = this.props;
@@ -123,7 +162,7 @@ const SettingsModalProvider = ({ children }) => {
     //   publicStudentUploads: !publicStudentUploads,
     // };
     // saveSettings(settingsToChange);
-    console.log('handleChangeStudentUploadVisibility');
+    setPublicStudentUploads(!publicStudentUploads);
   };
 
   const headerVisibilitySwitch = (
@@ -131,16 +170,23 @@ const SettingsModalProvider = ({ children }) => {
       color="primary"
       checked={headerVisible}
       onChange={handleChangeHeaderVisibility}
+      isloading={isloading}
       value="headerVisibility"
+      item={item}
+      updatedProperties={updatedProperties}
     />
   );
 
   const studentUploadVisibilitySwitch = (
     <Switch
       color="primary"
+      // checked={publicStudentUploads}
       checked={publicStudentUploads}
       onChange={handleChangeStudentUploadVisibility}
+      isloading={isloading}
       value="headerVisibility"
+      item={item}
+      updatedProperties={updatedProperties}
     />
   );
 
@@ -157,6 +203,7 @@ const SettingsModalProvider = ({ children }) => {
             {t('Settings')}
           </Typography>
           {/* {renderModalContent()} */}
+          {item}
           <>
             <FormControlLabel
               control={headerVisibilitySwitch}

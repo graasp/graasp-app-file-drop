@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import { Tooltip, makeStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
+// import EditIcon from '@material-ui/icons/Edit';
 import { SettingsModalContext } from '../context/SettingsModalContext';
 
 // import { connect } from 'react-redux';
@@ -35,9 +35,7 @@ const SettingsButton = ({ item }) => {
 
   return (
     <Tooltip title={t('Edit')}>
-      <IconButton aria-label="edit" onClick={handleEdit}>
-        <EditIcon fontSize="small" />
-      </IconButton>
+      <IconButton aria-label="edit" onClick={handleEdit} />
     </Tooltip>
   );
 };

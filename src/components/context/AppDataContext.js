@@ -77,6 +77,8 @@ const AppDataContextProvider = ({ children }) => {
   const [itemId, setItemId] = useState(null);
   const [token, setToken] = useState(null);
   const [reFetch, setReFetch] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const [publicStudentUploads, setPublicStudentUploads] = useState(false);
 
   const dispatch = () => {};
 
@@ -162,6 +164,10 @@ const AppDataContextProvider = ({ children }) => {
         setToken,
         reFetch,
         setReFetch,
+        headerVisible,
+        setHeaderVisible,
+        publicStudentUploads,
+        setPublicStudentUploads,
       }}
     >
       {children}
