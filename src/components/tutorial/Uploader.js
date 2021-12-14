@@ -1,90 +1,131 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
+import { useMutation } from 'react-query';
+import { withTranslation, useTranslation } from 'react-i18next';
 import { DragDrop } from '@uppy/react';
-import { DEFAULT_VISIBILITY } from '../../config/settings';
 import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
-// import { postAppInstanceResource } from '../../actions';
 import configureUppy from '../../utils/uppy';
+import { AppDataContext } from '../context/AppDataContext';
+import {
+  APP_DATA_ENDPOINT,
+  APP_ITEMS_ENDPOINT,
+  DEFAULT_POST_REQUEST,
+} from '../../config/api';
+import { APP_INSTANCE_RESOURCE_FORMAT } from '../../config/formats';
+import { DEFAULT_VISIBILITY } from '../../config/settings';
 
-class Uploader extends Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    dispatchPostAppInstanceResource: PropTypes.func.isRequired,
-    userId: PropTypes.string.isRequired,
-    visibility: PropTypes.string,
-    spaceId: PropTypes.string.isRequired,
-    appInstanceId: PropTypes.string.isRequired,
-    standalone: PropTypes.bool.isRequired,
-    offline: PropTypes.bool.isRequired,
-  };
-
-  static defaultProps = {
-    visibility: DEFAULT_VISIBILITY,
-  };
-
-  constructor(props) {
-    super(props);
-
-    const {
-      dispatchPostAppInstanceResource,
-      userId,
+const Uploader = () => {
+  const { t } = useTranslation();
+  const [uppy, setUppy] = useState(null);
+  const {
+    apiHost,
+    itemId,
+    offline,
+    standalone,
+    spaceId,
+    appInstanceId,
+    userId,
+    token,
+    reFetch,
+    setReFetch,
+  } = useContext(AppDataContext);
+  const visibility = DEFAULT_VISIBILITY;
+  console.log('token');
+  console.log(token);
+  console.log('itemId');
+  console.log(itemId);
+  const { mutateAsync, isloading } = useMutation((id, data, type) => {
+    console.log('inside');
+    console.log(id);
+    console.log(isloading);
+    // const url = `${apiHost}/${APP_ITEMS_ENDPOINT}/upload?id=${itemId}`;
+    const url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}`;
+    const body = {
+      data,
+      type,
+      format: APP_INSTANCE_RESOURCE_FORMAT,
+      appInstance: appInstanceId,
+      // here you can specify who the resource will belong to
+      // but applies if the user making the request is an admin
+      user: userId,
       visibility,
-      standalone,
-      offline,
-      spaceId,
-      appInstanceId,
-      t,
-    } = props;
-
-    this.uppy = configureUppy({
-      t,
-      offline,
-      standalone,
-      spaceId,
-      appInstanceId,
-      visibility,
-      dispatchPostAppInstanceResource,
-      userId,
+    };
+    const response = fetch(url, {
+      body: JSON.stringify({
+        data: body,
+        type: 'file',
+      }),
+      ...DEFAULT_POST_REQUEST,
+      headers: {
+        ...DEFAULT_POST_REQUEST.headers,
+        Authorization: `Bearer ${token}`,
+      },
     });
-  }
 
-  render() {
-    const { t } = this.props;
-    return (
+    return response;
+  });
+
+  const onComplete = result => {
+    console.log('oncomplete');
+    // update app on complete
+    // todo: improve with websockets or by receiving corresponding items
+    if (!result?.failed.length) {
+      // eslint-disable-next-line no-unused-vars
+      mutateAsync(itemId).then(async response => {
+        setReFetch(!reFetch);
+        console.log(reFetch);
+      });
+    }
+
+    return false;
+  };
+
+  const applyUppy = () =>
+    setUppy(
+      configureUppy({
+        t,
+        offline,
+        standalone,
+        spaceId,
+        appInstanceId,
+        visibility,
+        onComplete,
+        userId,
+      }),
+    );
+
+  useEffect(() => {
+    applyUppy();
+
+    return () => {
+      uppy?.close();
+    };
+  }, []);
+
+  useEffect(() => {
+    applyUppy();
+    // update uppy configuration each time itemId changes
+  }, [itemId]);
+
+  if (!uppy) {
+    return null;
+  }
+  return (
+    <>
       <DragDrop
-        uppy={this.uppy}
+        uppy={uppy}
         locale={{
           strings: {
-            dropHereOr: t('Drop Here or Click to Browse'),
+            dropHereOr: t('Drop Here or Click to Browseeee'),
           },
         }}
       />
-    );
-  }
-}
-
-// const mapStateToProps = state => {
-//   const {
-//     context: { userId, standalone, offline, appInstanceId, spaceId },
-//   } = state;
-//   return {
-//     standalone,
-//     offline,
-//     userId,
-//     spaceId,
-//     appInstanceId,
-//   };
-// };
-
-// const mapDispatchToProps = {
-//   dispatchPostAppInstanceResource: postAppInstanceResource,
-// };
+      {console.log(uppy)}
+    </>
+  );
+};
 
 const TranslatedComponent = withTranslation()(Uploader);
 
 export default connect()(TranslatedComponent);
-// mapStateToProps,
-// mapDispatchToProps,

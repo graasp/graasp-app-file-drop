@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Tooltip from '@material-ui/core/Tooltip';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 // import { actions } from 'react-redux-toastr';
@@ -17,6 +18,11 @@ import {
 } from '../../config/api';
 import { AppDataContext } from '../context/AppDataContext';
 import { buildDownloadFileRoute } from '../../api/routes';
+import {
+  TABLE_CELL_FILE_ACTION_DELETE,
+  TABLE_CELL_FILE_NAME,
+} from '../../constants/selectors';
+import DeleteResourceDialog from './DeleteResourceDialog';
 
 const getUsers = async key => {
   const token = key.queryKey[1];
@@ -37,8 +43,18 @@ const getUsers = async key => {
 };
 
 const Resource = ({ resource }) => {
-  const context = useContext(AppDataContext);
+  const { userId, token } = useContext(AppDataContext);
+  console.log('userId');
+  console.log(userId);
+  const [open, setOpen] = useState(false);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   // eslint-disable-next-line no-unused-vars
   const anonymousUser = {
     name: 'Anonymous',
@@ -50,14 +66,14 @@ const Resource = ({ resource }) => {
   // }
   function checkToken() {
     let check;
-    if (context.token == null) {
+    if (token == null) {
       check = false;
     } else {
       check = true;
     }
     return check;
   }
-  const { data, status } = useQuery(['users', context.token], getUsers, {
+  const { data, status } = useQuery(['users', token], getUsers, {
     enabled: checkToken(),
   });
   if (status === 'success') {
@@ -70,13 +86,25 @@ const Resource = ({ resource }) => {
   // eslint-disable-next-line no-unused-vars
   function renderActions(visibility, id, uri) {
     const actions = [
-      <IconButton
-        key="delete"
-        color="primary"
-        // onClick={() => handleDelete({ id, uri })}
-      >
-        <DeleteIcon />
-      </IconButton>,
+      <>
+        <IconButton
+          data-cy={TABLE_CELL_FILE_ACTION_DELETE}
+          color="primary"
+          // onClick={() => handleDelete({ id, uri })}
+          onClick={handleClickOpen}
+        >
+          <DeleteIcon />
+        </IconButton>
+        <DeleteResourceDialog
+          open={open}
+          handleClose={handleClose}
+          resourceId={resource.id}
+        />
+
+        <IconButton color="primary">
+          <ArrowDownward />
+        </IconButton>
+      </>,
     ];
     if (visibility === PUBLIC_VISIBILITY) {
       actions.push(
@@ -100,6 +128,7 @@ const Resource = ({ resource }) => {
       <TableCell>{userObj.name || 'Anonymous'}</TableCell>
       <TableCell>
         <a
+          data-cy={TABLE_CELL_FILE_NAME}
           href={buildDownloadFileRoute(resource.id)}
           target="_blank"
           rel="noopener noreferrer"
@@ -109,7 +138,7 @@ const Resource = ({ resource }) => {
       </TableCell>
       <TableCell>
         {renderActions(
-          resource.data.visibility,
+          resource.visibility,
           resource.id,
           // resource.data.data.uri,
         )}
@@ -121,15 +150,18 @@ const Resource = ({ resource }) => {
 Resource.propTypes = {
   resource: PropTypes.shape({
     id: PropTypes.string,
-    createdAt: PropTypes.string,
+    itemId: PropTypes.string,
     memberId: PropTypes.string,
+    type: PropTypes.string,
+    visibility: PropTypes.string,
+    createdAt: PropTypes.string,
+    creator: PropTypes.string,
+    updatedAt: PropTypes.string,
     data: PropTypes.shape({
-      id: PropTypes.string,
-      user: PropTypes.string,
-      visibility: PropTypes.string,
       name: PropTypes.string,
-      data: PropTypes.shape({
-        uri: PropTypes.string,
+      type: PropTypes.string,
+      extra: PropTypes.shape({
+        file: PropTypes.shape({}).isRequired,
       }).isRequired,
     }).isRequired,
   }).isRequired,

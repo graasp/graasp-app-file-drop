@@ -17,9 +17,8 @@ const configureUppy = ({
   standalone,
   spaceId,
   appInstanceId,
-  // visibility = DEFAULT_VISIBILITY,
   visibility,
-  dispatchPostAppInstanceResource,
+  onComplete,
   userId,
 }) => {
   const uppy = Uppy({
@@ -29,6 +28,9 @@ const configureUppy = ({
     },
     autoProceed: true,
   });
+
+  console.log('--------uppy');
+  console.log(uppy);
 
   // when offline override upload to post corresponding resources
   if (offline) {
@@ -62,12 +64,13 @@ const configureUppy = ({
   // endpoint
   uppy.use(XHRUpload, {
     // on standalone flag upload should fail
-    endpoint: standalone || FILE_UPLOAD_ENDPOINT,
+    // endpoint: standalone || FILE_UPLOAD_ENDPOINT,
+    endpoint: FILE_UPLOAD_ENDPOINT,
   });
 
   uppy.on('complete', ({ successful }) => {
     successful.forEach(({ response: { body: uri }, name }) => {
-      dispatchPostAppInstanceResource({
+      onComplete({
         data: {
           name,
           uri,

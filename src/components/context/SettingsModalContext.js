@@ -88,7 +88,7 @@ const SettingsModalProvider = ({ children }) => {
   const openModal = newItem => {
     setOpen(true);
     setItem(newItem);
-    console.log('newItem');
+    console.log('-------newItem');
     console.log(newItem);
   };
 
@@ -111,8 +111,8 @@ const SettingsModalProvider = ({ children }) => {
           app: {
             url: 'http://app.localhost:3334',
             settings: {
-              headerVisible: { headerVisible },
-              studentUploadVisibility: publicStudentUploads,
+              headerVisible: true,
+              studentUploadVisibility: true,
             },
           },
         },
@@ -136,13 +136,6 @@ const SettingsModalProvider = ({ children }) => {
   // };
 
   const handleChangeHeaderVisibility = () => {
-    // const {
-    //   settings: { headerVisible },
-    // } = this.props;
-    // const settingsToChange = {
-    //   headerVisible: !headerVisible,
-    // };
-    // saveSettings(settingsToChange);
     setHeaderVisible(!headerVisible);
     console.log('---headerVisible');
     console.log(headerVisible);
@@ -155,13 +148,6 @@ const SettingsModalProvider = ({ children }) => {
       setReFetch(!reFetch);
       console.log(reFetch);
     });
-    // const {
-    //   settings: { publicStudentUploads },
-    // } = this.props;
-    // const settingsToChange = {
-    //   publicStudentUploads: !publicStudentUploads,
-    // };
-    // saveSettings(settingsToChange);
     setPublicStudentUploads(!publicStudentUploads);
   };
 
@@ -203,7 +189,6 @@ const SettingsModalProvider = ({ children }) => {
             {t('Settings')}
           </Typography>
           {/* {renderModalContent()} */}
-          {item}
           <>
             <FormControlLabel
               control={headerVisibilitySwitch}

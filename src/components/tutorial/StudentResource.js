@@ -120,7 +120,6 @@ const Resource = ({ resource }) => {
 
   return (
     <TableRow key={resource.id}>
-      {console.log(resource)}
       <TableCell scope="row" data-cy={TABLE_CELL_FILE_CREATED_AT}>
         {resource.createdAt && new Date(resource.createdAt).toLocaleString()}
       </TableCell>

@@ -1,6 +1,9 @@
 import { APP_DATA_ENDPOINT, APP_ITEMS_ENDPOINT } from '../config/api';
 import { API_HOST } from '../config/constants';
 
+export const ITEMS_ROUTE = 'items';
+export const APP_ITEMS_ROUTE = 'app-items';
+
 export const buildAppDataRoute = id =>
   `${API_HOST}/${APP_ITEMS_ENDPOINT}/${id}/${APP_DATA_ENDPOINT}`;
 

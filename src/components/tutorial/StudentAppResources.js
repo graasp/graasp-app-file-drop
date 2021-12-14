@@ -19,12 +19,11 @@ import {
 // import Resource from './Resource';
 // import { AppDataContext } from '../context/AppDataContext';
 import Loader from '../common/Loader';
-import Uploader from './Uploader';
 import StudentResource from './StudentResource';
 // import Settings from './Settings';
 
 import { AppDataContext } from '../context/AppDataContext';
-import { PUBLIC_VISIBILITY } from '../../config/settings';
+import FileDashboardUploader from '../main/FileDashboardUploader';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -81,7 +80,7 @@ const AppResources = () => {
         <Grid container spacing={0}>
           <Grid item xs={12} className={classes.main}>
             <Grid item xs={12} className={classes.main}>
-              <Uploader visibility={PUBLIC_VISIBILITY} />
+              <FileDashboardUploader />
             </Grid>
             {status === 'loading' && <Loader />}
             {status === 'error' && <div>Error fetching data</div>}

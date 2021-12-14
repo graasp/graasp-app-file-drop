@@ -5,6 +5,7 @@ import TeacherMode from './tutorial/TeacherMode';
 import StudentMode from './tutorial/StudentMode';
 import { AppDataContext } from './context/AppDataContext';
 import ModalProviders from './context/ModalProviders';
+import FileUploader from './main/FileUploader';
 
 // import { GRAASP_APP_ID } from '../config/settings';
 
@@ -59,6 +60,7 @@ const App = () => {
       // }
       return (
         <ModalProviders>
+          <FileUploader />
           <TeacherMode view={view} />
         </ModalProviders>
       );
@@ -70,6 +72,7 @@ const App = () => {
     default:
       return (
         <ModalProviders>
+          <FileUploader />
           <StudentMode />
         </ModalProviders>
       );

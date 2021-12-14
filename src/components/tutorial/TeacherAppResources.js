@@ -16,18 +16,12 @@ import {
   APP_DATA_ENDPOINT,
   APP_ITEMS_ENDPOINT,
 } from '../../config/api';
-// import { GET_APP_INSTANCE_RESOURCES_SUCCEEDED } from '../../types';
-// import { AppDataContext } from '../context/AppDataContext';
-import Loader from '../common/Loader';
-// import Uploader from './Uploader';
-import FileUploader from './FileUploader';
-import TeacherResource from './TeacherResource';
-// import Settings from './Settings';
-import SettingsButton from './SettingsButton';
-
 import { AppDataContext } from '../context/AppDataContext';
-import { PUBLIC_VISIBILITY } from '../../config/settings';
+import Loader from '../common/Loader';
+import TeacherResource from './TeacherResource';
+import SettingsButton from './SettingsButton';
 import { SettingsModalContext } from '../context/SettingsModalContext';
+import FileDashboardUploader from '../main/FileDashboardUploader';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -77,19 +71,7 @@ const getAppResources = async key => {
 };
 
 const AppResources = () => {
-  // eslint-disable-next-line no-unused-vars
-  const {
-    apiHost,
-    appInstanceId,
-    dev,
-    itemId,
-    lang,
-    mode,
-    offline,
-    userId,
-    view,
-    token,
-  } = useContext(AppDataContext);
+  const { itemId, token, reFetch } = useContext(AppDataContext);
   const classes = useStyles();
   const { openModal } = useContext(SettingsModalContext);
 
@@ -97,6 +79,7 @@ const AppResources = () => {
     openModal(itemId);
   };
 
+  // check!!!
   function checkToken() {
     let check;
     if (token == null) {
@@ -107,9 +90,14 @@ const AppResources = () => {
     return check;
   }
 
-  const { data, status } = useQuery(['resources', token], getAppResources, {
-    enabled: checkToken(),
-  });
+  const check = checkToken();
+  const { data, status } = useQuery(
+    ['resources', token, reFetch],
+    getAppResources,
+    {
+      enabled: checkToken(),
+    },
+  );
 
   return (
     <div>
@@ -117,7 +105,7 @@ const AppResources = () => {
         <Grid container spacing={0}>
           <Grid item xs={12} className={classes.main}>
             <Grid item xs={12} className={classes.main}>
-              <FileUploader visibility={PUBLIC_VISIBILITY} />
+              <FileDashboardUploader value={check} />
             </Grid>
             {status === 'loading' && <Loader />}
             {status === 'error' && <div>Error fetching data</div>}
