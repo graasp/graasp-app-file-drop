@@ -8,20 +8,14 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import Paper from '@material-ui/core/Paper';
 import TableRow from '@material-ui/core/TableRow';
-// import { useAppDataContext } from "../context/AppDataContext";
 
 import {
   DEFAULT_GET_REQUEST,
   APP_DATA_ENDPOINT,
   APP_ITEMS_ENDPOINT,
 } from '../../config/api';
-// import { GET_APP_INSTANCE_RESOURCES_SUCCEEDED } from '../../types';
-// import Resource from './Resource';
-// import { AppDataContext } from '../context/AppDataContext';
 import Loader from '../common/Loader';
 import StudentResource from './StudentResource';
-// import Settings from './Settings';
-
 import { AppDataContext } from '../context/AppDataContext';
 import FileDashboardUploader from '../main/FileDashboardUploader';
 
@@ -40,8 +34,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const getAppResources = async key => {
-  const token = key.queryKey[1];
-  const url = `http://localhost:3000/${APP_ITEMS_ENDPOINT}/86a0eed7-70c6-47ba-8584-00c898c0d134/${APP_DATA_ENDPOINT}`;
+  const apiHost = key.queryKey[1];
+  const token = key.queryKey[2];
+  const itemId = key.queryKey[3];
+  const url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}`;
 
   const response = await fetch(url, {
     ...DEFAULT_GET_REQUEST,
@@ -55,21 +51,19 @@ const getAppResources = async key => {
 };
 
 const AppResources = () => {
-  const { token, reFetch } = useContext(AppDataContext);
+  const { apiHost, token, itemId, reFetch } = useContext(AppDataContext);
   const classes = useStyles();
 
   function checkToken() {
-    let check;
     if (token == null) {
-      check = false;
-    } else {
-      check = true;
+      return false;
     }
-    return check;
+    return true;
   }
+  const check = checkToken();
 
   const { data, status } = useQuery(
-    ['resources', token, reFetch],
+    ['resources', apiHost, token, itemId, reFetch],
     getAppResources,
     { enabled: checkToken() },
   );
@@ -80,7 +74,8 @@ const AppResources = () => {
         <Grid container spacing={0}>
           <Grid item xs={12} className={classes.main}>
             <Grid item xs={12} className={classes.main}>
-              <FileDashboardUploader />
+              {!checkToken() && <Loader />}
+              {checkToken() && <FileDashboardUploader value={check} />}
             </Grid>
             {status === 'loading' && <Loader />}
             {status === 'error' && <div>Error fetching data</div>}

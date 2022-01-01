@@ -13,17 +13,16 @@ import { AppDataContext } from '../context/AppDataContext';
 
 const FileDashboardUploader = ({ value }) => {
   const [uppy, setUppy] = useState(null);
-  const { itemId, token } = useContext(AppDataContext);
+  const { itemId, token, setReFetch } = useContext(AppDataContext);
   const { t } = useTranslation();
   const { mutate: onFileUploadComplete } = useMutation(
     MUTATION_KEYS.FILE_UPLOAD,
   );
 
   const onComplete = result => {
-    // update app on complete
-    // todo: improve with websockets or by receiving corresponding items
     if (!result?.failed.length) {
       onFileUploadComplete({ id: itemId });
+      setReFetch(true);
     }
 
     return false;

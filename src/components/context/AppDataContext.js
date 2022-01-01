@@ -61,8 +61,7 @@ const buildContext = payload => {
 };
 
 const AppDataContextProvider = ({ children }) => {
-  // const [myContext, setMyContext] = useState(() => getContext(AppDataContext));
-  // const [port, setPort] = useState(11234567);
+  const [messagePort, setMessagePort] = useState(null);
   const [mode, setMode] = useState(DEFAULT_MODE);
   const [view, setView] = useState(DEFAULT_VIEW);
   const [lang, setLang] = useState('en');
@@ -102,6 +101,7 @@ const AppDataContextProvider = ({ children }) => {
           setMode(context.mode);
           setUserId(context.userId);
           port2 = port;
+          setMessagePort(port2);
           port2?.postMessage(
             JSON.stringify({
               type: 'GET_AUTH_TOKEN',
@@ -114,7 +114,13 @@ const AppDataContextProvider = ({ children }) => {
           port.onmessage = data3 => {
             const { type: type2, payload: payload2 } = JSON.parse(data3.data);
             if (type2 === 'GET_AUTH_TOKEN_SUCCEEDED') {
+              console.log('--------payloadtoken');
+              console.log(payload2);
               setToken(payload2.token);
+            }
+            if (type2 === 'UPDATE_SETTINGS_SUCCEEDED') {
+              console.log('--------payload');
+              console.log(payload2);
             }
           };
           // window.removeEventListener('message', receiveContextMessage);
@@ -136,6 +142,8 @@ const AppDataContextProvider = ({ children }) => {
   return (
     <AppDataContext.Provider
       value={{
+        messagePort,
+        setMessagePort,
         mode,
         setMode,
         view,

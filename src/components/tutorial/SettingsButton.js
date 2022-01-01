@@ -4,12 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import { Tooltip, makeStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
-// import EditIcon from '@material-ui/icons/Edit';
 import { SettingsModalContext } from '../context/SettingsModalContext';
-
-// import { connect } from 'react-redux';
-// import { withTranslation } from 'react-i18next';
-// import { closeSettings, patchAppInstance } from '../../../actions';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -26,7 +21,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SettingsButton = ({ item }) => {
-  // const { open } = this.props;
   const { t } = useTranslation();
   const { openModal } = useContext(SettingsModalContext);
   const handleEdit = () => {

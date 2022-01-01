@@ -7,20 +7,13 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-// import { actions } from 'react-redux-toastr';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import { PUBLIC_VISIBILITY } from '../../config/settings';
-import {
-  APP_ITEMS_ENDPOINT,
-  DEFAULT_GET_REQUEST,
-  // SPACES_ENDPOINT,
-  // USERS_ENDPOINT,
-} from '../../config/api';
+import { APP_ITEMS_ENDPOINT, DEFAULT_GET_REQUEST } from '../../config/api';
 import { AppDataContext } from '../context/AppDataContext';
 import {
-  TABLE_CELL_FILE_NAME,
   TABLE_CELL_FILE_ACTION_DELETE,
   TABLE_CELL_FILE_CREATED_AT,
-  // ROW_NO_FILES_UPLOADED_ID,
 } from '../../constants/selectors';
 import { buildDownloadFileRoute } from '../../api/routes';
 import DeleteResourceDialog from './DeleteResourceDialog';
@@ -28,10 +21,6 @@ import DeleteResourceDialog from './DeleteResourceDialog';
 const getUsers = async key => {
   const token = key.queryKey[1];
   const url = `http://localhost:3000/${APP_ITEMS_ENDPOINT}/86a0eed7-70c6-47ba-8584-00c898c0d134/context`;
-
-  // const url = `//${apiHost + SPACES_ENDPOINT}/${spaceId}/${USERS_ENDPOINT}`;
-
-  // const response = await fetch(url, DEFAULT_GET_REQUEST);
   const response = await fetch(url, {
     ...DEFAULT_GET_REQUEST,
     headers: {
@@ -63,14 +52,36 @@ const Resource = ({ resource }) => {
   };
   let userObj = anonymousUser;
 
+  const downloadFile = url => {
+    const response = fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  };
+  const handleOpenDownloader = () => {
+    // console.log('-------download');
+    // setDownloader(true);
+    const url = buildDownloadFileRoute(resource.id);
+    // eslint-disable-next-line no-unused-vars
+    downloadFile(url).then(async response => {
+      console.log('response');
+      const blob = new Blob([await response.blob()], {
+        type: response.headers.get('Content-Type'),
+      });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `${resource.data.name}`;
+      link.click();
+    });
+  };
+
   function checkToken() {
-    let check;
     if (token == null) {
-      check = false;
-    } else {
-      check = true;
+      return false;
     }
-    return check;
+    return true;
   }
   const { data, status } = useQuery(['users', token], getUsers, {
     enabled: checkToken(),
@@ -101,6 +112,9 @@ const Resource = ({ resource }) => {
             handleClose={handleClose}
             resourceId={resource.id}
           />
+          <IconButton color="primary" onClick={handleOpenDownloader}>
+            <ArrowDownward />
+          </IconButton>
         </>,
       );
     }
@@ -123,17 +137,7 @@ const Resource = ({ resource }) => {
       <TableCell scope="row" data-cy={TABLE_CELL_FILE_CREATED_AT}>
         {resource.createdAt && new Date(resource.createdAt).toLocaleString()}
       </TableCell>
-      {/* <TableCell>{userObj.name || 'Anonymous'}</TableCell> */}
-      <TableCell>
-        <a
-          data-cy={TABLE_CELL_FILE_NAME}
-          href={buildDownloadFileRoute(resource.id)}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {resource.data.name}
-        </a>
-      </TableCell>
+      <TableCell>{resource.data.name}</TableCell>
       <TableCell>
         {renderActions(
           resource.visibility,

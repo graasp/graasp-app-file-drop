@@ -62,37 +62,6 @@ const FileUploader = () => {
     MUTATION_KEYS.FILE_UPLOAD,
   );
 
-  // const { mutateAsync, isloading } = useMutation((id) => {
-  //   const url = `${apiHost}/${APP_ITEMS_ROUTE}/upload?id=${id}`;
-
-  //   const body = {
-  //     data,
-  //     type,
-  //     format: APP_INSTANCE_RESOURCE_FORMAT,
-  //     appInstance: appInstanceId,
-  //     // here you can specify who the resource will belong to
-  //     // but applies if the user making the request is an admin
-  //     user: userId,
-  //     visibility,
-  //   };
-  //   // const type2 = { type };
-
-  //   const response = fetch(url, {
-  //     body: JSON.stringify({
-  //       data: body,
-  //       type: 'file',
-  //     }),
-  //     ...DEFAULT_POST_REQUEST,
-  //     headers: {
-  //       ...DEFAULT_POST_REQUEST.headers,
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   });
-
-  //   const appData = response.json();
-
-  // });
-
   const { t } = useTranslation();
 
   const closeUploader = () => {

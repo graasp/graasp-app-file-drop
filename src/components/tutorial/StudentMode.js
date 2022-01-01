@@ -7,7 +7,6 @@ import { AppDataContext } from '../context/AppDataContext';
 
 const StudentMode = () => {
   const context = useContext(AppDataContext);
-  // render() {
   const { view, headerVisible, standalone } = context;
   switch (view) {
     case FEEDBACK_VIEW:

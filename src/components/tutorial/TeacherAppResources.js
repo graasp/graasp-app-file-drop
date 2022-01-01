@@ -79,15 +79,11 @@ const AppResources = () => {
     openModal(itemId);
   };
 
-  // check!!!
   function checkToken() {
-    let check;
     if (token == null) {
-      check = false;
-    } else {
-      check = true;
+      return false;
     }
-    return check;
+    return true;
   }
 
   const check = checkToken();
@@ -105,7 +101,8 @@ const AppResources = () => {
         <Grid container spacing={0}>
           <Grid item xs={12} className={classes.main}>
             <Grid item xs={12} className={classes.main}>
-              <FileDashboardUploader value={check} />
+              {!checkToken() && <Loader />}
+              {checkToken() && <FileDashboardUploader value={check} />}
             </Grid>
             {status === 'loading' && <Loader />}
             {status === 'error' && <div>Error fetching data</div>}

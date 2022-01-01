@@ -18,19 +18,12 @@ import {
 } from '../../config/api';
 import { AppDataContext } from '../context/AppDataContext';
 import { buildDownloadFileRoute } from '../../api/routes';
-import {
-  TABLE_CELL_FILE_ACTION_DELETE,
-  TABLE_CELL_FILE_NAME,
-} from '../../constants/selectors';
+import { TABLE_CELL_FILE_ACTION_DELETE } from '../../constants/selectors';
 import DeleteResourceDialog from './DeleteResourceDialog';
 
 const getUsers = async key => {
   const token = key.queryKey[1];
   const url = `http://localhost:3000/${APP_ITEMS_ENDPOINT}/86a0eed7-70c6-47ba-8584-00c898c0d134/context`;
-
-  // const url = `//${apiHost + SPACES_ENDPOINT}/${spaceId}/${USERS_ENDPOINT}`;
-
-  // const response = await fetch(url, DEFAULT_GET_REQUEST);
   const response = await fetch(url, {
     ...DEFAULT_GET_REQUEST,
     headers: {
@@ -51,9 +44,33 @@ const Resource = ({ resource }) => {
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const downloadFile = url => {
+    const response = fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  };
+  const handleOpenDownloader = () => {
+    // console.log('-------download');
+    // setDownloader(true);
+    const url = buildDownloadFileRoute(resource.id);
+    // eslint-disable-next-line no-unused-vars
+    downloadFile(url).then(async response => {
+      console.log('response');
+      const blob = new Blob([await response.blob()], {
+        type: response.headers.get('Content-Type'),
+      });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `${resource.data.name}`;
+      link.click();
+    });
   };
   // eslint-disable-next-line no-unused-vars
   const anonymousUser = {
@@ -61,17 +78,11 @@ const Resource = ({ resource }) => {
   };
   let userObj = anonymousUser;
 
-  // function handleDelete ({ id, uri }) {
-
-  // }
   function checkToken() {
-    let check;
     if (token == null) {
-      check = false;
-    } else {
-      check = true;
+      return false;
     }
-    return check;
+    return true;
   }
   const { data, status } = useQuery(['users', token], getUsers, {
     enabled: checkToken(),
@@ -87,10 +98,12 @@ const Resource = ({ resource }) => {
   function renderActions(visibility, id, uri) {
     const actions = [
       <>
+        <IconButton color="primary" onClick={handleOpenDownloader}>
+          <ArrowDownward />
+        </IconButton>
         <IconButton
           data-cy={TABLE_CELL_FILE_ACTION_DELETE}
           color="primary"
-          // onClick={() => handleDelete({ id, uri })}
           onClick={handleClickOpen}
         >
           <DeleteIcon />
@@ -100,10 +113,6 @@ const Resource = ({ resource }) => {
           handleClose={handleClose}
           resourceId={resource.id}
         />
-
-        <IconButton color="primary">
-          <ArrowDownward />
-        </IconButton>
       </>,
     ];
     if (visibility === PUBLIC_VISIBILITY) {
@@ -126,16 +135,7 @@ const Resource = ({ resource }) => {
         {resource.createdAt && new Date(resource.createdAt).toLocaleString()}
       </TableCell>
       <TableCell>{userObj.name || 'Anonymous'}</TableCell>
-      <TableCell>
-        <a
-          data-cy={TABLE_CELL_FILE_NAME}
-          href={buildDownloadFileRoute(resource.id)}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {resource.data.name}
-        </a>
-      </TableCell>
+      <TableCell>{resource.data.name}</TableCell>
       <TableCell>
         {renderActions(
           resource.visibility,
