@@ -15,13 +15,13 @@ import {
   DEFAULT_GET_REQUEST,
   APP_DATA_ENDPOINT,
   APP_ITEMS_ENDPOINT,
-} from '../../config/api';
-import { AppDataContext } from '../context/AppDataContext';
-import Loader from '../common/Loader';
+} from '../../../config/api';
+import { AppDataContext } from '../../context/AppDataContext';
+import Loader from '../../common/Loader';
 import TeacherResource from './TeacherResource';
-import SettingsButton from './SettingsButton';
-import { SettingsModalContext } from '../context/SettingsModalContext';
-import FileDashboardUploader from '../main/FileDashboardUploader';
+import SettingsButton from '../../common/SettingsButton';
+import { SettingsModalContext } from '../../context/SettingsModalContext';
+import FileDashboardUploader from '../../main/FileDashboardUploader';
 
 const useStyles = makeStyles(theme => ({
   root: {

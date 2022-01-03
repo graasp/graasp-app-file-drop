@@ -26,7 +26,6 @@ import {
   DELETE_APP_INSTANCE_RESOURCE,
 } from '../types';
 import { flag, getApiContext, isErrorResponse, postMessage } from './common';
-// eslint-disable-next-line import/no-cycle
 import { getAuthToken } from './context';
 import { showErrorToast } from '../utils/toasts';
 import {

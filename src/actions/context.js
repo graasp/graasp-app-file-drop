@@ -7,11 +7,16 @@ import {
   FLAG_GETTING_AUTH_TOKEN,
   GET_AUTH_TOKEN_SUCCEEDED,
   GET_AUTH_TOKEN,
+  GET_APP_INSTANCE_RESOURCES_SUCCEEDED,
+  GET_APP_INSTANCE_SUCCEEDED,
+  PATCH_APP_INSTANCE_RESOURCE_SUCCEEDED,
+  POST_APP_INSTANCE_RESOURCE_SUCCEEDED,
+  DELETE_APP_INSTANCE_RESOURCE_SUCCEEDED,
+  POST_APP_INSTANCE_RESOURCE_FAILED,
+  DELETE_APP_INSTANCE_RESOURCE_FAILED,
 } from '../types';
 // import { flag, receiveMessage, postMessage } from './common';
 import { flag, postMessage } from './common';
-// eslint-disable-next-line import/no-cycle
-import { receiveMessage } from './listener';
 import {
   DEFAULT_API_HOST,
   DEFAULT_MODE,
@@ -19,6 +24,8 @@ import {
 } from '../config/settings';
 import { DEFAULT_VIEW } from '../config/views';
 import isInFrame from '../utils/isInFrame';
+import { FILE } from '../config/appInstanceResourceTypes';
+import { deleteFile } from './file';
 
 // message channel port
 let port2 = null;
@@ -91,6 +98,45 @@ const getAuthToken = () => async dispatch => {
       },
     }),
   );
+};
+
+const receiveMessage = dispatch => event => {
+  const { data } = event;
+  try {
+    const message = JSON.parse(data);
+
+    const { type, payload } = message;
+
+    switch (type) {
+      case GET_APP_INSTANCE_RESOURCES_SUCCEEDED:
+      case GET_APP_INSTANCE_SUCCEEDED:
+      case PATCH_APP_INSTANCE_RESOURCE_SUCCEEDED:
+      case POST_APP_INSTANCE_RESOURCE_SUCCEEDED:
+        return dispatch({
+          type,
+          payload,
+        });
+      case DELETE_APP_INSTANCE_RESOURCE_SUCCEEDED:
+        if (payload.type === FILE) {
+          dispatch(deleteFile(payload));
+        }
+        return dispatch({
+          type,
+          payload: payload.id || payload._id,
+        });
+      case POST_APP_INSTANCE_RESOURCE_FAILED:
+      case DELETE_APP_INSTANCE_RESOURCE_FAILED: {
+        return dispatch({
+          type,
+          payload,
+        });
+      }
+      default:
+        return false;
+    }
+  } catch (err) {
+    return false;
+  }
 };
 
 /**

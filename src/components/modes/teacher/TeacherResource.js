@@ -8,18 +8,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Tooltip from '@material-ui/core/Tooltip';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-// import { actions } from 'react-redux-toastr';
-import { PUBLIC_VISIBILITY } from '../../config/settings';
-import {
-  APP_ITEMS_ENDPOINT,
-  DEFAULT_GET_REQUEST,
-  // SPACES_ENDPOINT,
-  // USERS_ENDPOINT,
-} from '../../config/api';
-import { AppDataContext } from '../context/AppDataContext';
-import { buildDownloadFileRoute } from '../../api/routes';
-import { TABLE_CELL_FILE_ACTION_DELETE } from '../../constants/selectors';
-import DeleteResourceDialog from './DeleteResourceDialog';
+import { PUBLIC_VISIBILITY } from '../../../config/settings';
+import { APP_ITEMS_ENDPOINT, DEFAULT_GET_REQUEST } from '../../../config/api';
+import { AppDataContext } from '../../context/AppDataContext';
+import { buildDownloadFileRoute } from '../../../api/routes';
+import { TABLE_CELL_FILE_ACTION_DELETE } from '../../../constants/selectors';
+import DeleteResourceDialog from '../../main/DeleteResourceDialog';
 
 const getUsers = async key => {
   const token = key.queryKey[1];
@@ -36,9 +30,7 @@ const getUsers = async key => {
 };
 
 const Resource = ({ resource }) => {
-  const { userId, token } = useContext(AppDataContext);
-  console.log('userId');
-  console.log(userId);
+  const { token, reFetch } = useContext(AppDataContext);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -57,12 +49,9 @@ const Resource = ({ resource }) => {
     return response;
   };
   const handleOpenDownloader = () => {
-    // console.log('-------download');
-    // setDownloader(true);
     const url = buildDownloadFileRoute(resource.id);
     // eslint-disable-next-line no-unused-vars
     downloadFile(url).then(async response => {
-      console.log('response');
       const blob = new Blob([await response.blob()], {
         type: response.headers.get('Content-Type'),
       });
@@ -84,7 +73,7 @@ const Resource = ({ resource }) => {
     }
     return true;
   }
-  const { data, status } = useQuery(['users', token], getUsers, {
+  const { data, status } = useQuery(['users', token, reFetch], getUsers, {
     enabled: checkToken(),
   });
   if (status === 'success') {
@@ -136,13 +125,7 @@ const Resource = ({ resource }) => {
       </TableCell>
       <TableCell>{userObj.name || 'Anonymous'}</TableCell>
       <TableCell>{resource.data.name}</TableCell>
-      <TableCell>
-        {renderActions(
-          resource.visibility,
-          resource.id,
-          // resource.data.data.uri,
-        )}
-      </TableCell>
+      <TableCell>{renderActions(resource.visibility, resource.id)}</TableCell>
     </TableRow>
   );
 };

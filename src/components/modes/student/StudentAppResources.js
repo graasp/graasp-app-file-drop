@@ -13,11 +13,11 @@ import {
   DEFAULT_GET_REQUEST,
   APP_DATA_ENDPOINT,
   APP_ITEMS_ENDPOINT,
-} from '../../config/api';
-import Loader from '../common/Loader';
+} from '../../../config/api';
+import Loader from '../../common/Loader';
 import StudentResource from './StudentResource';
-import { AppDataContext } from '../context/AppDataContext';
-import FileDashboardUploader from '../main/FileDashboardUploader';
+import { AppDataContext } from '../../context/AppDataContext';
+import FileDashboardUploader from '../../main/FileDashboardUploader';
 
 const useStyles = makeStyles(theme => ({
   root: {

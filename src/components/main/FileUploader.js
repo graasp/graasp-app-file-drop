@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import { DragDrop } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '@uppy/drag-drop/dist/style.css';
-// import { useRouteMatch } from 'react-router';
 import { routines, MUTATION_KEYS } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
 import {
@@ -14,11 +13,9 @@ import {
 } from '../../config/constants';
 import { useMutation } from '../../config/queryClient';
 import configureUppy from '../../utils/uppy';
-// import { buildItemPath } from '../../config/paths';
 import notifier from '../../middlewares/notifier';
 import { UPLOADER_ID } from '../../config/selectors';
 import { AppDataContext } from '../context/AppDataContext';
-// import { APP_ITEMS_ROUTE } from '../../api/routes';
 
 const { uploadFileRoutine } = routines;
 
@@ -70,7 +67,6 @@ const FileUploader = () => {
 
   const onFilesAdded = () => {
     closeUploader();
-    console.log('onFilesAdded');
   };
 
   const onComplete = result => {

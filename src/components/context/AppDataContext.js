@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import {
   DEFAULT_API_HOST,
   DEFAULT_MODE,
@@ -16,8 +15,6 @@ const postMessage = data => {
   const message = JSON.stringify(data);
   if (window.parent.postMessage) {
     window.parent.postMessage(message, '*');
-  } else {
-    // console.error('unable to find postMessage');
   }
 };
 
@@ -53,7 +50,6 @@ const buildContext = payload => {
     sessionId,
     spaceId,
     subSpaceId,
-    // standalone,
     offline: offlineBool,
     dev: devBool,
     itemId,
@@ -81,7 +77,6 @@ const AppDataContextProvider = ({ children }) => {
 
   const dispatch = () => {};
 
-  // let contextMessage = {};
   // get context
   const getContext = dispatch1 => {
     if (!port2) {
@@ -114,16 +109,9 @@ const AppDataContextProvider = ({ children }) => {
           port.onmessage = data3 => {
             const { type: type2, payload: payload2 } = JSON.parse(data3.data);
             if (type2 === 'GET_AUTH_TOKEN_SUCCEEDED') {
-              console.log('--------payloadtoken');
-              console.log(payload2);
               setToken(payload2.token);
             }
-            if (type2 === 'UPDATE_SETTINGS_SUCCEEDED') {
-              console.log('--------payload');
-              console.log(payload2);
-            }
           };
-          // window.removeEventListener('message', receiveContextMessage);
         }
       };
       window.addEventListener('message', receiveContextMessage);

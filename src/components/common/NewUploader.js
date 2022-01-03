@@ -31,15 +31,7 @@ const Uploader = () => {
     setReFetch,
   } = useContext(AppDataContext);
   const visibility = DEFAULT_VISIBILITY;
-  console.log('token');
-  console.log(token);
-  console.log('itemId');
-  console.log(itemId);
-  const { mutateAsync, isloading } = useMutation((id, data, type) => {
-    console.log('inside');
-    console.log(id);
-    console.log(isloading);
-    // const url = `${apiHost}/${APP_ITEMS_ENDPOINT}/upload?id=${itemId}`;
+  const { mutateAsync } = useMutation((id, data, type) => {
     const url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}`;
     const body = {
       data,
@@ -67,14 +59,12 @@ const Uploader = () => {
   });
 
   const onComplete = result => {
-    console.log('oncomplete');
     // update app on complete
     // todo: improve with websockets or by receiving corresponding items
     if (!result?.failed.length) {
       // eslint-disable-next-line no-unused-vars
       mutateAsync(itemId).then(async response => {
         setReFetch(!reFetch);
-        console.log(reFetch);
       });
     }
 
@@ -121,7 +111,6 @@ const Uploader = () => {
           },
         }}
       />
-      {console.log(uppy)}
     </>
   );
 };

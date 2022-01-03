@@ -41,21 +41,15 @@ const useStyles = makeStyles(theme => ({
 
 const SettingsModalProvider = ({ children }) => {
   const { t } = useTranslation();
-  // eslint-disable-next-line no-unused-vars
-  const { messagePort } = useContext(AppDataContext);
-
-  // updated properties are separated from the original item
-  // so only necessary properties are sent when editing
-  // const [updatedProperties, setUpdatedItem] = useState({});
-  // eslint-disable-next-line no-unused-vars
-  const [headerVisible, setHeaderVisible] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [publicStudentUploads, setPublicStudentUploads] = useState(false);
   const classes = useStyles();
+  // TO DO: updated properties are separated from the original item
+  // so only necessary properties are sent when editing
+
+  const { messagePort } = useContext(AppDataContext);
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const [publicStudentUploads, setPublicStudentUploads] = useState(false);
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(null);
-  // eslint-disable-next-line no-unused-vars
-  // eslint-disable-next-line no-unused-vars
 
   const openModal = newItem => {
     setOpen(true);
@@ -64,69 +58,30 @@ const SettingsModalProvider = ({ children }) => {
 
   const onClose = () => {
     setOpen(false);
+    setHeaderVisible(false);
+    setPublicStudentUploads(false);
+
     setItem(null);
   };
-  const submit = () => {
-    messagePort
-      ?.postMessage(
-        JSON.stringify({
-          type: 'UPDATE_SETTINGS',
-          payload: {
-            headerVisible,
-            publicStudentUploads,
-          },
-        }),
-      )
-      .then(() => {
-        setOpen(false);
-        setItem(null);
-        console.log('----------submitted');
-        console.log(headerVisible);
-        console.log(publicStudentUploads);
-      });
-  };
-  // eslint-disable-next-line no-unused-vars
-  // const { mutateAsync, isloading } = useMutation(id => {
-  //   const url = `${apiHost}/${ITEMS_ROUTE}/${id}`;
-  //   console.log(url);
 
-  //   // eslint-disable-next-line no-unused-vars
-  //   const req = fetch(url, {
-  //     ...DEFAULT_PATCH_REQUEST,
-  //     body: JSON.stringify({
-  //       ...item,
-  //       extra: {
-  //         app: {
-  //           url: 'http://app.localhost:3334',
-  //           settings: {
-  //             headerVisible: true,
-  //             studentUploadVisibility: true,
-  //           },
-  //         },
-  //       },
-  //     }),
-  //     headers: {
-  //       ...DEFAULT_PATCH_REQUEST.headers,
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   });
-  //   return req;
-  // });
+  const submit = () => {
+    messagePort?.postMessage(
+      JSON.stringify({
+        type: 'UPDATE_SETTINGS',
+        payload: {
+          headerVisible,
+          publicStudentUploads,
+        },
+      }),
+    );
+  };
 
   const handleChangeHeaderVisibility = () => {
     setHeaderVisible(!headerVisible);
-    console.log(headerVisible);
   };
 
   const handleChangeStudentUploadVisibility = () => {
-    // mutateAsync({id: itemId, ...updatedProperties}).then(async response => {
-    // eslint-disable-next-line no-unused-vars
-    // mutateAsync(itemId).then(async response => {
-    //   setReFetch(!reFetch);
-    //   console.log(reFetch);
-    // });
     setPublicStudentUploads(!publicStudentUploads);
-    console.log(publicStudentUploads);
   };
 
   const headerVisibilitySwitch = (
@@ -177,13 +132,19 @@ const SettingsModalProvider = ({ children }) => {
               />
             </Tooltip>
           </>
-          <Button
-            onClick={submit}
-            color="primary"
-            id={ITEM_FORM_CONFIRM_BUTTON_ID}
+          <Tooltip
+            title={t(
+              'When clicked, settings will be saved and the app will be refreshed.',
+            )}
           >
-            {t('Save new settings')}
-          </Button>
+            <Button
+              onClick={submit}
+              color="primary"
+              id={ITEM_FORM_CONFIRM_BUTTON_ID}
+            >
+              {t('Save new settings')}
+            </Button>
+          </Tooltip>
         </div>
       </Modal>
     </div>
