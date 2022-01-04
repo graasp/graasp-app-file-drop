@@ -39,7 +39,6 @@ const DeleteResourceDialog = ({ resourceId, open, handleClose }) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
     return response;
   });
 

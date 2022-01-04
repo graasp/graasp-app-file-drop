@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useQuery } from 'react-query';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
@@ -8,16 +7,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import Paper from '@material-ui/core/Paper';
 import TableRow from '@material-ui/core/TableRow';
-
-import {
-  DEFAULT_GET_REQUEST,
-  APP_DATA_ENDPOINT,
-  APP_ITEMS_ENDPOINT,
-} from '../../../config/api';
 import Loader from '../../common/Loader';
 import StudentResource from './StudentResource';
 import { AppDataContext } from '../../context/AppDataContext';
 import FileDashboardUploader from '../../main/FileDashboardUploader';
+import { useGetAppResources } from '../../../api/hooks';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,23 +27,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const getAppResources = async key => {
-  const apiHost = key.queryKey[1];
-  const token = key.queryKey[2];
-  const itemId = key.queryKey[3];
-  const url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}`;
-
-  const response = await fetch(url, {
-    ...DEFAULT_GET_REQUEST,
-    headers: {
-      ...DEFAULT_GET_REQUEST.headers,
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const resources = await response.json();
-  return resources;
-};
-
 const AppResources = () => {
   const { apiHost, token, itemId, reFetch } = useContext(AppDataContext);
   const classes = useStyles();
@@ -62,11 +39,7 @@ const AppResources = () => {
   }
   const check = checkToken();
 
-  const { data, status } = useQuery(
-    ['resources', apiHost, token, itemId, reFetch],
-    getAppResources,
-    { enabled: checkToken() },
-  );
+  const { data, status } = useGetAppResources(token, apiHost, itemId, reFetch);
 
   return (
     <div>

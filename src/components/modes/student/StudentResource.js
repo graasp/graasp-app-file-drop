@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
@@ -9,7 +8,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import { PUBLIC_VISIBILITY } from '../../../config/settings';
-import { APP_ITEMS_ENDPOINT, DEFAULT_GET_REQUEST } from '../../../config/api';
 import { AppDataContext } from '../../context/AppDataContext';
 import {
   TABLE_CELL_FILE_ACTION_DELETE,
@@ -18,23 +16,10 @@ import {
 import { buildDownloadFileRoute } from '../../../api/routes';
 import DeleteResourceDialog from '../../main/DeleteResourceDialog';
 import { API_HOST } from '../../../config/constants';
-
-const getUsers = async key => {
-  const token = key.queryKey[1];
-  const url = `http://localhost:3000/${APP_ITEMS_ENDPOINT}/86a0eed7-70c6-47ba-8584-00c898c0d134/context`;
-  const response = await fetch(url, {
-    ...DEFAULT_GET_REQUEST,
-    headers: {
-      ...DEFAULT_GET_REQUEST.headers,
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const users = (await response.json())?.members;
-  return users;
-};
+import { useGetUsers } from '../../../api/hooks';
 
 const Resource = ({ resource }) => {
-  const { userId, token } = useContext(AppDataContext);
+  const { userId, token, apiHost, itemId } = useContext(AppDataContext);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -72,15 +57,7 @@ const Resource = ({ resource }) => {
     });
   };
 
-  function checkToken() {
-    if (token == null) {
-      return false;
-    }
-    return true;
-  }
-  const { data, status } = useQuery(['users', token], getUsers, {
-    enabled: checkToken(),
-  });
+  const { data, status } = useGetUsers(token, apiHost, itemId);
   if (status === 'success') {
     const members = data;
     // eslint-disable-next-line no-unused-vars

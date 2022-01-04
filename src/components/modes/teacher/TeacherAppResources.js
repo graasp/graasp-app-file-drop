@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useQuery } from 'react-query';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
@@ -10,18 +9,13 @@ import Paper from '@material-ui/core/Paper';
 import TableRow from '@material-ui/core/TableRow';
 import Fab from '@material-ui/core/Fab';
 import SettingsIcon from '@material-ui/icons/Settings';
-
-import {
-  DEFAULT_GET_REQUEST,
-  APP_DATA_ENDPOINT,
-  APP_ITEMS_ENDPOINT,
-} from '../../../config/api';
 import { AppDataContext } from '../../context/AppDataContext';
 import Loader from '../../common/Loader';
 import TeacherResource from './TeacherResource';
 import SettingsButton from '../../common/SettingsButton';
 import { SettingsModalContext } from '../../context/SettingsModalContext';
 import FileDashboardUploader from '../../main/FileDashboardUploader';
+import { useGetAppResources } from '../../../api/hooks';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,23 +49,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const getAppResources = async key => {
-  const token = key.queryKey[1];
-  const url = `http://localhost:3000/${APP_ITEMS_ENDPOINT}/86a0eed7-70c6-47ba-8584-00c898c0d134/${APP_DATA_ENDPOINT}`;
-
-  const response = await fetch(url, {
-    ...DEFAULT_GET_REQUEST,
-    headers: {
-      ...DEFAULT_GET_REQUEST.headers,
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const resources = await response.json();
-  return resources;
-};
-
 const AppResources = () => {
-  const { itemId, token, reFetch } = useContext(AppDataContext);
+  const { apiHost, itemId, token, reFetch } = useContext(AppDataContext);
   const classes = useStyles();
   const { openModal } = useContext(SettingsModalContext);
 
@@ -87,13 +66,8 @@ const AppResources = () => {
   }
 
   const check = checkToken();
-  const { data, status } = useQuery(
-    ['resources', token, reFetch],
-    getAppResources,
-    {
-      enabled: checkToken(),
-    },
-  );
+
+  const { data, status } = useGetAppResources(token, apiHost, itemId, reFetch);
 
   return (
     <div>
@@ -101,7 +75,6 @@ const AppResources = () => {
         <Grid container spacing={0}>
           <Grid item xs={12} className={classes.main}>
             <Grid item xs={12} className={classes.main}>
-              {!checkToken() && <Loader />}
               {checkToken() && <FileDashboardUploader value={check} />}
             </Grid>
             {status === 'loading' && <Loader />}

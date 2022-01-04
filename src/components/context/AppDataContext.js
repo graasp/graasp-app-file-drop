@@ -6,8 +6,9 @@ import {
   GRAASP_APP_ID,
 } from '../../config/settings';
 import { DEFAULT_VIEW } from '../../config/views';
+import { GET_CONTEXT_FAILED } from '../../types';
 
-const AppDataContext = React.createContext();
+const AppDataContext = React.createContext(!undefined);
 
 let port2 = null;
 
@@ -80,49 +81,57 @@ const AppDataContextProvider = ({ children }) => {
   // get context
   const getContext = dispatch1 => {
     if (!port2) {
-      const receiveContextMessage = event => {
-        const { type, payload } = event.data || {};
-        let { context } = {};
-        // get init message getting the Message Channel port
-        if (type === 'GET_CONTEXT_SUCCEEDED') {
-          // eslint-disable-next-line no-unused-vars
-          context = buildContext(payload);
-          dispatch1({
-            context,
-          });
-          const [port] = event.ports;
-          setApiHost(context.apiHost);
-          setItemId(context.itemId);
-          setMode(context.mode);
-          setUserId(context.userId);
-          port2 = port;
-          setMessagePort(port2);
-          port2?.postMessage(
-            JSON.stringify({
-              type: 'GET_AUTH_TOKEN',
-              payload: {
-                app: GRAASP_APP_ID,
-                origin: window.location.origin,
-              },
-            }),
-          );
-          port.onmessage = data3 => {
-            const { type: type2, payload: payload2 } = JSON.parse(data3.data);
-            if (type2 === 'GET_AUTH_TOKEN_SUCCEEDED') {
-              setToken(payload2.token);
-            }
-          };
-        }
-      };
-      window.addEventListener('message', receiveContextMessage);
-      // request parent to provide item data (item id, settings...) and access token
-      postMessage({
-        type: 'GET_CONTEXT',
-        payload: {
-          app: GRAASP_APP_ID,
-          origin: window.location.origin,
-        },
-      });
+      try {
+        const receiveContextMessage = event => {
+          const { type, payload } = event.data || {};
+          let { context } = {};
+          // get init message getting the Message Channel port
+          if (type === 'GET_CONTEXT_SUCCEEDED') {
+            // eslint-disable-next-line no-unused-vars
+            context = buildContext(payload);
+            dispatch1({
+              context,
+            });
+            const [port] = event.ports;
+            setApiHost(context.apiHost);
+            setItemId(context.itemId);
+            setMode(context.mode);
+            setUserId(context.userId);
+            port2 = port;
+            setMessagePort(port2);
+            port2?.postMessage(
+              JSON.stringify({
+                type: 'GET_AUTH_TOKEN',
+                payload: {
+                  app: GRAASP_APP_ID,
+                  origin: window.location.origin,
+                },
+              }),
+            );
+            port.onmessage = data3 => {
+              const { type: type2, payload: payload2 } = JSON.parse(data3.data);
+              if (type2 === 'GET_AUTH_TOKEN_SUCCEEDED') {
+                setToken(payload2.token);
+                window.removeEventListener('message', receiveContextMessage);
+              }
+            };
+          }
+        };
+        window.addEventListener('message', receiveContextMessage);
+        // request parent to provide item data (item id, settings...) and access token
+        postMessage({
+          type: 'GET_CONTEXT',
+          payload: {
+            app: GRAASP_APP_ID,
+            origin: window.location.origin,
+          },
+        });
+      } catch (err) {
+        dispatch1({
+          type: GET_CONTEXT_FAILED,
+          payload: err,
+        });
+      }
     }
   };
   getContext(dispatch);
