@@ -35,8 +35,8 @@ const Resource = ({ resource }) => {
   };
   let userObj = anonymousUser;
 
-  const downloadFile = url => {
-    const response = fetch(url, {
+  const downloadFile = async url => {
+    const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -47,7 +47,7 @@ const Resource = ({ resource }) => {
     const url = `${API_HOST}/${buildDownloadFileRoute(resource.id)}`;
     // eslint-disable-next-line no-unused-vars
     downloadFile(url).then(async response => {
-      const blob = new Blob([await response.blob()], {
+      const blob = new Blob([response.blob()], {
         type: response.headers.get('Content-Type'),
       });
       const link = document.createElement('a');

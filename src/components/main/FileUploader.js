@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
 
 const FileUploader = () => {
   const classes = useStyles();
-  const { itemId } = useContext(AppDataContext);
+  const { itemId, token, reFetch, setReFetch } = useContext(AppDataContext);
   const [uppy, setUppy] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isValid, setIsValid] = useState(true);
@@ -70,6 +70,7 @@ const FileUploader = () => {
   };
 
   const onComplete = result => {
+    setReFetch(!reFetch);
     // update app on complete
     // todo: improve with websockets or by receiving corresponding items
     if (result?.successful?.length) {
@@ -91,6 +92,7 @@ const FileUploader = () => {
     setUppy(
       configureUppy({
         itemId,
+        token,
         onComplete,
         onFilesAdded,
         method: UPLOAD_METHOD,
@@ -137,7 +139,7 @@ const FileUploader = () => {
 
   useEffect(() => {
     applyUppy();
-  }, [itemId]);
+  }, [itemId, token]);
 
   const handleDrop = () => {
     // todo: trigger error that only MAX_FILES was uploaded
