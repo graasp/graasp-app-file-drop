@@ -34,7 +34,7 @@ const Resource = ({ resource }) => {
     return response;
   };
   const handleOpenDownloader = () => {
-    const url = buildDownloadFileRoute(resource.id);
+    const url = `${apiHost}/${buildDownloadFileRoute(resource.id)}`;
     // eslint-disable-next-line no-unused-vars
     downloadFile(url).then(async response => {
       const blob = new Blob([await response.blob()], {

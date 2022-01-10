@@ -24,6 +24,7 @@
     "connected-react-router": "6.8.0",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.15.1",
+    "graasp-apps-query-client": "graasp/graasp-apps-query-client#1/Add-query-client-for-apps",
     "history": "5.0.0",
     "i18next": "17.0.16",
     "immutable": "4.0.0-rc.12",

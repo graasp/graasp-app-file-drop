@@ -15,7 +15,6 @@ import {
 } from '../../../constants/selectors';
 import { buildDownloadFileRoute } from '../../../api/routes';
 import DeleteResourceDialog from '../../main/DeleteResourceDialog';
-import { API_HOST } from '../../../config/constants';
 import { useGetUsers } from '../../../api/hooks';
 
 const Resource = ({ resource }) => {
@@ -44,10 +43,10 @@ const Resource = ({ resource }) => {
     return response;
   };
   const handleOpenDownloader = () => {
-    const url = `${API_HOST}/${buildDownloadFileRoute(resource.id)}`;
+    const url = `${apiHost}/${buildDownloadFileRoute(resource.id)}`;
     // eslint-disable-next-line no-unused-vars
     downloadFile(url).then(async response => {
-      const blob = new Blob([response.blob()], {
+      const blob = new Blob([await response.blob()], {
         type: response.headers.get('Content-Type'),
       });
       const link = document.createElement('a');
@@ -71,6 +70,9 @@ const Resource = ({ resource }) => {
     if (resource.memberId === userId) {
       actions.push(
         <>
+          <IconButton color="primary" onClick={handleOpenDownloader}>
+            <ArrowDownward />
+          </IconButton>
           <IconButton
             data-cy={TABLE_CELL_FILE_ACTION_DELETE}
             color="primary"
@@ -83,9 +85,6 @@ const Resource = ({ resource }) => {
             handleClose={handleClose}
             resourceId={resource.id}
           />
-          <IconButton color="primary" onClick={handleOpenDownloader}>
-            <ArrowDownward />
-          </IconButton>
         </>,
       );
     }
