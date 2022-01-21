@@ -1,4 +1,3 @@
-// import Qs from 'qs';
 import {
   FLAG_GETTING_CONTEXT,
   GET_CONTEXT_FAILED,
@@ -15,17 +14,13 @@ import {
   POST_APP_INSTANCE_RESOURCE_FAILED,
   DELETE_APP_INSTANCE_RESOURCE_FAILED,
 } from '../types';
-// import { flag, receiveMessage, postMessage } from './common';
 import { flag, postMessage } from './common';
-import {
-  DEFAULT_API_HOST,
-  DEFAULT_MODE,
-  GRAASP_APP_ID,
-} from '../config/settings';
+import { DEFAULT_API_HOST, DEFAULT_MODE } from '../config/settings';
 import { DEFAULT_VIEW } from '../config/views';
 import isInFrame from '../utils/isInFrame';
 import { FILE } from '../config/appInstanceResourceTypes';
 import { deleteFile } from './file';
+import { GRAASP_APP_ID } from '../config/constants';
 
 // message channel port
 let port2 = null;
@@ -186,8 +181,6 @@ const getContext = () => dispatch => {
       type: GET_CONTEXT_FAILED,
       payload: err,
     });
-    // } finally {
-    //   dispatch(flagGettingContext(false));
   }
 };
 

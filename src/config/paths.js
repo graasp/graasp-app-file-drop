@@ -13,4 +13,3 @@ export const buildItemSettingsPath = (id = ':itemId') =>
 export const buildGraaspPerformView = id => `${GRAASP_PERFORM_HOST}/${id}`;
 export const buildGraaspComposeView = id =>
   `${window.location.origin}${buildItemPath(id)}`;
-export const RECYCLE_BIN_PATH = '/recycle-bin';

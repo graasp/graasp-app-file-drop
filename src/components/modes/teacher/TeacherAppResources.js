@@ -58,14 +58,10 @@ const AppResources = () => {
     openModal(itemId);
   };
 
-  function checkToken() {
-    if (token == null) {
-      return false;
-    }
-    return true;
+  let check = false;
+  if (token) {
+    check = true;
   }
-
-  const check = checkToken();
 
   const { data, status } = useGetAppResources(token, apiHost, itemId, reFetch);
 
@@ -75,7 +71,7 @@ const AppResources = () => {
         <Grid container spacing={0}>
           <Grid item xs={12} className={classes.main}>
             <Grid item xs={12} className={classes.main}>
-              {checkToken() && <FileDashboardUploader value={check} />}
+              <FileDashboardUploader value={check} />
             </Grid>
             {status === 'loading' && <Loader />}
             {status === 'error' && <div>Error fetching data</div>}
@@ -91,9 +87,20 @@ const AppResources = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {data.map(resource => (
-                      <TeacherResource key={resource.id} resource={resource} />
-                    ))}
+                    {!data.length ? (
+                      <TableRow>
+                        <TableCell colSpan={4} align="center">
+                          No files have been uploaded.
+                        </TableCell>
+                      </TableRow>
+                    ) : (
+                      data.map(resource => (
+                        <TeacherResource
+                          key={resource.id}
+                          resource={resource}
+                        />
+                      ))
+                    )}
                   </TableBody>
                 </Table>
               </Paper>

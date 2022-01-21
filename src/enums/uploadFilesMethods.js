@@ -1,5 +1,4 @@
 const UPLOAD_FILES_METHODS = {
-  S3: 's3',
   DEFAULT: 'default',
 };
 

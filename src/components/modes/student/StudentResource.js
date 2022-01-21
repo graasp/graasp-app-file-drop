@@ -16,6 +16,7 @@ import {
 import { buildDownloadFileRoute } from '../../../api/routes';
 import DeleteResourceDialog from '../../main/DeleteResourceDialog';
 import { useGetUsers } from '../../../api/hooks';
+import downloadHelper from '../../common/utils';
 
 const Resource = ({ resource }) => {
   const { userId, token, apiHost, itemId } = useContext(AppDataContext);
@@ -46,13 +47,7 @@ const Resource = ({ resource }) => {
     const url = `${apiHost}/${buildDownloadFileRoute(resource.id)}`;
     // eslint-disable-next-line no-unused-vars
     downloadFile(url).then(async response => {
-      const blob = new Blob([await response.blob()], {
-        type: response.headers.get('Content-Type'),
-      });
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = `${resource.data.name}`;
-      link.click();
+      downloadHelper(response, resource);
     });
   };
 

@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  DEFAULT_API_HOST,
-  DEFAULT_MODE,
-  GRAASP_APP_ID,
-} from '../../config/settings';
+import { DEFAULT_API_HOST, DEFAULT_MODE } from '../../config/settings';
 import { DEFAULT_VIEW } from '../../config/views';
 import { GET_CONTEXT_FAILED } from '../../types';
+import { GRAASP_APP_ID } from '../../config/constants';
 
 const AppDataContext = React.createContext(!undefined);
 

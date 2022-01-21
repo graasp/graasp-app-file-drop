@@ -3,9 +3,6 @@ import {
   DEFAULT_POST_REQUEST,
   DEFAULT_PATCH_REQUEST,
   DEFAULT_DELETE_REQUEST,
-  // APP_INSTANCE_RESOURCES_ENDPOINT,
-  APP_DATA_ENDPOINT,
-  APP_ITEMS_ENDPOINT,
 } from '../config/api';
 import {
   FLAG_GETTING_APP_INSTANCE_RESOURCES,
@@ -34,6 +31,10 @@ import {
 } from '../constants/messages';
 import { APP_INSTANCE_RESOURCE_FORMAT } from '../config/formats';
 import { DEFAULT_VISIBILITY } from '../config/settings';
+import {
+  buildDeleteResourceRoute,
+  buildGetAppResourcesRoute,
+} from '../api/routes';
 
 const flagGettingAppInstanceResources = flag(
   FLAG_GETTING_APP_INSTANCE_RESOURCES,
@@ -49,8 +50,7 @@ const flagDeletingAppInstanceResource = flag(
 const refreshExpiredToken = (response, dispatch) => {
   if (
     // todo: refactor using global constants
-    response.status === 401 &&
-    response.message === 'Auth token does not match targeted item'
+    response.status === 401
   ) {
     dispatch(getAuthToken());
 
@@ -58,13 +58,10 @@ const refreshExpiredToken = (response, dispatch) => {
   }
 };
 
-const getAppInstanceResources = async ({
-  // userId,
-  sessionId,
-  type,
-  // include public resources by default
-  // includePublic = true,
-} = {}) => async (dispatch, getState) => {
+const getAppInstanceResources = async ({ sessionId, type } = {}) => async (
+  dispatch,
+  getState,
+) => {
   dispatch(flagGettingAppInstanceResources(true));
   try {
     const {
@@ -98,15 +95,7 @@ const getAppInstanceResources = async ({
       });
     }
 
-    // const queryParams = `appInstanceId=${appInstanceId}&includePublic=${includePublic}`;
-
-    // let url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}?${queryParams}`;
-    let url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}`;
-
-    // only add userId or sessionId, not both
-    // if (userId) {
-    //   url += `&userId=${userId}`;
-    // } else
+    let url = `${apiHost}/${buildGetAppResourcesRoute(itemId)}`;
     if (sessionId) {
       url += `&sessionId=${sessionId}`;
     }
@@ -184,20 +173,16 @@ const postAppInstanceResource = async ({
       });
     }
 
-    // const url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}`;
-    const url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}`;
+    const url = `${apiHost}/${buildGetAppResourcesRoute(itemId)}`;
 
     const body = {
       data,
       type,
       format: APP_INSTANCE_RESOURCE_FORMAT,
       appInstance: appInstanceId,
-      // here you can specify who the resource will belong to
-      // but applies if the user making the request is an admin
       user: userId,
       visibility,
     };
-    // const type2 = { type };
 
     const response = await fetch(url, {
       body: JSON.stringify({
@@ -272,9 +257,7 @@ const patchAppInstanceResource = async ({ id, data } = {}) => async (
       return showErrorToast(MISSING_APP_INSTANCE_RESOURCE_ID_MESSAGE);
     }
 
-    // const url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}/${id}`;
-    const url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}/${id}`;
-
+    const url = `${apiHost}/${buildDeleteResourceRoute({ itemId, id })}`;
     const body = {
       data,
     };
@@ -348,9 +331,10 @@ const deleteAppInstanceResource = async payload => async (
         },
       });
     }
-    // const url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}/${identifier}`;
-    const url = `${apiHost}/${APP_ITEMS_ENDPOINT}/${itemId}/${APP_DATA_ENDPOINT}/${identifier}`;
-
+    const url = `${apiHost}/${buildDeleteResourceRoute({
+      itemId,
+      identifier,
+    })}`;
     const response = await fetch(url, {
       ...DEFAULT_DELETE_REQUEST,
       headers: {

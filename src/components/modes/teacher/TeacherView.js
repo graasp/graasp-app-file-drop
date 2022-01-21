@@ -84,7 +84,6 @@ export class TeacherView extends Component {
       PropTypes.shape({
         // we need to specify number to avoid warnings with local server
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        // _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         appInstanceId: PropTypes.string,
         data: PropTypes.arrayOf(PropTypes.shape({})),
         type: PropTypes.string,

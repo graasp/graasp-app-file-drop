@@ -16,6 +16,7 @@ export const APP_NAME = 'Graasp';
 export const ENV = {
   DEVELOPMENT: 'development',
 };
+export const GRAASP_APP_ID = process.env.REACT_APP_GRAASP_APP_ID;
 
 export const NODE_ENV =
   ENV_NODE_ENV ||
