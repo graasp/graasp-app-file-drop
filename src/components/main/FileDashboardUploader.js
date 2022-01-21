@@ -10,7 +10,6 @@ import { useMutation } from '../../config/queryClient';
 import configureUppy from '../../utils/uppy';
 import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 import { AppDataContext } from '../context/AppDataContext';
-import { UPLOAD_FILES_METHODS } from '../../enums';
 import notifier from '../../middlewares/notifier';
 
 const { uploadFileRoutine } = routines;
@@ -23,8 +22,6 @@ const FileDashboardUploader = ({ value }) => {
     MUTATION_KEYS.FILE_UPLOAD,
   );
 
-  const method = UPLOAD_FILES_METHODS.DEFAULT;
-
   const onComplete = result => {
     setReFetch(!reFetch);
     if (!result?.failed.length) {
@@ -34,15 +31,7 @@ const FileDashboardUploader = ({ value }) => {
   };
 
   const onUpload = () => {
-    switch (method) {
-      case UPLOAD_FILES_METHODS.S3:
-        break;
-
-      case UPLOAD_FILES_METHODS.DEFAULT:
-      default:
-        notifier({ type: uploadFileRoutine.REQUEST });
-        break;
-    }
+    notifier({ type: uploadFileRoutine.REQUEST });
   };
 
   const onError = error => {
