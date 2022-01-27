@@ -1,119 +1,41 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
-import { getContext, getAppInstance } from '../actions';
-import { DEFAULT_LANG, DEFAULT_MODE } from '../config/settings';
-import { DEFAULT_VIEW } from '../config/views';
+import React, { useContext } from 'react';
 import TeacherMode from './modes/teacher/TeacherMode';
-import Loader from './common/Loader';
 import StudentMode from './modes/student/StudentMode';
-import USER_TYPES from '../config/userTypes';
+import { AppDataContext } from './context/AppDataContext';
+import ModalProviders from './context/ModalProviders';
+import FileUploader from './main/FileUploader';
+import Loader from './common/Loader';
 
-export class App extends Component {
-  static propTypes = {
-    i18n: PropTypes.shape({
-      defaultNS: PropTypes.string,
-      changeLanguage: PropTypes.func,
-    }).isRequired,
-    dispatchGetContext: PropTypes.func.isRequired,
-    dispatchGetAppInstance: PropTypes.func.isRequired,
-    appInstanceId: PropTypes.string,
-    lang: PropTypes.string,
-    mode: PropTypes.string,
-    view: PropTypes.string,
-    userType: PropTypes.string,
-    ready: PropTypes.bool.isRequired,
-    standalone: PropTypes.bool.isRequired,
-  };
+const App = () => {
+  const { mode, view, token } = useContext(AppDataContext);
 
-  static defaultProps = {
-    lang: DEFAULT_LANG,
-    mode: DEFAULT_MODE,
-    view: DEFAULT_VIEW,
-    appInstanceId: null,
-    userType: null,
-  };
-
-  constructor(props) {
-    super(props);
-    // first thing to do is get the context
-    props.dispatchGetContext();
-    // then get the app instance
-    props.dispatchGetAppInstance();
-  }
-
-  componentDidMount() {
-    const { lang } = this.props;
-    // set the language on first load
-    this.handleChangeLang(lang);
-  }
-
-  componentDidUpdate({ lang: prevLang, appInstanceId: prevAppInstanceId }) {
-    const { lang, appInstanceId, dispatchGetAppInstance } = this.props;
-    // handle a change of language
-    if (lang !== prevLang) {
-      this.handleChangeLang(lang);
-    }
-    // handle receiving the app instance id
-    if (appInstanceId !== prevAppInstanceId) {
-      dispatchGetAppInstance();
-    }
-  }
-
-  handleChangeLang = lang => {
-    const { i18n } = this.props;
-    i18n.changeLanguage(lang);
-  };
-
-  render() {
-    const { mode, view, ready, standalone, userType } = this.props;
-
-    if (!standalone && !ready) {
-      return <Loader />;
-    }
-
+  if (token != null) {
     switch (mode) {
       // show teacher view when in producer (educator) mode
       case 'teacher':
       case 'producer':
       case 'educator':
       case 'admin':
-        // unless the user is a viewer
-        if (userType === USER_TYPES.VIEWER) {
-          return <StudentMode />;
-        }
-        return <TeacherMode view={view} />;
+        return (
+          <ModalProviders>
+            <FileUploader />
+            <TeacherMode view={view} />
+          </ModalProviders>
+        );
 
       // by default go with the consumer (learner) mode
       case 'student':
       case 'consumer':
       case 'learner':
       default:
-        return <StudentMode />;
+        return (
+          <ModalProviders>
+            <FileUploader />
+            <StudentMode />
+          </ModalProviders>
+        );
     }
   }
-}
-
-const mapStateToProps = ({ context, appInstance }) => ({
-  headerVisible: appInstance.content.settings.headerVisible,
-  standalone: context.standalone,
-  lang: context.lang,
-  mode: context.mode,
-  view: context.view,
-  userType: context.userType,
-  appInstanceId: context.appInstanceId,
-  ready: appInstance.ready,
-});
-
-const mapDispatchToProps = {
-  dispatchGetContext: getContext,
-  dispatchGetAppInstance: getAppInstance,
+  return <Loader />;
 };
-
-const ConnectedApp = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(App);
-
-export default withTranslation()(ConnectedApp);
+export default App;

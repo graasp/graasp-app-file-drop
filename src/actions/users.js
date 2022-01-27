@@ -1,22 +1,19 @@
-import { flag, getApiContext, isErrorResponse, postMessage } from './common';
+import { flag, isErrorResponse, postMessage } from './common';
 import {
   FLAG_GETTING_USERS,
   GET_USERS,
   GET_USERS_FAILED,
   GET_USERS_SUCCEEDED,
 } from '../types';
-import {
-  DEFAULT_GET_REQUEST,
-  SPACES_ENDPOINT,
-  USERS_ENDPOINT,
-} from '../config/api';
+import { DEFAULT_GET_REQUEST } from '../config/api';
+import { buildGetContextRoute } from '../api/routes';
 
 const flagGettingUsers = flag(FLAG_GETTING_USERS);
 
 const getUsers = async () => async (dispatch, getState) => {
   dispatch(flagGettingUsers(true));
   try {
-    const { spaceId, apiHost, offline, standalone } = getApiContext(getState);
+    const { apiHost, offline, standalone, itemId, token } = getState().context;
 
     // if standalone, you cannot connect to api
     if (standalone) {
@@ -30,14 +27,19 @@ const getUsers = async () => async (dispatch, getState) => {
       });
     }
 
-    const url = `//${apiHost + SPACES_ENDPOINT}/${spaceId}/${USERS_ENDPOINT}`;
-
-    const response = await fetch(url, DEFAULT_GET_REQUEST);
+    const url = `${apiHost}/${buildGetContextRoute(itemId)}`;
+    const response = await fetch(url, {
+      ...DEFAULT_GET_REQUEST,
+      headers: {
+        ...DEFAULT_GET_REQUEST.headers,
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     // throws if it is an error
     await isErrorResponse(response);
 
-    const users = response.json();
+    const users = (await response.json())?.members;
     return dispatch({
       type: GET_USERS_SUCCEEDED,
       payload: users,

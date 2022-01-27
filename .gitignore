@@ -28,6 +28,9 @@ yarn-error.log*
 # include encrypted environment variables
 !.env*.encrypted
 
+# cache
+.eslintcache
+
 # exclude keys
 *.aes
 
@@ -37,3 +40,11 @@ yarn-error.log*
 
 # exclude local database
 db.json
+
+# yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

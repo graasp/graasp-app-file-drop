@@ -73,9 +73,21 @@ class StudentView extends Component {
     }
   };
 
-  renderActions({ visibility, id, uri, user }) {
+  renderActions({ visibility, id, uri, memberId }) {
     const { t, currentUserId } = this.props;
     const actions = [];
+    // students can always delete their own files
+    if (memberId === currentUserId) {
+      actions.push(
+        <IconButton
+          data-cy={TABLE_CELL_FILE_ACTION_DELETE}
+          color="primary"
+          onClick={() => this.handleDelete({ id, uri })}
+        >
+          <DeleteIcon />
+        </IconButton>,
+      );
+    }
     if (visibility === PUBLIC_VISIBILITY) {
       actions.push(
         <Tooltip title={t('This file was uploaded for everyone.')}>
@@ -88,18 +100,6 @@ class StudentView extends Component {
       );
     }
 
-    // students can always delete their own files
-    if (user === currentUserId) {
-      actions.push(
-        <IconButton
-          data-cy={TABLE_CELL_FILE_ACTION_DELETE}
-          color="primary"
-          onClick={() => this.handleDelete({ id, uri })}
-        >
-          <DeleteIcon />
-        </IconButton>,
-      );
-    }
     return actions;
   }
 
@@ -117,7 +117,16 @@ class StudentView extends Component {
     }
     // map each app instance resource to a row in the table
     return appInstanceResources.map(
-      ({ _id, id, data: { name, uri }, visibility, createdAt, user }) => {
+      ({
+        _id,
+        id,
+        data: {
+          data: { name, uri },
+          visibility,
+        },
+        createdAt,
+        memberId,
+      }) => {
         const identifier = id || _id;
         return (
           <TableRow id={identifier} key={identifier}>
@@ -135,7 +144,12 @@ class StudentView extends Component {
               </a>
             </TableCell>
             <TableCell>
-              {this.renderActions({ visibility, id: identifier, uri, user })}
+              {this.renderActions({
+                visibility,
+                id: identifier,
+                uri,
+                memberId,
+              })}
             </TableCell>
           </TableRow>
         );

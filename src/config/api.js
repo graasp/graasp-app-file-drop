@@ -5,12 +5,15 @@ export const LOCAL_API_HOST = 'localhost:3636';
 export const FILE_UPLOAD_ENDPOINT = 'https://graasp.eu/files';
 
 // endpoints
+export const ACTIONS_ENDPOINT = 'app-action';
+export const APP_DATA_ENDPOINT = 'app-data';
 export const APP_INSTANCES_ENDPOINT = '/app-instances';
 export const APP_INSTANCE_RESOURCES_ENDPOINT = '/app-instance-resources';
 export const SPACES_ENDPOINT = '/spaces';
 // users endpoint is currently used in conjunction with spaces endpoint
 // e.g. `${SPACES_ENDPOINT}/${spaceId}/${USERS_ENDPOINT}`
 export const USERS_ENDPOINT = 'users';
+export const APP_ITEMS_ENDPOINT = 'app-items';
 
 // request defaults
 const DEFAULT_REQUEST = {

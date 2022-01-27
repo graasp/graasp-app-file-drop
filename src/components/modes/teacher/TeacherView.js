@@ -70,6 +70,12 @@ export class TeacherView extends Component {
       fab: PropTypes.string,
       teacherView: PropTypes.string,
     }).isRequired,
+    members: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+      }),
+    ),
     dispatchGetUsers: PropTypes.func.isRequired,
     dispatchDeleteAppInstanceResource: PropTypes.func.isRequired,
     // inside the shape method you should put the shape
@@ -78,17 +84,16 @@ export class TeacherView extends Component {
       PropTypes.shape({
         // we need to specify number to avoid warnings with local server
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         appInstanceId: PropTypes.string,
-        data: PropTypes.object,
+        data: PropTypes.arrayOf(PropTypes.shape({})),
+        type: PropTypes.string,
       }),
     ),
-    // this is the shape of the select options for students
-    users: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   };
 
   static defaultProps = {
     appInstanceResources: [],
+    members: [],
   };
 
   constructor(props) {
@@ -139,7 +144,7 @@ export class TeacherView extends Component {
   }
 
   renderAppInstanceResources() {
-    const { appInstanceResources, users, t } = this.props;
+    const { appInstanceResources, members, t } = this.props;
     // if there are no resources, show an empty table
     if (!appInstanceResources.length) {
       return (
@@ -150,10 +155,23 @@ export class TeacherView extends Component {
         </TableRow>
       );
     }
+    const anonymousUser = {
+      name: t('Anonymous'),
+    };
     // map each app instance resource to a row in the table
     return appInstanceResources.map(
-      ({ _id, id, data: { name, uri }, user, createdAt, visibility }) => {
-        const userObj = users.find(student => student.id === user) || {};
+      ({
+        _id,
+        id,
+        data: {
+          data: { name, uri },
+          visibility,
+        },
+        memberId,
+        createdAt,
+      }) => {
+        const userObj =
+          members.find(member => member.id === memberId) || anonymousUser;
         const identifier = id || _id;
         return (
           <TableRow key={identifier}>
@@ -215,7 +233,7 @@ export class TeacherView extends Component {
 
 // get the app instance resources that are saved in the redux store
 const mapStateToProps = ({ users, appInstanceResources }) => ({
-  users: users.content,
+  members: users.content,
   appInstanceResources: _.sortBy(appInstanceResources.content, [
     'createdAt',
   ]).reverse(),

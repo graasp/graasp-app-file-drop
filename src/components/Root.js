@@ -1,7 +1,9 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactGa from 'react-ga';
 import { I18nextProvider } from 'react-i18next';
+import ReduxToastr from 'react-redux-toastr';
 import {
   MuiThemeProvider,
   createMuiTheme,
@@ -14,11 +16,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import i18nConfig from '../config/i18n';
 import App from './App';
 import {
+  QueryClientProvider,
+  queryClient,
+  ReactQueryDevtools,
+} from '../config/queryClient';
+import configureStore from '../store/configure';
+import {
   REACT_APP_GRAASP_APP_ID,
   REACT_APP_GRAASP_DEVELOPER_ID,
   REACT_APP_VERSION,
   REACT_APP_GOOGLE_ANALYTICS_ID,
 } from '../config/env';
+import { SHOW_NOTIFICATIONS, NODE_ENV, ENV } from '../config/constants';
+import { AppDataContextProvider } from './context/AppDataContext';
 
 ReactGa.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
 ReactGa.ga(
@@ -58,14 +68,26 @@ const theme = createMuiTheme({
   },
 });
 
+const { store } = configureStore();
+
 const Root = ({ classes }) => (
   <div className={classes.root}>
-    <MuiThemeProvider theme={theme}>
-      <I18nextProvider i18n={i18nConfig}>
-        <App />
-        <ToastContainer />
-      </I18nextProvider>
-    </MuiThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <MuiThemeProvider theme={theme}>
+        <I18nextProvider i18n={i18nConfig}>
+          <Provider store={store}>
+            {SHOW_NOTIFICATIONS && <ReduxToastr />}
+            <AppDataContextProvider>
+              <App />
+            </AppDataContextProvider>
+            <ToastContainer />
+          </Provider>
+        </I18nextProvider>
+      </MuiThemeProvider>
+      {NODE_ENV === ENV.DEVELOPMENT && (
+        <ReactQueryDevtools initialIsOpen={false} />
+      )}
+    </QueryClientProvider>
   </div>
 );
 
