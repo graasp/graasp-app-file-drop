@@ -1,20 +1,20 @@
 import React, { useContext } from 'react';
-import { DEFAULT_VIEW, FEEDBACK_VIEW } from '../../../config/views';
 import Header from '../../layout/Header';
-import StudentAppResources from './StudentAppResources';
-import { AppDataContext } from '../../context/AppDataContext';
+import { Context } from '../../context/ContextContext';
+import CONTEXTS from '../../../config/contexts';
+import AppDataTable from '../../common/AppDataTable';
 
 const StudentMode = () => {
-  const context = useContext(AppDataContext);
-  const { view, headerVisible, standalone } = context;
-  switch (view) {
-    case FEEDBACK_VIEW:
-    case DEFAULT_VIEW:
+  const context = useContext(Context);
+  const standalone = context?.get('standalone');
+  const settings = context.get('settings');
+  switch (context.get('context')) {
+    case CONTEXTS.PLAYER:
     default:
       return (
         <>
-          {headerVisible || standalone ? <Header /> : null}
-          <StudentAppResources />
+          {settings?.headerVisible || standalone ? <Header /> : null}
+          <AppDataTable showMember={false} />
         </>
       );
   }

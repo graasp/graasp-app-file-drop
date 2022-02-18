@@ -9,13 +9,12 @@
 // ***********************************************
 //
 
-const { GET_APP_INSTANCE_SUCCEEDED } = require('../../src/types');
 const { DEFAULT_MODE } = require('../../src/config/settings');
 const { LOAD_PAGE_PAUSE } = require('../constants');
 
-Cypress.Commands.add('postMessage', message => {
+Cypress.Commands.add('postMessage', (message) => {
   const msg = JSON.stringify(message);
-  cy.window().then(win => win.postMessage(msg, '*'));
+  cy.window().then((win) => win.postMessage(msg, '*'));
 });
 
 Cypress.Commands.add(
@@ -38,7 +37,7 @@ Cypress.Commands.add(
     cy.wait(LOAD_PAGE_PAUSE);
 
     // simulate get appInstance
-    const msg = { type: GET_APP_INSTANCE_SUCCEEDED, payload: {} };
-    cy.postMessage(msg);
+    // const msg = { type: GET_APP_INSTANCE_SUCCEEDED, payload: {} };
+    // cy.postMessage(msg);
   },
 );

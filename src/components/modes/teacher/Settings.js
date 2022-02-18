@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import React, { useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
+import Fab from '@material-ui/core/Fab';
 import Switch from '@material-ui/core/Switch';
-import { Tooltip } from '@material-ui/core';
-import { connect } from 'react-redux';
+import Tooltip from '@material-ui/core/Tooltip';
+import SettingsIcon from '@material-ui/icons/Settings';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { withTranslation } from 'react-i18next';
-import { closeSettings, patchAppInstance } from '../../../actions';
-import Loader from '../../common/Loader';
+import { Context } from '../../context/ContextContext';
+import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
 
 function getModalStyle() {
   const top = 50;
@@ -21,88 +21,74 @@ function getModalStyle() {
   };
 }
 
-const styles = theme => ({
+const useStyles = makeStyles((theme) => ({
+  fab: {
+    margin: theme.spacing(1),
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
   paper: {
     position: 'absolute',
-    width: theme.spacing.unit * 50,
+    width: theme.spacing(50),
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
+    padding: theme.spacing(4),
     outline: 'none',
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
-});
+}));
 
-class Settings extends Component {
-  static propTypes = {
-    classes: PropTypes.shape({
-      paper: PropTypes.string,
-    }).isRequired,
-    open: PropTypes.bool.isRequired,
-    activity: PropTypes.bool.isRequired,
-    settings: PropTypes.shape({
-      headerVisible: PropTypes.bool.isRequired,
-      publicStudentUploads: PropTypes.bool.isRequired,
-    }).isRequired,
-    t: PropTypes.func.isRequired,
-    dispatchCloseSettings: PropTypes.func.isRequired,
-    dispatchPatchAppInstance: PropTypes.func.isRequired,
-    i18n: PropTypes.shape({
-      defaultNS: PropTypes.string,
-    }).isRequired,
-  };
+const Settings = () => {
+  const [open, setOpen] = useState(false);
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const context = useContext(Context);
+  const settings = context?.get('settings');
+  const { mutate: updateSettings } = useMutation(MUTATION_KEYS.PATCH_SETTINGS);
 
-  saveSettings = settingsToChange => {
-    const { settings, dispatchPatchAppInstance } = this.props;
+  const saveSettings = (settingsToChange) => {
     const newSettings = {
       ...settings,
       ...settingsToChange,
     };
-    dispatchPatchAppInstance({
-      data: newSettings,
-    });
+    updateSettings(newSettings);
   };
 
-  handleChangeHeaderVisibility = () => {
-    const {
-      settings: { headerVisible },
-    } = this.props;
+  const handleChangeHeaderVisibility = () => {
+    const { headerVisible } = settings;
     const settingsToChange = {
       headerVisible: !headerVisible,
     };
-    this.saveSettings(settingsToChange);
+    saveSettings(settingsToChange);
   };
 
-  handleChangeStudentUploadVisibility = () => {
-    const {
-      settings: { publicStudentUploads },
-    } = this.props;
+  const handleChangeStudentUploadVisibility = () => {
+    const { publicStudentUploads } = settings;
     const settingsToChange = {
       publicStudentUploads: !publicStudentUploads,
     };
-    this.saveSettings(settingsToChange);
+    saveSettings(settingsToChange);
   };
 
-  handleClose = () => {
-    const { dispatchCloseSettings } = this.props;
-    dispatchCloseSettings();
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  renderModalContent() {
-    const { t, settings, activity } = this.props;
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const renderModalContent = () => {
     const { headerVisible, publicStudentUploads } = settings;
-
-    if (activity) {
-      return <Loader />;
-    }
 
     const headerVisibilitySwitch = (
       <Switch
         color="primary"
         checked={headerVisible}
-        onChange={this.handleChangeHeaderVisibility}
+        onChange={handleChangeHeaderVisibility}
         value="headerVisibility"
       />
     );
@@ -111,7 +97,7 @@ class Settings extends Component {
       <Switch
         color="primary"
         checked={publicStudentUploads}
-        onChange={this.handleChangeStudentUploadVisibility}
+        onChange={handleChangeStudentUploadVisibility}
         value="headerVisibility"
       />
     );
@@ -134,52 +120,33 @@ class Settings extends Component {
         </Tooltip>
       </>
     );
-  }
-
-  render() {
-    const { open, classes, t } = this.props;
-
-    return (
-      <div>
-        <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          open={open}
-          onClose={this.handleClose}
-        >
-          <div style={getModalStyle()} className={classes.paper}>
-            <Typography variant="h5" id="modal-title">
-              {t('Settings')}
-            </Typography>
-            {this.renderModalContent()}
-          </div>
-        </Modal>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = ({ layout, appInstance }) => {
-  return {
-    open: layout.settings.open,
-    settings: {
-      // by default this is true
-      headerVisible: appInstance.content.settings.headerVisible,
-      publicStudentUploads: appInstance.content.settings.publicStudentUploads,
-    },
-    activity: Boolean(appInstance.activity.length),
   };
+
+  return (
+    <>
+      <Fab
+        color="primary"
+        aria-label="Settings"
+        className={classes.fab}
+        onClick={handleOpen}
+      >
+        <SettingsIcon />
+      </Fab>
+      <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={open}
+        onClose={handleClose}
+      >
+        <div style={getModalStyle()} className={classes.paper}>
+          <Typography variant="h5" id="modal-title">
+            {t('Settings')}
+          </Typography>
+          {renderModalContent()}
+        </div>
+      </Modal>
+    </>
+  );
 };
 
-const mapDispatchToProps = {
-  dispatchCloseSettings: closeSettings,
-  dispatchPatchAppInstance: patchAppInstance,
-};
-
-const ConnectedComponent = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Settings);
-const TranslatedComponent = withTranslation()(ConnectedComponent);
-
-export default withStyles(styles)(TranslatedComponent);
+export default Settings;

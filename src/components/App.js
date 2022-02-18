@@ -1,41 +1,35 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
 import TeacherMode from './modes/teacher/TeacherMode';
 import StudentMode from './modes/student/StudentMode';
-import { AppDataContext } from './context/AppDataContext';
 import ModalProviders from './context/ModalProviders';
-import FileUploader from './main/FileUploader';
-import Loader from './common/Loader';
+import { DEFAULT_PERMISSION, PERMISSION_LEVELS } from '../config/constants';
+import { Context } from './context/ContextContext';
+import { TokenProvider } from './context/TokenContext';
 
 const App = () => {
-  const { mode, view, token } = useContext(AppDataContext);
+  const context = useContext(Context);
 
-  if (token != null) {
-    switch (mode) {
-      // show teacher view when in producer (educator) mode
-      case 'teacher':
-      case 'producer':
-      case 'educator':
-      case 'admin':
+  const renderContent = () => {
+    switch (context?.get('permission', DEFAULT_PERMISSION)) {
+      case PERMISSION_LEVELS.WRITE:
+      case PERMISSION_LEVELS.ADMIN:
         return (
           <ModalProviders>
-            <FileUploader />
-            <TeacherMode view={view} />
+            <TeacherMode />
           </ModalProviders>
         );
 
-      // by default go with the consumer (learner) mode
-      case 'student':
-      case 'consumer':
-      case 'learner':
+      case PERMISSION_LEVELS.READ:
       default:
         return (
           <ModalProviders>
-            <FileUploader />
             <StudentMode />
           </ModalProviders>
         );
     }
-  }
-  return <Loader />;
+  };
+
+  return <TokenProvider>{renderContent()}</TokenProvider>;
 };
 export default App;

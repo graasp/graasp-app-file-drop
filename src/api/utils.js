@@ -27,7 +27,7 @@ export const DEFAULT_PUT = {
   credentials: 'include',
 };
 
-export const failOnError = res => {
+export const failOnError = (res) => {
   if (!res.ok) {
     throw new Error(res.statusText);
   }
