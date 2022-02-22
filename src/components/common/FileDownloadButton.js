@@ -6,6 +6,7 @@ import { API_ROUTES } from '../../config/queryClient';
 import { TokenContext } from '../context/TokenContext';
 import downloadHelper from './utils';
 import { Context } from '../context/ContextContext';
+import { TABLE_CELL_FILE_ACTION_DOWNLOAD_CYPRESS } from '../../config/selectors';
 
 const FileDownloadButton = ({ data }) => {
   const context = useContext(Context);
@@ -29,7 +30,11 @@ const FileDownloadButton = ({ data }) => {
   };
 
   return (
-    <IconButton color="primary" onClick={handleOpenDownloader}>
+    <IconButton
+      color="primary"
+      onClick={handleOpenDownloader}
+      data-cy={TABLE_CELL_FILE_ACTION_DOWNLOAD_CYPRESS}
+    >
       <ArrowDownward />
     </IconButton>
   );

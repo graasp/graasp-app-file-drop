@@ -7,11 +7,16 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { useTranslation } from 'react-i18next';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { VISIBILITIES } from '../../config/settings';
-import { TABLE_CELL_FILE_CREATED_AT } from '../../constants/selectors';
 import { Context } from '../context/ContextContext';
 import { PERMISSION_LEVELS } from '../../config/constants';
 import FileDownloadButton from './FileDownloadButton';
 import DeleteAppDataButton from './DeleteAppDataButton';
+import {
+  buildTableRowId,
+  TABLE_CELL_FILE_CREATED_AT_CYPRESS,
+  TABLE_CELL_FILE_NAME_CYPRESS,
+  TABLE_CELL_FILE_USER_CYPRESS,
+} from '../../config/selectors';
 
 const AppDataRow = ({ data, showMember, member }) => {
   const { t } = useTranslation();
@@ -32,12 +37,8 @@ const AppDataRow = ({ data, showMember, member }) => {
       data.memberId === memberId ||
       [PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(permission)
     ) {
-      actions.push(
-        <>
-          <FileDownloadButton data={data} />
-          <DeleteAppDataButton data={data} />
-        </>,
-      );
+      actions.push(<FileDownloadButton data={data} key="download" />);
+      actions.push(<DeleteAppDataButton data={data} key="delete" />);
     }
     if (visibility === VISIBILITIES.ITEM) {
       actions.push(
@@ -57,12 +58,18 @@ const AppDataRow = ({ data, showMember, member }) => {
   };
 
   return (
-    <TableRow key={data.id}>
-      <TableCell scope="row" data-cy={TABLE_CELL_FILE_CREATED_AT}>
+    <TableRow id={buildTableRowId(data.id)}>
+      <TableCell scope="row" data-cy={TABLE_CELL_FILE_CREATED_AT_CYPRESS}>
         {data.createdAt && new Date(data.createdAt).toLocaleString()}
       </TableCell>
-      {showMember && <TableCell>{renderUsername()}</TableCell>}
-      <TableCell>{data.data.name}</TableCell>
+      {showMember && (
+        <TableCell data-cy={TABLE_CELL_FILE_USER_CYPRESS}>
+          {renderUsername()}
+        </TableCell>
+      )}
+      <TableCell data-cy={TABLE_CELL_FILE_NAME_CYPRESS}>
+        {data.data.name}
+      </TableCell>
       <TableCell>{renderActions()}</TableCell>
     </TableRow>
   );
@@ -79,15 +86,13 @@ AppDataRow.propTypes = {
     memberId: PropTypes.string,
     type: PropTypes.string,
     visibility: PropTypes.string,
-    createdAt: PropTypes.string,
+    createdAt: PropTypes.number,
     creator: PropTypes.string,
     updatedAt: PropTypes.string,
     data: PropTypes.shape({
       name: PropTypes.string,
       type: PropTypes.string,
-      extra: PropTypes.shape({
-        file: PropTypes.shape({}).isRequired,
-      }).isRequired,
+      extra: PropTypes.shape({}).isRequired,
     }).isRequired,
   }).isRequired,
 };

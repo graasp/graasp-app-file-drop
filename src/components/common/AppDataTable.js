@@ -13,6 +13,7 @@ import FileDashboardUploader from '../main/FileDashboardUploader';
 import { useAppContext, useAppData } from '../context/appData';
 import { useTranslation } from 'react-i18next';
 import AppDataRow from './AppDataRow';
+import { ROW_NO_FILES_UPLOADED_ID } from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,7 +71,11 @@ const AppDataTable = ({ showMember }) => {
               <TableBody>
                 {appData.isEmpty() ? (
                   <TableRow>
-                    <TableCell colSpan={4} align="center">
+                    <TableCell
+                      id={ROW_NO_FILES_UPLOADED_ID}
+                      colSpan={4}
+                      align="center"
+                    >
                       {t('No files have been uploaded.')}
                     </TableCell>
                   </TableRow>

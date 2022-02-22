@@ -10,6 +10,7 @@ import { ReactComponent as Logo } from '../../resources/logo.svg';
 import { Context } from '../context/ContextContext';
 import { PERMISSION_LEVELS } from '../../config/constants';
 import { queryClient, HOOK_KEYS } from '../../config/queryClient';
+import { HEADER_REFRESH_BUTTON_CYPRESS } from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +53,11 @@ const Header = () => {
       [PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(permission)
     ) {
       return [
-        <IconButton onClick={handleRefresh} key="refresh">
+        <IconButton
+          onClick={handleRefresh}
+          key="refresh"
+          data-cy={HEADER_REFRESH_BUTTON_CYPRESS}
+        >
           <RefreshIcon color="secondary" />
         </IconButton>,
       ];

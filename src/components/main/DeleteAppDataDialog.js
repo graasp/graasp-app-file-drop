@@ -8,8 +8,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
-import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
 import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
 
 const useStyles = makeStyles(() => ({
   confirmDeleteButton: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const DeleteResourceDialog = ({ appDataId, open, handleClose }) => {
+const DeleteAppDataDialog = ({ appDataId, open, handleClose }) => {
   const { t } = useTranslation();
 
   const { mutateAsync: deleteAppData } = useMutation(
@@ -64,14 +64,14 @@ const DeleteResourceDialog = ({ appDataId, open, handleClose }) => {
   );
 };
 
-DeleteResourceDialog.propTypes = {
+DeleteAppDataDialog.propTypes = {
   open: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
   appDataId: PropTypes.string.isRequired,
 };
 
-DeleteResourceDialog.defaultProps = {
+DeleteAppDataDialog.defaultProps = {
   open: false,
 };
 
-export default DeleteResourceDialog;
+export default DeleteAppDataDialog;

@@ -10,6 +10,10 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Context } from '../../context/ContextContext';
 import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
+import {
+  SETTINGS_BUTTON_CYPRESS,
+  SETTING_HEADER_VISIBILITY_SWITCH_CYPRESS,
+} from '../../../config/selectors';
 
 function getModalStyle() {
   const top = 50;
@@ -90,6 +94,7 @@ const Settings = () => {
         checked={headerVisible}
         onChange={handleChangeHeaderVisibility}
         value="headerVisibility"
+        data-cy={SETTING_HEADER_VISIBILITY_SWITCH_CYPRESS}
       />
     );
 
@@ -99,6 +104,8 @@ const Settings = () => {
         checked={publicStudentUploads}
         onChange={handleChangeStudentUploadVisibility}
         value="headerVisibility"
+        // todo: enable when feature is available
+        disabled
       />
     );
 
@@ -129,6 +136,7 @@ const Settings = () => {
         aria-label="Settings"
         className={classes.fab}
         onClick={handleOpen}
+        data-cy={SETTINGS_BUTTON_CYPRESS}
       >
         <SettingsIcon />
       </Fab>

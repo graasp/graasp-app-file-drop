@@ -4,7 +4,7 @@ import '@uppy/dashboard/dist/style.css';
 import { ROUTINES } from '@graasp/apps-query-client';
 import { Dashboard } from '@uppy/react';
 import { useTranslation } from 'react-i18next';
-import { FILE_UPLOAD_MAX_FILES, UPLOAD_METHOD } from '../../config/constants';
+import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
 import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import configureUppy from '../../utils/uppy';
 import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
@@ -19,6 +19,7 @@ const FileDashboardUploader = () => {
   const context = useContext(Context);
   const token = useContext(TokenContext);
   const itemId = context?.get('itemId');
+  const apiHost = context?.get('apiHost');
   const [uppy, setUppy] = useState(null);
   const { mutate: onFileUploadComplete } = useMutation(
     MUTATION_KEYS.FILE_UPLOAD,
@@ -26,9 +27,12 @@ const FileDashboardUploader = () => {
 
   const onComplete = (result) => {
     if (!result?.failed.length) {
+      console.log(result.successful);
       onFileUploadComplete({
         id: itemId,
-        data: result.successful?.map(({ response: { body } }) => body[0]),
+        data: result.successful
+          ?.map(({ response }) => response?.body?.[0])
+          .filter(Boolean),
       });
     }
     return false;
@@ -45,13 +49,12 @@ const FileDashboardUploader = () => {
   const applyUppy = () => {
     setUppy(
       configureUppy({
-        apiHost: context.get('apiHost'),
+        apiHost,
         itemId,
         token,
         onComplete,
         onError,
         onUpload,
-        method: UPLOAD_METHOD,
       }),
     );
   };

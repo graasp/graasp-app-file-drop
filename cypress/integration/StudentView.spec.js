@@ -1,365 +1,88 @@
-// import configureUppy from '../../src/utils/uppy';
-// import { FILE } from '../../src/config/appInstanceResourceTypes';
-// import {
-//   TABLE_CELL_FILE_NAME,
-//   TABLE_CELL_FILE_ACTION_DELETE,
-//   TABLE_CELL_FILE_CREATED_AT,
-//   ROW_NO_FILES_UPLOADED_ID,
-// } from '../../src/constants/selectors';
-// import { DEFAULT_VISIBILITY } from '../../src/config/settings';
-// import { appQueryParameters, studentUserId } from '../fixtures/queryParameters';
+import {
+  buildTableRowId,
+  DASHBOARD_UPLOADER_ID,
+  dataCyWrapper,
+  ROW_NO_FILES_UPLOADED_ID,
+  TABLE_CELL_FILE_ACTION_DOWNLOAD_CYPRESS,
+} from '../../src/config/selectors';
+import { MOCK_APP_DATA, MOCK_FILE } from '../fixtures/appData';
+import { checkRow, deleteFile } from '../support/utils';
 
-// const uploadFile = (
-//   uppy,
-//   { name, type, filepath, user, visibility = DEFAULT_VISIBILITY },
-// ) => {
-//   // programmatically add file to uppy, it will trigger the upload automatically
-//   const filename = name || filepath;
-//   uppy.addFile({
-//     name: filename,
-//     type,
-//     userId: user,
-//     data: { name: filename, path: filepath },
-//   });
+describe('<StudentView />', () => {
+  describe('Upload a file', () => {
+    beforeEach(() => {
+      cy.setUpApi({
+        database: { appData: [MOCK_APP_DATA] },
+        appContext: { memberId: MOCK_APP_DATA.creator },
+      });
+      cy.visit('/');
+    });
 
-//   // assert postMessage is sent to upload the file locally
-//   cy.get('@postMessage')
-//     // .should('be.calledWithMatch', `"type":"${POST_FILE}"`)
-//     .should('be.calledWithMatch', `"name":"${name}"`)
-//     .should('be.calledWithMatch', `"visibility":"${visibility}"`)
-//     .should('be.calledWithMatch', `"userId":"${user}"`)
-//     .should('be.calledWithMatch', `"path":"${filepath}"`);
-// };
+    it('uploading a file does not crash', () => {
+      // bug: for some reason miragejs interfers with uppy
+      // which always results in a successful requests and stops
+      cy.get(`#${DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`).attachFile(
+        MOCK_FILE,
+        {
+          subjectType: 'drag-n-drop',
+        },
+      );
+    });
 
-// const uploadFileSuccessfully = (uppy, file) => {
-//   uploadFile(uppy, file);
+    it('show already saved data', () => {
+      checkRow(MOCK_APP_DATA);
+    });
+  });
+  describe('Delete a file', () => {
+    beforeEach(() => {
+      cy.setUpApi({
+        database: { appData: [MOCK_APP_DATA] },
+        appContext: { memberId: MOCK_APP_DATA.creator },
+      });
+      cy.visit('/');
+    });
+    it('deleting a file successfully', () => {
+      const { id } = MOCK_APP_DATA;
+      deleteFile({ id });
 
-//   const { name, user, createdAt, uri, visibility = DEFAULT_VISIBILITY } = file;
+      // assert ui
+      cy.get(`#${ROW_NO_FILES_UPLOADED_ID}`).should('exist');
+    });
+  });
+  describe('Download a file', () => {
+    beforeEach(() => {
+      cy.setUpApi({
+        database: { appData: [MOCK_APP_DATA] },
+        appContext: { memberId: MOCK_APP_DATA.creator },
+      });
+      cy.visit('/');
+    });
+    it('downloading a file successfully', () => {
+      const { id } = MOCK_APP_DATA;
 
-//   // simulate post file success
-//   const payload = {
-//     data: { name, uri },
-//     createdAt,
-//     visibility,
-//     userId: user,
-//     type: FILE,
-//   };
-//   const message = {
-//     type: POST_FILE_SUCCEEDED,
-//     payload,
-//   };
-//   cy.postMessage(message);
+      // assert ui
+      cy.get(
+        `#${buildTableRowId(id)} ${dataCyWrapper(
+          TABLE_CELL_FILE_ACTION_DOWNLOAD_CYPRESS,
+        )}`,
+      ).click();
+    });
+  });
+  describe('Handling errors', () => {
+    it('Fail to delete a file still shows app data', () => {
+      const data = MOCK_APP_DATA;
+      const { id, creator } = data;
+      cy.setUpApi({
+        database: { appData: [data] },
+        appContext: { memberId: creator },
+        errors: { deleteAppDataShouldThrow: true },
+      });
+      cy.visit('/');
 
-//   // assert postMessage with corresponding appInstanceResource
-//   cy.get('@postMessage')
-//     .should('be.calledWithMatch', `"type":"${POST_APP_INSTANCE_RESOURCE}"`)
-//     .should('be.calledWithMatch', `"name":"${name}"`)
-//     .should('be.calledWithMatch', `"visibility":"${visibility}"`)
-//     .should('be.calledWithMatch', `"userId":"${user}"`)
-//     .should('be.calledWithMatch', `"uri":"${uri}"`);
+      deleteFile({ id });
+      cy.wait(1000);
 
-//   // simulate post appInstanceResource success
-//   // payload is obtained from post file request
-//   // generate some random id
-//   const id = Math.random()
-//     .toString(36)
-//     .substr(2, 9);
-//   const msg = {
-//     type: POST_APP_INSTANCE_RESOURCE_SUCCEEDED,
-//     payload: {
-//       id,
-//       data: { name, uri },
-//       createdAt,
-//       visibility,
-//       user,
-//       type: FILE,
-//     },
-//   };
-//   cy.postMessage(msg);
-
-//   // assert ui
-//   const rowSelector = `#${id}`;
-//   cy.get(`${rowSelector} [data-cy='${TABLE_CELL_FILE_NAME}']`)
-//     .should('have.text', name)
-//     .should('have.attr', 'href', uri);
-//   cy.get(`${rowSelector} [data-cy='${TABLE_CELL_FILE_ACTION_DELETE}']`).should(
-//     'exist',
-//   );
-//   cy.get(`${rowSelector} [data-cy='${TABLE_CELL_FILE_CREATED_AT}']`).should(
-//     'have.text',
-//     new Date(createdAt).toLocaleString(),
-//   );
-
-//   return id;
-// };
-
-// const deleteFile = ({ id, name, uri }) => {
-//   // click on delete
-//   cy.get(`#${id} [data-cy="${TABLE_CELL_FILE_ACTION_DELETE}"]`).click();
-
-//   // assert postMessage is sent to delete the app instance resource
-//   cy.get('@postMessage')
-//     .should('be.calledWithMatch', `"type":"${DELETE_APP_INSTANCE_RESOURCE}"`)
-//     .should('be.calledWithMatch', `"name":"${name}"`)
-//     .should('be.calledWithMatch', `"id":"${id}"`)
-//     .should('be.calledWithMatch', `"uri":"${uri}"`);
-// };
-
-// describe('<StudentView />', () => {
-//   describe('when offline = true', () => {
-//     let uppy = null;
-
-//     beforeEach(() => {
-//       cy.visitOffline({ appQueryParameters, userId: studentUserId });
-
-//       // create another identical uppy to simulate behavior
-//       uppy = configureUppy({
-//         offline: true,
-//         ...appQueryParameters,
-//         userId: studentUserId,
-//       });
-//     });
-
-//     describe('Upload a file', () => {
-//       it('uploading a file saves it locally and saves the corresponding appInstanceResource', () => {
-//         const fixturePath = 'icon.png';
-//         const name = 'myIcon';
-//         const createdAt = new Date();
-//         const uri = 'some/uri';
-//         uploadFileSuccessfully(uppy, {
-//           name,
-//           uri,
-//           type: 'image/png',
-//           filepath: fixturePath,
-//           createdAt,
-//           user: studentUserId,
-//         });
-//       });
-
-//       it('failing to upload a file throws error', () => {
-//         const fixturePath = 'icon.png';
-//         const name = 'myIcon';
-//         const createdAt = new Date();
-//         const uri = 'some/uri';
-//         uploadFile(uppy, {
-//           name,
-//           uri,
-//           type: 'image/png',
-//           filepath: fixturePath,
-//           createdAt,
-//           user: studentUserId,
-//         });
-
-//         // simulate post file failure
-//         const payload = 'the file was not uploaded';
-//         const message = {
-//           type: POST_FILE_FAILED,
-//           payload,
-//         };
-//         cy.postMessage(message);
-
-//         // assert ui
-//         cy.get(`#${ROW_NO_FILES_UPLOADED_ID}`).should('exist');
-
-//         // should show error message
-//         cy.get('.Toastify__toast--error').should('exist');
-//       });
-
-//       it('failing to save app instance resource still shows nothing', () => {
-//         const fixturePath = 'icon.png';
-//         const name = 'myIcon';
-//         const createdAt = new Date();
-//         const uri = 'some/uri';
-//         const visibility = DEFAULT_VISIBILITY;
-//         const user = studentUserId;
-//         uploadFile(uppy, {
-//           name,
-//           uri,
-//           type: 'image/png',
-//           filepath: fixturePath,
-//           createdAt,
-//           user,
-//         });
-
-//         // simulate post file success
-//         const payload = {
-//           data: { name, uri },
-//           createdAt,
-//           visibility,
-//           userId: user,
-//           type: FILE,
-//         };
-//         const message = {
-//           type: POST_FILE_SUCCEEDED,
-//           payload,
-//         };
-//         cy.postMessage(message);
-
-//         // assert postMessage with corresponding appInstanceResource
-//         cy.get('@postMessage')
-//           .should(
-//             'be.calledWithMatch',
-//             `"type":"${POST_APP_INSTANCE_RESOURCE}"`,
-//           )
-//           .should('be.calledWithMatch', `"name":"${name}"`)
-//           .should('be.calledWithMatch', `"visibility":"${visibility}"`)
-//           .should('be.calledWithMatch', `"userId":"${user}"`)
-//           .should('be.calledWithMatch', `"uri":"${uri}"`);
-
-//         // simulate post appInstanceResource failure
-//         const msg = {
-//           type: POST_APP_INSTANCE_RESOURCE_FAILED,
-//           payload: 'An error happened',
-//         };
-//         cy.postMessage(msg);
-
-//         // should show error message
-//         cy.get('.Toastify__toast--error').should('exist');
-//       });
-//     });
-//     describe('Delete a file', () => {
-//       it('deleting a file deletes the local copy and delete the corresponding appInstanceResource', () => {
-//         const fixturePath = 'icon.png';
-//         const name = 'myIcon';
-//         const createdAt = new Date();
-//         const uri = 'some/uri';
-//         const visibility = DEFAULT_VISIBILITY;
-//         const id = uploadFileSuccessfully(uppy, {
-//           name,
-//           type: 'image/png',
-//           filepath: fixturePath,
-//           createdAt,
-//           uri,
-//           visibility,
-//           user: studentUserId,
-//         });
-
-//         // click on delete button
-//         deleteFile({ name, uri, id });
-
-//         // simulate delete file appInstanceResource success
-//         const payload = {
-//           id,
-//           data: { name, uri },
-//           createdAt,
-//           visibility,
-//           user: studentUserId,
-//           type: FILE,
-//         };
-//         const message = {
-//           type: DELETE_APP_INSTANCE_RESOURCE_SUCCEEDED,
-//           payload,
-//         };
-//         cy.postMessage(message);
-
-//         // assert postMessage with corresponding appInstanceResource delete
-//         cy.get('@postMessage').should('be.calledWithMatch', id);
-
-//         // simulate delete file success
-//         // payload is obtain from post file request
-//         const msg = {
-//           type: DELETE_FILE_SUCCEEDED,
-//           payload,
-//         };
-//         cy.postMessage(msg);
-
-//         // assert ui
-//         cy.get(`#${ROW_NO_FILES_UPLOADED_ID}`).should('exist');
-//       });
-//       it('failing to delete an app instance resource keeps file information and throws error', () => {
-//         const fixturePath = 'icon.png';
-//         const name = 'myIcon';
-//         const createdAt = new Date();
-//         const uri = 'some/uri';
-//         const visibility = DEFAULT_VISIBILITY;
-//         const id = uploadFileSuccessfully(uppy, {
-//           name,
-//           type: 'image/png',
-//           filepath: fixturePath,
-//           createdAt,
-//           uri,
-//           visibility,
-//           user: studentUserId,
-//         });
-
-//         // click on delete button
-//         deleteFile({ name, uri, id });
-
-//         // simulate delete file appInstanceResource failure
-//         const message = {
-//           type: DELETE_APP_INSTANCE_RESOURCE_FAILED,
-//           payload: 'The file could not be deleted',
-//         };
-//         cy.postMessage(message);
-
-//         // assert ui
-//         const rowSelector = `#${id}`;
-//         cy.get(`${rowSelector} [data-cy='${TABLE_CELL_FILE_NAME}']`)
-//           .should('have.text', name)
-//           .should('have.attr', 'href', uri);
-//         cy.get(
-//           `${rowSelector} [data-cy='${TABLE_CELL_FILE_ACTION_DELETE}']`,
-//         ).should('exist');
-//         cy.get(
-//           `${rowSelector} [data-cy='${TABLE_CELL_FILE_CREATED_AT}']`,
-//         ).should('have.text', new Date(createdAt).toLocaleString());
-
-//         // should show error message
-//         cy.get('.Toastify__toast--error').should('exist');
-//       });
-
-//       it('failing to delete a file deletes information and does not throw error', () => {
-//         const fixturePath = 'icon.png';
-//         const name = 'myIcon';
-//         const createdAt = new Date();
-//         const uri = 'some/uri';
-//         const visibility = DEFAULT_VISIBILITY;
-//         const id = uploadFileSuccessfully(uppy, {
-//           name,
-//           type: 'image/png',
-//           filepath: fixturePath,
-//           createdAt,
-//           uri,
-//           visibility,
-//           user: studentUserId,
-//         });
-
-//         // click on delete button
-//         deleteFile({ name, uri, id });
-
-//         // simulate delete file appInstanceResource success
-//         const payload = {
-//           id,
-//           data: { name, uri },
-//           createdAt,
-//           visibility,
-//           userId: studentUserId,
-//           type: FILE,
-//         };
-//         const message = {
-//           type: DELETE_APP_INSTANCE_RESOURCE_SUCCEEDED,
-//           payload,
-//         };
-//         cy.postMessage(message);
-
-//         // assert postMessage with corresponding appInstanceResource delete
-//         cy.get('@postMessage')
-//           .should('be.calledWithMatch', `"type":"${DELETE_FILE}"`)
-//           .should('be.calledWithMatch', `"userId":"${studentUserId}"`)
-//           .should('be.calledWithMatch', `"name":"${name}"`)
-//           .should('be.calledWithMatch', `"uri":"${uri}"`);
-
-//         // simulate delete file failure
-//         // payload is obtain from post file request
-//         const msg = {
-//           type: DELETE_FILE_FAILED,
-//           payload: 'An error happened',
-//         };
-//         cy.postMessage(msg);
-
-//         // assert ui
-//         cy.get(`#${ROW_NO_FILES_UPLOADED_ID}`).should('exist');
-//       });
-//     });
-//   });
-// });
+      checkRow(data);
+    });
+  });
+});

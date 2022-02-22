@@ -6,8 +6,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Switch from '@material-ui/core/Switch';
-import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
 
 const SettingsModalContext = React.createContext();
 
