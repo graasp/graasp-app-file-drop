@@ -47,12 +47,10 @@ const configureUppy = ({
   });
 
   uppy.on('error', (error) => {
-    console.log('error: ', error);
     onError?.(error);
   });
 
   uppy.on('upload-error', (error) => {
-    console.log('error: ', error);
     onError?.(error);
   });
 
