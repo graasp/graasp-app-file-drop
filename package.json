@@ -11,7 +11,7 @@
   "homepage": ".",
   "license": "MIT",
   "dependencies": {
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git#11/fileContent",
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git",
     "@graasp/ui": "git://github.com/graasp/graasp-ui.git",
     "@material-ui/core": "4.12.3",
     "@material-ui/icons": "4.11.2",
