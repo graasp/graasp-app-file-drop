@@ -16,3 +16,9 @@ export const useAppContext = () => {
   const query = hooks.useAppContext({ token, itemId: context?.get('itemId') });
   return query;
 };
+
+export const useFileContent = (fileId, enabled) => {
+  const token = useContext(TokenContext);
+  const query = hooks.useFileContent({ token, fileId }, { enabled });
+  return query;
+};

@@ -19,7 +19,7 @@ describe('<StudentView />', () => {
     });
 
     it('uploading a file does not crash', () => {
-      // bug: for some reason miragejs interfers with uppy
+      // bug: for some reason miragejs interfers with uppy in cypress
       // which always results in a successful requests and stops
       cy.get(`#${DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`).attachFile(
         MOCK_FILE,

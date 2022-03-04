@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
 import { FILE_UPLOAD_MAX_FILES } from '../config/constants';

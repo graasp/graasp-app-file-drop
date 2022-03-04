@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
 import TeacherMode from './modes/teacher/TeacherMode';
 import StudentMode from './modes/student/StudentMode';

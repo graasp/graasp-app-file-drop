@@ -27,7 +27,6 @@ const FileDashboardUploader = () => {
 
   const onComplete = (result) => {
     if (!result?.failed.length) {
-      console.log(result.successful);
       onFileUploadComplete({
         id: itemId,
         data: result.successful
