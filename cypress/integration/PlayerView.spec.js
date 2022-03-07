@@ -8,7 +8,7 @@ import {
 import { MOCK_APP_DATA, MOCK_FILE } from '../fixtures/appData';
 import { checkRow, deleteFile } from '../support/utils';
 
-describe('<StudentView />', () => {
+describe('<PlayerView />', () => {
   describe('Upload a file', () => {
     beforeEach(() => {
       cy.setUpApi({

@@ -1,4 +1,5 @@
 import { PERMISSION_LEVELS } from '../../src/config/constants';
+import CONTEXTS from '../../src/config/contexts';
 import {
   buildTableRowId,
   DASHBOARD_UPLOADER_ID,
@@ -14,7 +15,7 @@ import {
 } from '../fixtures/appData';
 import { checkRow, deleteFile, openSettings } from '../support/utils';
 
-describe('<TeacherView />', () => {
+describe('<BuilderView />', () => {
   describe('Upload a file', () => {
     beforeEach(() => {
       cy.setUpApi({
@@ -22,6 +23,7 @@ describe('<TeacherView />', () => {
         appContext: {
           memberId: MOCK_APP_DATA.creator,
           permission: PERMISSION_LEVELS.ADMIN,
+          context: CONTEXTS.BUILDER,
         },
       });
       cy.visit('/');

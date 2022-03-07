@@ -7,7 +7,8 @@ import { PERMISSION_LEVELS } from '../../config/constants';
 
 const BuilderView = () => {
   const context = useContext(Context);
-  switch (context.get('context')) {
+  console.log('context: ', context.toJS());
+  switch (context.get('permission')) {
     case PERMISSION_LEVELS.ADMIN:
     case PERMISSION_LEVELS.WRITE:
       return (

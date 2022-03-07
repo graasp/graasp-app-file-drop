@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AppDataTable = ({ showMember }) => {
+  console.log('showMember: ', showMember);
   const classes = useStyles();
   const { t } = useTranslation();
   const { data: appContext, isLoading: isAppContextLoading } = useAppContext();

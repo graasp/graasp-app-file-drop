@@ -9,7 +9,7 @@ const PlayerView = () => {
   const standalone = context?.get('standalone');
   const settings = context.get('settings');
   const header = settings?.headerVisible || standalone ? <Header /> : null;
-  switch (context.get('context')) {
+  switch (context.get('permission')) {
     case PERMISSION_LEVELS.ADMIN:
     case PERMISSION_LEVELS.WRITE:
       return (
