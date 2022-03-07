@@ -8,12 +8,12 @@ import Switch from '@material-ui/core/Switch';
 import Tooltip from '@material-ui/core/Tooltip';
 import SettingsIcon from '@material-ui/icons/Settings';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Context } from '../../context/ContextContext';
-import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
+import { Context } from '../context/ContextContext';
+import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import {
   SETTINGS_BUTTON_CYPRESS,
   SETTING_HEADER_VISIBILITY_SWITCH_CYPRESS,
-} from '../../../config/selectors';
+} from '../../config/selectors';
 
 function getModalStyle() {
   const top = 50;
