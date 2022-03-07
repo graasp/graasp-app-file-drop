@@ -57,6 +57,7 @@ describe('<BuilderView />', () => {
         appContext: {
           memberId: MOCK_APP_DATA.creator,
           permission: PERMISSION_LEVELS.ADMIN,
+          context: CONTEXTS.BUILDER,
         },
       });
       cy.visit('/');
@@ -75,6 +76,7 @@ describe('<BuilderView />', () => {
         appContext: {
           memberId: MOCK_APP_DATA.creator,
           permission: PERMISSION_LEVELS.ADMIN,
+          context: CONTEXTS.BUILDER,
         },
       });
       cy.visit('/');
@@ -96,6 +98,7 @@ describe('<BuilderView />', () => {
         appContext: {
           memberId: MOCK_APP_DATA.creator,
           permission: PERMISSION_LEVELS.ADMIN,
+          context: CONTEXTS.BUILDER,
         },
       });
       cy.visit('/');
@@ -111,7 +114,11 @@ describe('<BuilderView />', () => {
       const { id, creator } = data;
       cy.setUpApi({
         database: { appData: [data] },
-        appContext: { memberId: creator, permission: PERMISSION_LEVELS.ADMIN },
+        appContext: {
+          memberId: creator,
+          permission: PERMISSION_LEVELS.ADMIN,
+          context: CONTEXTS.BUILDER,
+        },
         errors: { deleteAppDataShouldThrow: true },
       });
       cy.visit('/');
