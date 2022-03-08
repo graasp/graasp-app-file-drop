@@ -4,7 +4,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-const FileDownloader = ({ resourceId, open, handleClose }) => {
+const FileDownloader = ({ appDataId, open, handleClose }) => {
   const { t } = useTranslation();
 
   return (
@@ -16,7 +16,7 @@ const FileDownloader = ({ resourceId, open, handleClose }) => {
     >
       <DialogTitle id="alert-dialog-title">
         {t('Downloading item...')}
-        <p>{resourceId}</p>
+        <p>{appDataId}</p>
       </DialogTitle>
     </Dialog>
   );
@@ -25,7 +25,7 @@ const FileDownloader = ({ resourceId, open, handleClose }) => {
 FileDownloader.propTypes = {
   open: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
-  resourceId: PropTypes.arrayOf(PropTypes.string).isRequired,
+  appDataId: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 FileDownloader.defaultProps = {

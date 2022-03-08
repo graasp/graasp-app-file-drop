@@ -13,8 +13,17 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
+import '@cypress/code-coverage/support';
+
 import './commands';
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+Cypress.on('uncaught:exception', (err, runnable, promise) => {
+  // returning false here prevents Cypress from failing the test
+  // this is necessary to accept wanted error from mirage to fail the test
+  if (promise) {
+    console.error(
+      'This error is caught by cypress and was configured to not throw.',
+    );
+    return false;
+  }
+});

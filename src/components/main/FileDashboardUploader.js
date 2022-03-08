@@ -1,31 +1,38 @@
 import React, { useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
+import { ROUTINES } from '@graasp/apps-query-client';
 import { Dashboard } from '@uppy/react';
-import { routines, MUTATION_KEYS } from '@graasp/query-client';
 import { useTranslation } from 'react-i18next';
-import { FILE_UPLOAD_MAX_FILES, UPLOAD_METHOD } from '../../config/constants';
-import { useMutation } from '../../config/queryClient';
+import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
+import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import configureUppy from '../../utils/uppy';
 import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
-import { AppDataContext } from '../context/AppDataContext';
-import notifier from '../../middlewares/notifier';
+import notifier from '../../config/notifier';
+import { Context } from '../context/ContextContext';
+import { TokenContext } from '../context/TokenContext';
 
-const { uploadFileRoutine } = routines;
+const { uploadFileRoutine } = ROUTINES;
 
-const FileDashboardUploader = ({ value }) => {
-  const [uppy, setUppy] = useState(null);
-  const { itemId, token, reFetch, setReFetch } = useContext(AppDataContext);
+const FileDashboardUploader = () => {
   const { t } = useTranslation();
+  const context = useContext(Context);
+  const token = useContext(TokenContext);
+  const itemId = context?.get('itemId');
+  const apiHost = context?.get('apiHost');
+  const [uppy, setUppy] = useState(null);
   const { mutate: onFileUploadComplete } = useMutation(
     MUTATION_KEYS.FILE_UPLOAD,
   );
 
-  const onComplete = result => {
-    setReFetch(!reFetch);
+  const onComplete = (result) => {
     if (!result?.failed.length) {
-      onFileUploadComplete({ id: itemId });
+      onFileUploadComplete({
+        id: itemId,
+        data: result.successful
+          ?.map(({ response }) => response?.body?.[0])
+          .filter(Boolean),
+      });
     }
     return false;
   };
@@ -34,39 +41,30 @@ const FileDashboardUploader = ({ value }) => {
     notifier({ type: uploadFileRoutine.REQUEST });
   };
 
-  const onError = error => {
+  const onError = (error) => {
     onFileUploadComplete({ id: itemId, error });
   };
 
   const applyUppy = () => {
-    if (value) {
-      setUppy(
-        configureUppy({
-          itemId,
-          token,
-          onComplete,
-          onError,
-          onUpload,
-          method: UPLOAD_METHOD,
-        }),
-      );
-    }
+    setUppy(
+      configureUppy({
+        apiHost,
+        itemId,
+        token,
+        onComplete,
+        onError,
+        onUpload,
+      }),
+    );
   };
-
-  useEffect(() => {
-    if (value) {
-      applyUppy();
-
-      return () => {
-        uppy?.close();
-      };
-    }
-    return null;
-  }, []);
 
   // update uppy configuration each time itemId changes
   useEffect(() => {
     applyUppy();
+
+    return () => {
+      uppy?.close();
+    };
   }, [itemId, token]);
 
   if (!uppy) {
@@ -74,36 +72,27 @@ const FileDashboardUploader = ({ value }) => {
   }
 
   return (
-    <>
-      <div id={DASHBOARD_UPLOADER_ID}>
-        <Dashboard
-          uppy={uppy}
-          height={200}
-          width="100%"
-          proudlyDisplayPoweredByUppy={false}
-          note={t(
-            `You can upload up to FILE_UPLOAD_MAX_FILES files at a time`,
-            {
-              maxFiles: FILE_UPLOAD_MAX_FILES,
-            },
-          )}
-          locale={{
-            strings: {
-              // Text to show on the droppable area.
-              // `%{browse}` is replaced with a link that opens the system file selection dialog.
-              dropPaste: `${t('Drop here or')} %{browse}`,
-              // Used as the label for the link that opens the system file selection dialog.
-              browse: t('Browse'),
-            },
-          }}
-        />
-      </div>
-    </>
+    <div id={DASHBOARD_UPLOADER_ID}>
+      <Dashboard
+        uppy={uppy}
+        height={200}
+        width="100%"
+        proudlyDisplayPoweredByUppy={false}
+        note={t(`You can upload up to FILE_UPLOAD_MAX_FILES files at a time`, {
+          maxFiles: FILE_UPLOAD_MAX_FILES,
+        })}
+        locale={{
+          strings: {
+            // Text to show on the droppable area.
+            // `%{browse}` is replaced with a link that opens the system file selection dialog.
+            dropPaste: `${t('Drop here or')} %{browse}`,
+            // Used as the label for the link that opens the system file selection dialog.
+            browse: t('Browse'),
+          },
+        }}
+      />
+    </div>
   );
-};
-
-FileDashboardUploader.propTypes = {
-  value: PropTypes.bool.isRequired,
 };
 
 export default FileDashboardUploader;

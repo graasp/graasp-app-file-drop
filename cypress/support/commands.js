@@ -1,44 +1,26 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
+import 'cypress-file-upload';
+import { MOCK_SERVER_ITEM } from '../fixtures/appData';
 
-const { GET_APP_INSTANCE_SUCCEEDED } = require('../../src/types');
-const { DEFAULT_MODE } = require('../../src/config/settings');
-const { LOAD_PAGE_PAUSE } = require('../constants');
-
-Cypress.Commands.add('postMessage', message => {
-  const msg = JSON.stringify(message);
-  cy.window().then(win => win.postMessage(msg, '*'));
-});
+import { CURRENT_MEMBER, MEMBERS } from '../fixtures/members';
 
 Cypress.Commands.add(
-  'visitOffline',
-  ({ appQueryParameters, userId }, mode = DEFAULT_MODE) => {
-    cy.visit('/', {
-      qs: {
-        ...appQueryParameters,
-        mode,
-        userId,
-        offline: true,
-        test: true,
-        dev: true,
-      },
-      onBeforeLoad(win) {
-        // start spying parent postMessage
-        cy.spy(win.parent, 'postMessage').as('postMessage');
-      },
+  'setUpApi',
+  ({
+    currentMember = CURRENT_MEMBER,
+    database = {},
+    appContext,
+    errors = {},
+  } = {}) => {
+    // mock api and database
+    Cypress.on('window:before:load', (win) => {
+      win.database = {
+        currentMember,
+        currentItemId: MOCK_SERVER_ITEM.id,
+        members: Object.values(MEMBERS),
+        ...database,
+      };
+      win.appContext = appContext;
+      win.apiErrors = errors;
     });
-    cy.wait(LOAD_PAGE_PAUSE);
-
-    // simulate get appInstance
-    const msg = { type: GET_APP_INSTANCE_SUCCEEDED, payload: {} };
-    cy.postMessage(msg);
   },
 );

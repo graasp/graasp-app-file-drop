@@ -1,41 +1,33 @@
 import React, { useContext } from 'react';
-import TeacherMode from './modes/teacher/TeacherMode';
-import StudentMode from './modes/student/StudentMode';
-import { AppDataContext } from './context/AppDataContext';
 import ModalProviders from './context/ModalProviders';
-import FileUploader from './main/FileUploader';
-import Loader from './common/Loader';
+import { Context } from './context/ContextContext';
+import { TokenProvider } from './context/TokenContext';
+import CONTEXTS from '../config/contexts';
+import BuilderView from './views/BuilderView';
+import PlayerView from './views/PlayerView';
 
 const App = () => {
-  const { mode, view, token } = useContext(AppDataContext);
+  const context = useContext(Context);
 
-  if (token != null) {
-    switch (mode) {
-      // show teacher view when in producer (educator) mode
-      case 'teacher':
-      case 'producer':
-      case 'educator':
-      case 'admin':
+  const renderContent = () => {
+    switch (context?.get('context')) {
+      case CONTEXTS.BUILDER:
         return (
           <ModalProviders>
-            <FileUploader />
-            <TeacherMode view={view} />
+            <BuilderView />
           </ModalProviders>
         );
 
-      // by default go with the consumer (learner) mode
-      case 'student':
-      case 'consumer':
-      case 'learner':
+      case CONTEXTS.PLAYER:
       default:
         return (
           <ModalProviders>
-            <FileUploader />
-            <StudentMode />
+            <PlayerView />
           </ModalProviders>
         );
     }
-  }
-  return <Loader />;
+  };
+
+  return <TokenProvider>{renderContent()}</TokenProvider>;
 };
 export default App;

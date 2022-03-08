@@ -1,9 +1,10 @@
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
-import { API_HOST, FILE_UPLOAD_MAX_FILES } from '../config/constants';
-import { buildUploadFilesRoute } from '../api/routes';
+import { FILE_UPLOAD_MAX_FILES } from '../config/constants';
+import { API_ROUTES } from '../config/queryClient';
 
 const configureUppy = ({
+  apiHost,
   itemId,
   token,
   onComplete,
@@ -19,7 +20,7 @@ const configureUppy = ({
   });
 
   uppy.use(XHRUpload, {
-    endpoint: `${API_HOST}/${buildUploadFilesRoute(itemId)}`,
+    endpoint: `${apiHost}/${API_ROUTES.buildUploadFilesRoute(itemId)}`,
     withCredentials: true,
     formData: true,
     metaFields: [],
@@ -28,11 +29,11 @@ const configureUppy = ({
     },
   });
 
-  uppy.on('file-added', file => {
+  uppy.on('file-added', (file) => {
     onFileAdded?.(file);
   });
 
-  uppy.on('files-added', files => {
+  uppy.on('files-added', (files) => {
     onFilesAdded?.(files);
   });
 
@@ -40,15 +41,15 @@ const configureUppy = ({
 
   uppy.on('progress', onProgress);
 
-  uppy.on('complete', result => {
+  uppy.on('complete', (result) => {
     onComplete?.(result);
   });
 
-  uppy.on('error', error => {
+  uppy.on('error', (error) => {
     onError?.(error);
   });
 
-  uppy.on('upload-error', error => {
+  uppy.on('upload-error', (error) => {
     onError?.(error);
   });
 

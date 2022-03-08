@@ -7,10 +7,12 @@ import { IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import WarningIcon from '@material-ui/icons/Warning';
 import { ReactComponent as Logo } from '../../resources/logo.svg';
-import { TEACHER_MODES } from '../../config/settings';
-import { AppDataContext } from '../context/AppDataContext';
+import { Context } from '../context/ContextContext';
+import { PERMISSION_LEVELS } from '../../config/constants';
+import { queryClient, HOOK_KEYS } from '../../config/queryClient';
+import { HEADER_REFRESH_BUTTON_CYPRESS } from '../../config/selectors';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -19,17 +21,21 @@ const useStyles = makeStyles(theme => ({
   },
   logo: {
     height: '48px',
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
 }));
 
 const Header = () => {
   const { t } = useTranslation();
-  const { mode, standalone, reFetch, setReFetch } = useContext(AppDataContext);
   const classes = useStyles();
+  const context = useContext(Context);
+  const permission = context.get('permission');
+  const standalone = context.get('standalone');
 
   const handleRefresh = () => {
-    setReFetch(!reFetch);
+    const itemId = context.get('itemId');
+    queryClient.invalidateQueries(HOOK_KEYS.buildAppDataKey(itemId));
+    queryClient.invalidateQueries(HOOK_KEYS.buildAppContextKey(itemId));
   };
 
   const renderViewButtons = () => {
@@ -43,9 +49,15 @@ const Header = () => {
       );
     }
 
-    if (TEACHER_MODES.includes(mode)) {
+    if (
+      [PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(permission)
+    ) {
       return [
-        <IconButton onClick={handleRefresh} key="refresh">
+        <IconButton
+          onClick={handleRefresh}
+          key="refresh"
+          data-cy={HEADER_REFRESH_BUTTON_CYPRESS}
+        >
           <RefreshIcon color="secondary" />
         </IconButton>,
       ];

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Tooltip, makeStyles, Button } from '@material-ui/core';
@@ -6,8 +6,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Switch from '@material-ui/core/Switch';
+import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import { ITEM_FORM_CONFIRM_BUTTON_ID } from '../../config/selectors';
-import { AppDataContext } from './AppDataContext';
 
 const SettingsModalContext = React.createContext();
 
@@ -21,21 +21,21 @@ function getModalStyle() {
   };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   dialogContent: {
     display: 'flex',
     flexDirection: 'column',
   },
   paper: {
     position: 'absolute',
-    width: theme.spacing.unit * 50,
+    width: theme.spacing(50),
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
+    padding: theme.spacing(4),
     outline: 'none',
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
 }));
 
@@ -45,16 +45,16 @@ const SettingsModalProvider = ({ children }) => {
   // TO DO: updated properties are separated from the original item
   // so only necessary properties are sent when editing
 
-  const { messagePort } = useContext(AppDataContext);
   const [headerVisible, setHeaderVisible] = useState(false);
   const [publicStudentUploads, setPublicStudentUploads] = useState(false);
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(null);
+  const { mutate: updateSettings } = useMutation(MUTATION_KEYS.UPDATE_SETTINGS);
 
-  const openModal = newItem => {
+  const openModal = useCallback((newItem) => {
     setOpen(true);
     setItem(newItem);
-  };
+  }, []);
 
   const onClose = () => {
     setOpen(false);
@@ -65,15 +65,10 @@ const SettingsModalProvider = ({ children }) => {
   };
 
   const submit = () => {
-    messagePort?.postMessage(
-      JSON.stringify({
-        type: 'UPDATE_SETTINGS',
-        payload: {
-          headerVisible,
-          publicStudentUploads,
-        },
-      }),
-    );
+    updateSettings({
+      headerVisible,
+      publicStudentUploads,
+    });
   };
 
   const handleChangeHeaderVisibility = () => {
@@ -116,22 +111,20 @@ const SettingsModalProvider = ({ children }) => {
           <Typography variant="h5" id="modal-title">
             {t('Settings')}
           </Typography>
-          <>
+          <FormControlLabel
+            control={headerVisibilitySwitch}
+            label={t('Show Header to Students')}
+          />
+          <Tooltip
+            title={t(
+              'When enabled, student uploads will be visible to other students. Teacher uploads are always visible to all students.',
+            )}
+          >
             <FormControlLabel
-              control={headerVisibilitySwitch}
-              label={t('Show Header to Students')}
+              control={studentUploadVisibilitySwitch}
+              label={t('Student Uploads are Public')}
             />
-            <Tooltip
-              title={t(
-                'When enabled, student uploads will be visible to other students. Teacher uploads are always visible to all students.',
-              )}
-            >
-              <FormControlLabel
-                control={studentUploadVisibilitySwitch}
-                label={t('Student Uploads are Public')}
-              />
-            </Tooltip>
-          </>
+          </Tooltip>
           <Tooltip
             title={t(
               'When clicked, settings will be saved and the app will be refreshed.',
@@ -150,8 +143,10 @@ const SettingsModalProvider = ({ children }) => {
     </div>
   );
 
+  const value = useMemo(() => ({ openModal }), [openModal]);
+
   return (
-    <SettingsModalContext.Provider value={{ openModal }}>
+    <SettingsModalContext.Provider value={value}>
       {renderModal()}
       {children}
     </SettingsModalContext.Provider>
