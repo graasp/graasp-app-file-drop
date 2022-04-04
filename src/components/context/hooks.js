@@ -22,3 +22,10 @@ export const useFileContent = (fileId, enabled) => {
   const query = hooks.useFileContent({ token, fileId }, { enabled });
   return query;
 };
+
+export const useAppSettings = () => {
+  const context = useContext(Context);
+  const token = useContext(TokenContext);
+  const query = hooks.useAppSettings({ token, itemId: context?.get('itemId') });
+  return query;
+};

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -8,12 +8,18 @@ import Switch from '@material-ui/core/Switch';
 import Tooltip from '@material-ui/core/Tooltip';
 import SettingsIcon from '@material-ui/icons/Settings';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Context } from '../context/ContextContext';
 import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
 import {
   SETTINGS_BUTTON_CYPRESS,
   SETTING_HEADER_VISIBILITY_SWITCH_CYPRESS,
 } from '../../config/selectors';
+import Loader from '../common/Loader';
+import { useAppSettings } from '../context/hooks';
+import {
+  APP_SETTINGS,
+  DEFAULT_HEADER_VISIBLE,
+  DEFAULT_PUBLIC_STUDENT_UPLOADS,
+} from '../../config/constants';
 
 function getModalStyle() {
   const top = 50;
@@ -49,32 +55,46 @@ const Settings = () => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
   const { t } = useTranslation();
-  const context = useContext(Context);
-  const settings = context?.get('settings');
-  const { mutate: updateSettings } = useMutation(MUTATION_KEYS.PATCH_SETTINGS);
+  const { data: settings, isLoading } = useAppSettings();
+  const { mutate: postAppSetting } = useMutation(
+    MUTATION_KEYS.POST_APP_SETTING,
+  );
+  const { mutate: patchAppSetting } = useMutation(
+    MUTATION_KEYS.PATCH_APP_SETTING,
+  );
 
-  const saveSettings = (settingsToChange) => {
-    const newSettings = {
-      ...settings,
-      ...settingsToChange,
-    };
-    updateSettings(newSettings);
+  const saveSettings = (originalSetting, newSetting) => {
+    if (originalSetting?.id) {
+      patchAppSetting(newSetting);
+    } else {
+      postAppSetting(newSetting);
+    }
   };
 
   const handleChangeHeaderVisibility = () => {
-    const { headerVisible } = settings;
-    const settingsToChange = {
-      headerVisible: !headerVisible,
+    const key = APP_SETTINGS.HEADER_VISIBLE;
+    const originalSetting = settings.find(({ name }) => name === key) ?? {
+      name: key,
     };
-    saveSettings(settingsToChange);
+    const settingsToChange = {
+      ...originalSetting,
+      data: {
+        [key]: !originalSetting?.data?.[key] ?? !DEFAULT_HEADER_VISIBLE,
+      },
+    };
+    saveSettings(originalSetting, settingsToChange);
   };
 
   const handleChangeStudentUploadVisibility = () => {
-    const { publicStudentUploads } = settings;
+    const key = APP_SETTINGS.PUBLIC_STUDENT_UPLOADS;
+    const originalSetting = settings.find(({ name }) => name === key);
     const settingsToChange = {
-      publicStudentUploads: !publicStudentUploads,
+      ...originalSetting,
+      data: {
+        [key]: !originalSetting?.data?.[key] ?? !DEFAULT_PUBLIC_STUDENT_UPLOADS,
+      },
     };
-    saveSettings(settingsToChange);
+    saveSettings(originalSetting, settingsToChange);
   };
 
   const handleClose = () => {
@@ -86,14 +106,26 @@ const Settings = () => {
   };
 
   const renderModalContent = () => {
-    const { headerVisible, publicStudentUploads } = settings;
+    const headerVisible = settings?.find(
+      ({ name }) => name === APP_SETTINGS.HEADER_VISIBLE,
+    );
+    const publicStudentUploads = settings?.find(
+      ({ name }) => name === APP_SETTINGS.PUBLIC_STUDENT_UPLOADS,
+    );
+
+    if (isLoading) {
+      return <Loader />;
+    }
 
     const headerVisibilitySwitch = (
       <Switch
         color="primary"
-        checked={headerVisible}
+        checked={
+          headerVisible?.data[APP_SETTINGS.HEADER_VISIBLE] ??
+          DEFAULT_HEADER_VISIBLE
+        }
         onChange={handleChangeHeaderVisibility}
-        value="headerVisibility"
+        value={APP_SETTINGS.HEADER_VISIBLE}
         data-cy={SETTING_HEADER_VISIBILITY_SWITCH_CYPRESS}
       />
     );
@@ -101,9 +133,12 @@ const Settings = () => {
     const studentUploadVisibilitySwitch = (
       <Switch
         color="primary"
-        checked={publicStudentUploads}
+        checked={
+          publicStudentUploads?.data[APP_SETTINGS.PUBLIC_STUDENT_UPLOADS] ??
+          DEFAULT_PUBLIC_STUDENT_UPLOADS
+        }
         onChange={handleChangeStudentUploadVisibility}
-        value="headerVisibility"
+        value={APP_SETTINGS.PUBLIC_STUDENT_UPLOADS}
         // todo: enable when feature is available
         disabled
       />

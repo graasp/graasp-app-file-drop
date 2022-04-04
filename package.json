@@ -61,7 +61,7 @@
     "cypress": "concurrently \"yarn start:test\" \"wait-on http://localhost:3333 && yarn cypress:run\"",
     "cypress:run": "env-cmd -f ./.env.test cypress run --headless --browser chrome --spec \"cypress/**/*.spec.js\"",
     "postinstall": "husky install",
-    "pre-commit": "yarn prettier:check --staged && yarn lint"
+    "pre-commit": "yarn prettier:check && yarn lint"
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.17.0",

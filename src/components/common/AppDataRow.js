@@ -68,7 +68,7 @@ const AppDataRow = ({ data, showMember, member }) => {
         </TableCell>
       )}
       <TableCell data-cy={TABLE_CELL_FILE_NAME_CYPRESS}>
-        {data.data.name}
+        {data.data?.name}
       </TableCell>
       <TableCell>{renderActions()}</TableCell>
     </TableRow>
