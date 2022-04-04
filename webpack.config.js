@@ -1,6 +1,6 @@
 const path = require('path');
 const glob = require('glob');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
@@ -9,7 +9,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 // grab react app environment variables
 const REACT_APP = /^REACT_APP_/i;
 const REACT_ENV = Object.keys(process.env)
-  .filter(key => REACT_APP.test(key))
+  .filter((key) => REACT_APP.test(key))
   .reduce(
     (env, key) => {
       // eslint-disable-next-line no-param-reassign
@@ -28,7 +28,7 @@ module.exports = {
   entry: {
     'bundle.js': glob
       .sync('build/static/?(js|css)/*.?(js|css)')
-      .map(f => path.resolve(__dirname, f)),
+      .map((f) => path.resolve(__dirname, f)),
   },
   output: {
     filename: 'dist/bundle.min.js',
@@ -42,8 +42,11 @@ module.exports = {
       },
     ],
   },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
   plugins: [
-    new UglifyJsPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'public/index.html',
