@@ -1902,9 +1902,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/apps-query-client@github:graasp/graasp-apps-query-client.git":
+"@graasp/apps-query-client@github:graasp/graasp-apps-query-client.git#22/fetchFile":
   version: 0.1.0
-  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=739f3df1b674fa8cf128b2b1999275e58ae02992"
+  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=87748b6098fa4457969a63bd305665c9d096a8e0"
   dependencies:
     axios: 0.26.0
     http-status-codes: 2.1.4
@@ -1916,7 +1916,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 103edb8a61606b1179290199e128ff65856c4513411e40b142e24a288accc2d5a140a5113778e06b9e5bac20eccf556b3744bba2d6172874d935c9f407949695
+  checksum: 424c07f47d6cd8f77dcc4b717f97223ef1943c111839f3254e10cdd4f7257b74c2655e4689089c7f552f08c12465b3f1fcd5d5eb2329f9a3e4e23c4da87f7bd9
   languageName: node
   linkType: hard
 
@@ -9615,7 +9615,7 @@ __metadata:
     "@commitlint/config-conventional": 16.2.1
     "@cypress/code-coverage": 3.9.12
     "@cypress/instrument-cra": 1.4.0
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git"
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git#22/fetchFile"
     "@graasp/ui": "github:graasp/graasp-ui.git"
     "@material-ui/core": 4.12.4
     "@material-ui/icons": 4.11.3
