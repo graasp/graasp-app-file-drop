@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import TableRow from '@material-ui/core/TableRow';
 import Loader from './Loader';
 import FileDashboardUploader from '../main/FileDashboardUploader';
-import { useAppContext, useAppData } from '../context/appData';
+import { useAppContext, useAppData } from '../context/hooks';
 import { useTranslation } from 'react-i18next';
 import AppDataRow from './AppDataRow';
 import { ROW_NO_FILES_UPLOADED_ID } from '../../config/selectors';
@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AppDataTable = ({ showMember }) => {
-  console.log('showMember: ', showMember);
   const classes = useStyles();
   const { t } = useTranslation();
   const { data: appContext, isLoading: isAppContextLoading } = useAppContext();

@@ -38,3 +38,11 @@ export const PERMISSION_LEVELS = {
 export const APP_DATA_TYPES = {
   FILE: 'file',
 };
+
+export const APP_SETTINGS = {
+  HEADER_VISIBLE: 'headerVisible',
+  PUBLIC_STUDENT_UPLOADS: 'publicStudentUploads',
+};
+
+export const DEFAULT_HEADER_VISIBLE = false;
+export const DEFAULT_PUBLIC_STUDENT_UPLOADS = false;

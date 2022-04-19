@@ -18,7 +18,7 @@ const FileDownloadButton = ({ data }) => {
       apiHost: context?.get('apiHost'),
       token,
     });
-    downloadHelper(file.data, data.data.name);
+    downloadHelper(file, data.data.name);
   };
 
   return (
