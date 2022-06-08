@@ -1,22 +1,25 @@
-name: CI S3-apps caller workflow
+name: CI pipeline for S3-apps
 
 # Controls when the action will run.
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+  # Triggers the workflow on push events only for the main branch
   push:
     branches:
-      - main
+    - main
 
+  # Triggers the workflow on closed pull request events only for the main branch
   pull_request:
-   branches: [main]
+    branches: [main]
+    types: [closed]
 
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows to run the workflow manually from the Actions tab
   workflow_dispatch:
 
+# This workflow is made up of one job that calls the reusable workflow in graasp-deploy
 jobs:
-  call-reusable-workflow:
+  graasp-deploy-s3-apps-workflow:
     name: Graasp app file-drop
-    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@main
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@5ad156f86b2de177a81546db2ddc252a2ace36ca
     with:
       build-folder: 'build'
       version: 'latest'
