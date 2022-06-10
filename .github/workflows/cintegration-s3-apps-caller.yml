@@ -1,4 +1,4 @@
-name: CI pipeline for S3-apps
+name: Deploy File-drop app to development environment
 
 # Controls when the action will run.
 on:
@@ -28,6 +28,6 @@ jobs:
       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
       aws-region: ${{ secrets.APPS_AWS_REGION }}
       aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_APPS_DEV }}
+      cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_DEV }}
       app-id: ${{ secrets.APP_ID }}
-      graasp-domain-dev: ${{ secrets.DEV_GRAASP_DOMAIN }}
-      cloudfront-distribution: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_DEV }}
+      graasp-domain: ${{ secrets.DEV_GRAASP_DOMAIN }}
