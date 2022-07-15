@@ -1,4 +1,4 @@
-name: Deploy File-drop app to development environment
+name: Deploy to development environment
 
 # Controls when the action will run.
 on:
@@ -6,11 +6,7 @@ on:
   push:
     branches:
     - main
-
-  # Triggers the workflow on closed pull request events only for the main branch
-  pull_request:
-    branches: [main]
-    types: [closed]
+    - master
 
   # Allows to run the workflow manually from the Actions tab
   workflow_dispatch:
@@ -19,7 +15,7 @@ on:
 jobs:
   graasp-deploy-s3-apps-workflow:
     name: Graasp app file-drop
-    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@5ad156f86b2de177a81546db2ddc252a2ace36ca
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@7b5dd84304458c3c5ab03cbbde059670f77b1687
     with:
       build-folder: 'build'
       version: 'latest'
