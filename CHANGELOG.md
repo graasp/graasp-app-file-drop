@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/graasp/graasp-app-file-drop/compare/v0.1.4...v0.1.5) (2022-07-17)
+
+
+### Features
+
+* add caller workflow to graasp-deploy ([0d84610](https://github.com/graasp/graasp-app-file-drop/commit/0d8461015bf13175c8afc3b19c0dc9583b3b4ee8))
+* add cdelivery and cdeployment workflows ([129b4e8](https://github.com/graasp/graasp-app-file-drop/commit/129b4e82f21e059d5825d87332d28052df4f103c))
+* correctly upload and delete files to old graasp ([dcea0cb](https://github.com/graasp/graasp-app-file-drop/commit/dcea0cb9410e6447828852ac599c7fd0f0255772))
+* include required scripts to use standard-version ([2ffd1dd](https://github.com/graasp/graasp-app-file-drop/commit/2ffd1ddea3da0c47ef6757457443a14bd7d4fdf6))
+* Integrate app in compose and perform ([411a27f](https://github.com/graasp/graasp-app-file-drop/commit/411a27fc81cce96cf4a9b284bc17ef653fc90030))
+* update staging versions in graasp deploy ([f899602](https://github.com/graasp/graasp-app-file-drop/commit/f89960268cfe7411e0147582e47d05fcb00d43b8))
+* use apps-query-client for new graasp api ([c6b999f](https://github.com/graasp/graasp-app-file-drop/commit/c6b999f3244cb3e59f0b681221e27130f3caf01a))
+
+
+### Bug Fixes
+
+* added delete functionality ([1a969f6](https://github.com/graasp/graasp-app-file-drop/commit/1a969f6495cdc4e2f9bf0bbfe35c75b07375fa68))
+* Added student mode view ([7d8791e](https://github.com/graasp/graasp-app-file-drop/commit/7d8791ef59a33aa7c422a19e6b2e19182205fd4f))
+* additional code cleaning ([8f1bb12](https://github.com/graasp/graasp-app-file-drop/commit/8f1bb12aceccbc555e5f69ae546e9565d4d539a7))
+* changes in package.json ([69d8553](https://github.com/graasp/graasp-app-file-drop/commit/69d855368e0a915bc5d8b912914596b411209a7c))
+* code cleaning ([ddc3ece](https://github.com/graasp/graasp-app-file-drop/commit/ddc3ece827a0644915577c0638528f0070689061))
+* delete uploadFilesMethods.js ([5782a1d](https://github.com/graasp/graasp-app-file-drop/commit/5782a1dd9a9fcdd4fd30b244a69ee0311d5194f6))
+* deleted .eslintcache ([f3c7a40](https://github.com/graasp/graasp-app-file-drop/commit/f3c7a40a1e4811aa0616011546def8ad76c77637))
+* fixed gitignore and stage install-state.gz file ([3f34648](https://github.com/graasp/graasp-app-file-drop/commit/3f34648fe074ed827667f0192e667fd16445e8a7))
+* improved integration in graasp compose ([90a9865](https://github.com/graasp/graasp-app-file-drop/commit/90a98651696d98d3107d98079f38654f2fe770ea))
+* improved student and teacher view with visibility ([a2bea1e](https://github.com/graasp/graasp-app-file-drop/commit/a2bea1ecb03ef655c62c1990faa66d67c90166c8))
+* installed yarn version ([e7b9838](https://github.com/graasp/graasp-app-file-drop/commit/e7b983854cef9a40ff317091109cc9ebf3978768))
+* minor changes in settings implementation ([c327b0c](https://github.com/graasp/graasp-app-file-drop/commit/c327b0c3ae51ea1b8af869b708ef0429a28295a8))
+* minor fixes ([100ffb7](https://github.com/graasp/graasp-app-file-drop/commit/100ffb7f35e34fcc5ed1050eda8cb6907642fae6))
+* minor fixes ([762d34e](https://github.com/graasp/graasp-app-file-drop/commit/762d34ed196a4c53251dd9a0a757f7ad81920b70))
+* minor fixes in download file feature ([0f1cf67](https://github.com/graasp/graasp-app-file-drop/commit/0f1cf67bd453a26f59bf8c3f50cab4139ebe8eb9))
+* removed console statements ([f5ad66d](https://github.com/graasp/graasp-app-file-drop/commit/f5ad66dcf3f0430776754c3e3d2ebb132f91a8ce))
+* solve pull request issues ([1514e8a](https://github.com/graasp/graasp-app-file-drop/commit/1514e8a6061def9beccf2092649e350b9330ad53))
+* update package.json ([75d1578](https://github.com/graasp/graasp-app-file-drop/commit/75d1578b2a2b2e6c85f5783fa5561121af6488cd))
+* update sha ref and minor issues ([e8854e0](https://github.com/graasp/graasp-app-file-drop/commit/e8854e0a8437b6e2e8b89e3dec0b1fde8dec0e5b))
+* updated berry version ([df0b946](https://github.com/graasp/graasp-app-file-drop/commit/df0b9467aca2f7e64781fa29a556bc878ffa1f41))
+* updated gitignore ([8a4cecf](https://github.com/graasp/graasp-app-file-drop/commit/8a4cecf1feb14e67716c416cb352b40dca1072e9))
+
 ### [0.1.4](https://github.com/graasp/graasp-app-file-drop/compare/v0.1.3...v0.1.4) (2020-12-02)
 
 ### Features
