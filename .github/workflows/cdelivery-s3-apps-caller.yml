@@ -13,7 +13,7 @@ jobs:
     name: Graasp app file-drop
     # Replace 'main' with the hash of a commit, so it points to an specific version of the reusable workflow that is used
     # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
-    uses: graasp/graasp-deploy/.github/workflows/cdelivery-s3-apps.yml@a5e6f97c18c86d97e3e8f15b27e4d898746327cf
+    uses: graasp/graasp-deploy/.github/workflows/cdelivery-s3-apps.yml@78c70b9b9e3b8c66b279a5d9378b2fcc6fa680fe
     # Replace input build-folder or version if needed
     with:
       build-folder: 'build'
@@ -26,5 +26,5 @@ jobs:
       aws-region: ${{ secrets.APPS_AWS_REGION }}
       aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_APPS_STAGE }}
       cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_STAGE }}
-      app-id: ${{ secrets.APP_ID }}
+      app-key: ${{ secrets.APP_KEY }}
       graasp-domain: ${{ secrets.STAGE_GRAASP_DOMAIN }}
