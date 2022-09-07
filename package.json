@@ -60,6 +60,7 @@
     "release:first": "standard-version -a --first-release",
     "release:minor": "standard-version -a --release-as minor",
     "release:major": "standard-version -a --release-as major",
+    "release:patch": "standard-version -a --release-as patch",
     "cypress:open": "cypress open",
     "cypress": "concurrently \"yarn start:test\" \"wait-on http://localhost:3333 && yarn cypress:run\"",
     "cypress:run": "env-cmd -f ./.env.test cypress run --headless --browser chrome --spec \"cypress/**/*.spec.js\"",
