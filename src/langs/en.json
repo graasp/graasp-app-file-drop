@@ -1,5 +1,6 @@
 {
   "translations": {
+    "DOWNLOADING_ITEM": "Downloading item...",
     "Drop Here or Click to Browse": "Drop Here or Click to Browse",
     "No files have been uploaded.": "No files have been uploaded.",
     "File Drop": "File Drop",
@@ -20,9 +21,12 @@
     "Confirm deleting item.": "Confirm deleting item.",
     "You can upload up to FILE_UPLOAD_MAX_FILES files at a time": "You can upload up to {{maxFiles}} files at a time",
     "Drop here or": "Drop here or",
-    "Browse": "Browse",
+    "BROWSE_FILES": "Browse files",
     "Save new settings": "Save new settings",
     "When enabled, student uploads will be visible to other students. Teacher uploads are always visible to all students.": "When enabled, student uploads will be visible to other students. Teacher uploads are always visible to all students.",
-    "When clicked, settings will be saved and the app will be refreshed.": "When clicked, settings will be saved and the app will be refreshed."
+    "When clicked, settings will be saved and the app will be refreshed.": "When clicked, settings will be saved and the app will be refreshed.",
+    "UPLOAD_FILES_PROGRESS_MESSAGE": "The file(s) are in queue for uploading. Please wait a moment.",
+    "UPLOAD_FILES_SUCCESS_MESSAGE": "The file(s) were successfully uploaded.",
+    "UPLOAD_FILES_ERROR_MESSAGE": "There was an error uploading the file(s)."
   }
 }
