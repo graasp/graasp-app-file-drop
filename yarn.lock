@@ -7409,14 +7409,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-file-upload@npm:5.0.2":
-  version: 5.0.2
-  resolution: "cypress-file-upload@npm:5.0.2"
-  dependencies:
-    mime: ^2.5.0
+"cypress-file-upload@npm:5.0.8":
+  version: 5.0.8
+  resolution: "cypress-file-upload@npm:5.0.8"
   peerDependencies:
     cypress: ">3.0.0"
-  checksum: 2ee5e53e93854982002a5700326c47345e964711509fc0e5ceaff457c0ddc272739f9031e8b48393611c605fc32d412b4bb9d9c645d25b1cbb11e13d42f892de
+  checksum: 9c70ca7e0bb137d0ec0b8d38987219ce15b26ac3a40e3ed4e78e6ad4690392eab905586848eec6ad8edd42ee480e68ccc63007b2ebd0a02f4b3eca116ff017e3
   languageName: node
   linkType: hard
 
@@ -10300,7 +10298,7 @@ __metadata:
     cross-env: 7.0.3
     customize-cra: 1.0.0
     cypress: ~12.3.0
-    cypress-file-upload: 5.0.2
+    cypress-file-upload: 5.0.8
     dompurify: 2.4.3
     env-cmd: 10.1.0
     enzyme: 3.11.0
@@ -13560,15 +13558,6 @@ __metadata:
   bin:
     mime: cli.js
   checksum: fef25e39263e6d207580bdc629f8872a3f9772c923c7f8c7e793175cee22777bbe8bba95e5d509a40aaa292d8974514ce634ae35769faa45f22d17edda5e8557
-  languageName: node
-  linkType: hard
-
-"mime@npm:^2.5.0":
-  version: 2.6.0
-  resolution: "mime@npm:2.6.0"
-  bin:
-    mime: cli.js
-  checksum: 1497ba7b9f6960694268a557eae24b743fd2923da46ec392b042469f4b901721ba0adcf8b0d3c2677839d0e243b209d76e5edcbd09cfdeffa2dfb6bb4df4b862
   languageName: node
   linkType: hard
 

@@ -11,8 +11,6 @@
   "homepage": ".",
   "license": "MIT",
   "dependencies": {
-    "@cypress/code-coverage": "3.10.0",
-    "@cypress/instrument-cra": "1.4.0",
     "@emotion/react": "~11.10.5",
     "@emotion/styled": "~11.10.5",
     "@graasp/apps-query-client": "0.4.1",
@@ -103,7 +101,7 @@
     "cross-env": "7.0.3",
     "customize-cra": "1.0.0",
     "cypress": "~12.3.0",
-    "cypress-file-upload": "5.0.2",
+    "cypress-file-upload": "5.0.8",
     "env-cmd": "10.1.0",
     "eslint": "~8.31.0",
     "eslint-config-airbnb": "~19.0.4",
