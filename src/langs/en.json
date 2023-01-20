@@ -27,6 +27,10 @@
     "When clicked, settings will be saved and the app will be refreshed.": "When clicked, settings will be saved and the app will be refreshed.",
     "UPLOAD_FILES_PROGRESS_MESSAGE": "The file(s) are in queue for uploading. Please wait a moment.",
     "UPLOAD_FILES_SUCCESS_MESSAGE": "The file(s) were successfully uploaded.",
-    "UPLOAD_FILES_ERROR_MESSAGE": "There was an error uploading the file(s)."
+    "UPLOAD_FILES_ERROR_MESSAGE": "There was an error uploading the file(s).",
+    "UPLOADED_FILES_TOOLBAR": "Uploaded files",
+    "DOWNLOAD_ALL": "Download all",
+    "ERROR_DOWNLOAD_ALL": "Error in downloading all the uploaded files:\n{{ reason }}",
+    "FILE_REQUEST_FAILED": "The request to the API failed."
   }
 }
