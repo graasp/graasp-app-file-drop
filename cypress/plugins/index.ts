@@ -1,4 +1,4 @@
-// <reference types="cypress" />
+/// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
 //
@@ -15,10 +15,24 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-// eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
-  require('@cypress/code-coverage/task')(on, config);
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-  return config;
+  const newConfig = {
+    ...config,
+    env: {
+      ...config.env,
+      REACT_APP_API_HOST: process.env.REACT_APP_API_HOST,
+      REACT_APP_MOCK_API: process.env.REACT_APP_MOCK_API,
+      REACT_APP_GRAASP_DEVELOPER_ID: process.env.REACT_APP_GRAASP_DEVELOPER_ID,
+      REACT_APP_GRAASP_APP_ID: process.env.REACT_APP_GRAASP_APP_ID,
+      REACT_APP_VERSION: process.env.REACT_APP_VERSION,
+    },
+  };
+  require('@cypress/code-coverage/task')(on, newConfig);
+  // include any other plugin code...
+
+  // It's IMPORTANT to return the config object
+  // with any changed environment variables
+  return newConfig;
 };

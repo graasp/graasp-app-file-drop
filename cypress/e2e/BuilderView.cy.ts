@@ -119,12 +119,11 @@ describe('<BuilderView />', () => {
           permission: PermissionLevel.Admin,
           context: Context.BUILDER,
         },
-        // errors: { deleteAppDataShouldThrow: true }, // TODO: Fix this !
+        errors: { deleteAppDataShouldThrow: true },
       });
       cy.visit('/');
 
       deleteFile({ id });
-      // cy.wait(1000);
 
       checkRow(data, true);
     });

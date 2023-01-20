@@ -17,7 +17,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["node", "cypress", "i18next"]
+    "types": ["node", "cypress", "i18next", "cypress-file-upload"]
   },
   "include": ["src"]
 }

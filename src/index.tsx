@@ -29,6 +29,7 @@ if (MOCK_API) {
     database: window.Cypress
       ? window.database
       : buildDatabase(mockContext, mockMembers),
+    errors: window.apiErrors,
   });
 }
 

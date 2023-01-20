@@ -75,12 +75,11 @@ describe('<PlayerView />', () => {
       cy.setUpApi({
         database: { appData: [data] },
         appContext: { memberId: creator },
-        // errors: { deleteAppDataShouldThrow: true }, // TODO: fix this !
+        errors: { deleteAppDataShouldThrow: true },
       });
       cy.visit('/');
 
       deleteFile({ id });
-      // cy.wait(1000);
 
       checkRow(data);
     });

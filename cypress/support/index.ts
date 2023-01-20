@@ -16,13 +16,15 @@ import '@cypress/code-coverage/support';
 
 import './commands';
 
-Cypress.on('uncaught:exception', (err, runnable, promise) => {
+Cypress.on('uncaught:exception', (err, runnable, promise): boolean => {
   // returning false here prevents Cypress from failing the test
   // this is necessary to accept wanted error from mirage to fail the test
   if (promise) {
+    // eslint-disable-next-line no-console
     console.error(
       'This error is caught by cypress and was configured to not throw.',
     );
     return false;
   }
+  return true;
 });

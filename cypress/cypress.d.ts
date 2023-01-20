@@ -15,10 +15,12 @@ declare global {
         database,
         currentMember,
         appContext,
+        errors,
       }: {
         database?: Partial<Database>;
         currentMember?: Member;
         appContext?: Partial<LocalContext>;
+        errors?: object;
       }): Chainable<Element>;
     }
   }
