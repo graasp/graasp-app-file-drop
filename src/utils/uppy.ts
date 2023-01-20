@@ -15,9 +15,13 @@ interface UppyConfiguration {
   apiHost: string;
   itemId: string;
   token: string;
+  // TODO: define the correct types.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onComplete: UploadCompleteCallback<any>;
   onProgress?: ProgressCallback;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onFileAdded?: FileAddedCallback<any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onFilesAdded?: FilesAddedCallback<any>;
   onError: ErrorCallback;
   onUpload: UploadCallback;
