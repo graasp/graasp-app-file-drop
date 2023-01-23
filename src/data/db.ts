@@ -5,6 +5,7 @@ import { Context, PermissionLevel } from '@graasp/sdk';
 
 import { APP_DATA_TYPES } from '../config/appDataTypes';
 import { REACT_APP_API_HOST } from '../config/env';
+import { AppDataVisibility } from '../types/appData';
 
 export const mockContext: LocalContext = {
   apiHost: REACT_APP_API_HOST,
@@ -49,6 +50,7 @@ const buildDatabase = (
       creator: mockContext.memberId || v4(),
       memberId: mockContext.memberId || 'm1',
       itemId: mockContext.itemId,
+      visibility: AppDataVisibility.MEMBER,
     },
   ],
   appActions: [],

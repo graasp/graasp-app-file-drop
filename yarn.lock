@@ -2274,9 +2274,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/apps-query-client@github:graasp/graasp-apps-query-client#70-errors-mockApi":
+"@graasp/apps-query-client@github:graasp/graasp-apps-query-client":
   version: 0.4.1
-  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=ad92178c885b4ead7ea75f42922ede82d7212578"
+  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=f6636d0e89d129a7217e75fa52f127e22dded5c4"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk"
     axios: 0.27.2
@@ -2290,7 +2290,7 @@ __metadata:
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: fc4cf045f28e5ab2837d66592c6c342640c71c52438524c4ce8b31a3e29d1858bac15b7ef37d3855766ff0605dbd5b29fbab801d32002e269e0083e6b9d0ecb7
+  checksum: c1ec355867431dc1fa98bf40a693e7e101b472fc032b4fad10cbc93b496f9c51edef72f413cf5f06b48bb966efd57a87f9c3de9da44594e044dd39bced58804e
   languageName: node
   linkType: hard
 
@@ -10261,7 +10261,7 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@emotion/react": ~11.10.5
     "@emotion/styled": ~11.10.5
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#70-errors-mockApi"
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client"
     "@graasp/sdk": 0.2.0
     "@graasp/ui": 0.7.1
     "@mui/icons-material": ~5.11.0

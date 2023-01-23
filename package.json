@@ -14,7 +14,7 @@
   "dependencies": {
     "@emotion/react": "~11.10.5",
     "@emotion/styled": "~11.10.5",
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#70-errors-mockApi",
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client",
     "@graasp/sdk": "0.2.0",
     "@graasp/ui": "0.7.1",
     "@mui/icons-material": "~5.11.0",

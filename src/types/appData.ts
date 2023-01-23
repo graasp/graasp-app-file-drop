@@ -1,4 +1,4 @@
-export enum APP_DATA_VISIBILITY {
+export enum AppDataVisibility {
   MEMBER = 'member',
   ITEM = 'item',
 }
@@ -6,7 +6,7 @@ export enum APP_DATA_VISIBILITY {
 export type PostAppDataType = {
   data: { [key: string]: unknown };
   type: string;
-  visibility?: APP_DATA_VISIBILITY;
+  visibility?: AppDataVisibility;
 };
 
 export type PatchAppDataType = {
