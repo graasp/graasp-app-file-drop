@@ -22,7 +22,7 @@ declare global {
         appContext?: Partial<LocalContext>;
         errors?:
           | {
-              deleteAppDataShouldThrow?: boolean | undefined;
+              deleteAppDataShouldThrow?: boolean;
             }
           | undefined;
       }): Chainable<Element>;
