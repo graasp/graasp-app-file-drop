@@ -18,8 +18,7 @@ const { uploadFileRoutine } = ROUTINES;
 
 const FileDashboardUploader: FC = () => {
   const { t } = useTranslation();
-  const context = useLocalContext();
-  const { itemId, apiHost } = context;
+  const { itemId, apiHost } = useLocalContext();
   const { data: token } = hooks.useAuthToken(itemId);
   const [uppy, setUppy] = useState<Uppy | null>(null);
   const { mutate: onFileUploadComplete } = useMutation<
