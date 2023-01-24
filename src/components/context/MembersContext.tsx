@@ -1,6 +1,6 @@
 import { List } from 'immutable';
 
-import React, { FC, ReactElement, createContext, useMemo } from 'react';
+import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
 import { Member } from '@graasp/apps-query-client';
 import { Loader } from '@graasp/ui';
@@ -12,11 +12,7 @@ export type MembersContextType = List<Member>;
 const defaultContextValue = List<Member>();
 const MembersContext = createContext<MembersContextType>(defaultContextValue);
 
-type Prop = {
-  children: ReactElement | ReactElement[];
-};
-
-export const MembersProvider: FC<Prop> = ({ children }) => {
+export const MembersProvider: FC<PropsWithChildren> = ({ children }) => {
   const appContext = hooks.useAppContext();
 
   const members = useMemo(() => {

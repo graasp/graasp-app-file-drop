@@ -38,13 +38,9 @@ const buildDatabase = (
 ): Database => ({
   appData: [
     {
-      data: {
-        color: '#FFFF99',
-        position: { pageX: 100, pageY: 100 },
-        text: '<p>note 1</p>',
-      },
+      data: {},
       id: v4(),
-      type: APP_DATA_TYPES.NOTE,
+      type: APP_DATA_TYPES.FILE,
       createdAt: now.toISOString(),
       updatedAt: now.toISOString(),
       creator: mockContext.memberId || v4(),

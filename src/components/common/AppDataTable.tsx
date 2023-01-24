@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { makeStyles } from 'tss-react/mui';
 
 import React, { FC } from 'react';
@@ -96,10 +95,6 @@ const AppDataTable: FC<AppDataTableProps> = ({ showMember }) => {
       </Grid>
     </Grid>
   );
-};
-
-AppDataTable.propTypes = {
-  showMember: PropTypes.bool.isRequired,
 };
 
 export default AppDataTable;

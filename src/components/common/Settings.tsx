@@ -71,7 +71,7 @@ const Settings: FC = () => {
   }
   const saveSettings = (newSetting: NewSetting): void => {
     const { id, name, data } = newSetting;
-    if (typeof id === 'string') {
+    if (id) {
       patchAppSetting({ id, data });
     } else if (typeof name === 'string') {
       postAppSetting({ name, data });

@@ -16,7 +16,7 @@ interface FileDownloadButtonProps {
 const FileDownloadButton: FC<FileDownloadButtonProps> = ({ data }) => {
   const context = useLocalContext();
   const { itemId } = context;
-  const { data: token, status } = hooks.useAuthToken(itemId);
+  const { data: token, isSuccess } = hooks.useAuthToken(itemId);
 
   const handleOpenDownloader = async (): Promise<void> => {
     if (typeof token !== 'undefined') {
@@ -28,7 +28,7 @@ const FileDownloadButton: FC<FileDownloadButtonProps> = ({ data }) => {
       downloadHelper(file, data.data.name as string);
     }
   };
-  if (status === 'success') {
+  if (isSuccess) {
     return (
       <IconButton
         color="primary"

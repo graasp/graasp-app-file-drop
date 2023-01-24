@@ -2,10 +2,13 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AppData, Member, useLocalContext } from '@graasp/apps-query-client';
-import { PermissionLevel } from '@graasp/sdk';
+import { PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
 
+import Visibility from '@mui/icons-material/Visibility';
+import IconButton from '@mui/material/IconButton';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import Tooltip from '@mui/material/Tooltip';
 
 import {
   TABLE_CELL_FILE_CREATED_AT_CYPRESS,
@@ -13,6 +16,7 @@ import {
   TABLE_CELL_FILE_USER_CYPRESS,
   buildTableRowId,
 } from '../../config/selectors';
+import { AppDataVisibility } from '../../types/appData';
 import DeleteAppDataButton from './DeleteAppDataButton';
 import FileDownloadButton from './FileDownloadButton';
 
@@ -26,6 +30,7 @@ const AppDataRow: FC<AppDataRowProps> = ({ data, showMember, member }) => {
   const { t } = useTranslation();
   const context = useLocalContext();
   const { permission, memberId } = context;
+  const { memberId: dataMemberId, visibility } = data;
 
   const username = member?.name || t('Anonymous');
 
@@ -35,29 +40,29 @@ const AppDataRow: FC<AppDataRowProps> = ({ data, showMember, member }) => {
     // show if app data is from authenticated member
     // or if has at least write permission
     if (
-      data.memberId === memberId ||
-      [PermissionLevel.Write, PermissionLevel.Admin].includes(
-        (permission || PermissionLevel.Read) as PermissionLevel,
+      dataMemberId === memberId ||
+      PermissionLevelCompare.gte(
+        permission as PermissionLevel,
+        PermissionLevel.Write,
       )
     ) {
       actions.push(<FileDownloadButton data={data} key="download" />);
       actions.push(<DeleteAppDataButton data={data} key="delete" />);
     }
-    // TODO: fix this after fixing https://github.com/graasp/graasp-apps-query-client/issues/68
-    // if (visibility === VISIBILITIES.ITEM) {
-    //   actions.push(
-    //     <Tooltip
-    //       key="visibility"
-    //       title={t('This file was uploaded for everyone.')}
-    //     >
-    //       <span>
-    //         <IconButton color="primary" size="large">
-    //           <Visibility />
-    //         </IconButton>
-    //       </span>
-    //     </Tooltip>,
-    //   );
-    // }
+    if (visibility === AppDataVisibility.ITEM) {
+      actions.push(
+        <Tooltip
+          key="visibility"
+          title={t('This file was uploaded for everyone.')}
+        >
+          <span>
+            <IconButton color="primary" size="large">
+              <Visibility />
+            </IconButton>
+          </span>
+        </Tooltip>,
+      );
+    }
     return actions;
   };
 
@@ -74,9 +79,7 @@ const AppDataRow: FC<AppDataRowProps> = ({ data, showMember, member }) => {
           {renderUsername()}
         </TableCell>
       )}
-      <TableCell data-cy={TABLE_CELL_FILE_NAME_CYPRESS}>
-        <p>{filename}</p>
-      </TableCell>
+      <TableCell data-cy={TABLE_CELL_FILE_NAME_CYPRESS}>{filename}</TableCell>
       <TableCell>{renderActions()}</TableCell>
     </TableRow>
   );

@@ -62,7 +62,7 @@ const configureUppy = ({
 
   uppy.on('upload', onUpload);
 
-  if (typeof onProgress !== 'undefined') {
+  if (onProgress) {
     uppy.on('progress', onProgress);
   }
 
@@ -70,7 +70,7 @@ const configureUppy = ({
     onComplete?.(result);
   });
 
-  if (typeof onError !== 'undefined') {
+  if (onError) {
     uppy.on('error', onError);
     uppy.on('upload-error', (_, error) => {
       onError(error);

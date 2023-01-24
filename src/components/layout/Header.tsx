@@ -72,7 +72,6 @@ const Header: FC = () => {
     <header>
       <AppBar position="static">
         <Toolbar>
-          {/* <Logo className={classes.logo} /> */}
           <Typography variant="h6" color="inherit" className={classes.grow}>
             {t('File Drop')}
           </Typography>

@@ -17,7 +17,7 @@ interface NotifierInt {
   };
 }
 
-export default ({ type, payload = undefined }: NotifierInt): void => {
+export default ({ type, payload }: NotifierInt): void => {
   let message = null;
   switch (type) {
     // error messages
