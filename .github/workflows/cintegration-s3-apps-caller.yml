@@ -15,7 +15,7 @@ on:
 jobs:
   graasp-deploy-s3-apps-workflow:
     name: Graasp app file-drop
-    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@78c70b9b9e3b8c66b279a5d9378b2fcc6fa680fe
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3-apps.yml@v1
     with:
       build-folder: 'build'
       version: 'latest'
