@@ -27,4 +27,4 @@ jobs:
       cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_DEV }}
       # TODO: Change to app key when https://github.com/graasp/graasp-apps-query-client/pull/45 is deployed
       app-id: ${{ secrets.APP_ID }}
-      graasp-domain: ${{ secrets.DEV_GRAASP_DOMAIN }}
+      graasp-domain: ${{ secrets.REACT_APP_GRAASP_DOMAIN_DEV }}
