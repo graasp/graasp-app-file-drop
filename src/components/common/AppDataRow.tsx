@@ -75,9 +75,7 @@ const AppDataRow: FC<AppDataRowProps> = ({ data, showMember, member }) => {
         {data.createdAt && new Date(data.createdAt).toLocaleString()}
       </TableCell>
       {showMember && (
-        <TableCell data-cy={TABLE_CELL_FILE_USER_CYPRESS}>
-          {renderUsername()}
-        </TableCell>
+        <TableCell data-cy={TABLE_CELL_FILE_USER_CYPRESS}>{username}</TableCell>
       )}
       <TableCell data-cy={TABLE_CELL_FILE_NAME_CYPRESS}>{filename}</TableCell>
       <TableCell>{renderActions()}</TableCell>
