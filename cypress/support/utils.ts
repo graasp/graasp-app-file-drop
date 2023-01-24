@@ -22,11 +22,6 @@ export const deleteFile = ({ id }): void => {
   cy.get(`#${CONFIRM_DELETE_BUTTON_ID}`).click();
 };
 
-// interface checkRowInt {
-//   _: AppData;
-//   checkMember?: boolean;
-// }
-
 export const checkRow = (
   { id, createdAt, data: { name }, creator }: AppData,
   checkMember = false,

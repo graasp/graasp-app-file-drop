@@ -20,7 +20,11 @@ declare global {
         database?: Partial<Database>;
         currentMember?: Member;
         appContext?: Partial<LocalContext>;
-        errors?: object;
+        errors?:
+          | {
+              deleteAppDataShouldThrow?: boolean | undefined;
+            }
+          | undefined;
       }): Chainable<Element>;
     }
   }
