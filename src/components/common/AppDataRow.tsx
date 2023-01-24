@@ -27,7 +27,7 @@ const AppDataRow: FC<AppDataRowProps> = ({ data, showMember, member }) => {
   const context = useLocalContext();
   const { permission, memberId } = context;
 
-  const renderUsername = (): string => member?.name || t('Anonymous');
+  const username = member?.name || t('Anonymous');
 
   const renderActions = (): JSX.Element[] => {
     // const { visibility } = data;
