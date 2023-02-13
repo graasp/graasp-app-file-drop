@@ -59,7 +59,7 @@ const AppDataToolbar: FC = () => {
           .then(() => {
             zip.generateAsync({ type: 'blob' }).then((archive) => {
               const d = new Date();
-              saveAs(archive, `uploaded_files_${d.toISOString()}`);
+              saveAs(archive, `uploaded_files_${d.toISOString()}.zip`);
               setIsLoading(false);
             });
           })
