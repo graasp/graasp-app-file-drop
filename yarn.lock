@@ -10080,6 +10080,7 @@ __metadata:
     uglifyjs-webpack-plugin: ~2.2.0
     uuid: 9.0.0
     wait-on: 7.0.1
+    webpack: ~5.75.0
     webpack-cli: ~5.0.1
   languageName: unknown
   linkType: soft
@@ -19206,7 +19207,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.64.4":
+"webpack@npm:^5.64.4, webpack@npm:~5.75.0":
   version: 5.75.0
   resolution: "webpack@npm:5.75.0"
   dependencies:

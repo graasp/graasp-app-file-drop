@@ -1,6 +1,6 @@
 import saveAs from 'file-saver';
 import { t } from 'i18next';
-import zip from 'jszip';
+import JSZip from 'jszip';
 
 import React, { FC, useState } from 'react';
 
@@ -16,6 +16,8 @@ import Typography from '@mui/material/Typography';
 import { hooks } from '../../config/queryClient';
 import { showErrorToast } from '../../utils/toasts';
 import { useAppDataContext } from '../context/AppDataContext';
+
+const zip = new JSZip();
 
 const AppDataToolbar: FC = () => {
   const { appDataArray } = useAppDataContext();
@@ -38,10 +40,13 @@ const AppDataToolbar: FC = () => {
     });
 
   const getAllFiles = async (appDataFiles: AppData[]): Promise<void> => {
-    appDataFiles.forEach((appDataFile) => {
-      const name: string = (appDataFile.data?.name as string) ?? appDataFile.id;
-      getFile(appDataFile.id).then((file) => zip.file(name, file));
-    });
+    await Promise.all(
+      appDataFiles.map(async (appDataFile) => {
+        const name: string =
+          (appDataFile.data?.name as string) ?? appDataFile.id;
+        await getFile(appDataFile.id).then((file) => zip.file(name, file));
+      }),
+    );
   };
 
   const handleDownloadAll = async (): Promise<void> => {
@@ -52,7 +57,8 @@ const AppDataToolbar: FC = () => {
         getAllFiles(appDataFiles.toArray())
           .then(() => {
             zip.generateAsync({ type: 'blob' }).then((archive) => {
-              saveAs(archive, `uploaded_files_${Date().toString()}`);
+              const d = new Date();
+              saveAs(archive, `uploaded_files_${d.toISOString()}`);
               setIsLoading(false);
             });
           })
