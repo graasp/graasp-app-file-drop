@@ -14,6 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
 import { hooks } from '../../config/queryClient';
+import { DOWNLOAD_ALL_CYPRESS } from '../../config/selectors';
 import { showErrorToast } from '../../utils/toasts';
 import { useAppDataContext } from '../context/AppDataContext';
 
@@ -83,7 +84,10 @@ const AppDataToolbar: FC = () => {
         <CircularProgress color="primary" />
       ) : (
         <Tooltip title={t('DOWNLOAD_ALL')}>
-          <IconButton onClick={handleDownloadAll}>
+          <IconButton
+            onClick={handleDownloadAll}
+            data-cy={DOWNLOAD_ALL_CYPRESS}
+          >
             <FileDownloadIcon color="primary" />
           </IconButton>
         </Tooltip>
