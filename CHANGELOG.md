@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/graasp/graasp-app-file-drop/compare/v0.1.5...v0.2.0) (2023-02-14)
+
+
+### Features
+
+* add download all button ([3d2e78f](https://github.com/graasp/graasp-app-file-drop/commit/3d2e78f5a0806e0ba6e2fd2f5f37b2b54767c945))
+
+
+### Bug Fixes
+
+* add visibility field in AppData ([5112740](https://github.com/graasp/graasp-app-file-drop/commit/511274033d138b29ca0dd48f7a601d911a9a55a0))
+* add zip extension to downloaded archive ([7e3ae05](https://github.com/graasp/graasp-app-file-drop/commit/7e3ae055c01947a4699b3aaef00b96b7f2a4db55))
+* await for files before dwnld zip ([9d4e035](https://github.com/graasp/graasp-app-file-drop/commit/9d4e03507b4ab5dd58e346e88a6432baf588e8cb))
+* change meta fields in uppy config ([59ca417](https://github.com/graasp/graasp-app-file-drop/commit/59ca417fd0ff34e4de9fc22ce0864336540e4fe6))
+* component AppDataRow shows username ([7c9ad98](https://github.com/graasp/graasp-app-file-drop/commit/7c9ad98405a190442b98008c3d131478089c02f0))
+* update package.json ([6b19f7c](https://github.com/graasp/graasp-app-file-drop/commit/6b19f7ca8102f3b46eaf3bd27b259f8397bdae3e))
+* update workflow sha ref ([2156deb](https://github.com/graasp/graasp-app-file-drop/commit/2156deb716e8c2761f3add8a65ac2ea614575814))
+* update workflow sha ref ([5d70ef1](https://github.com/graasp/graasp-app-file-drop/commit/5d70ef165460bbe8fddcd0ca66f6d08e336e33d6))
+
+
+### Tests
+
+* add simple test for download all btn ([bae2ef5](https://github.com/graasp/graasp-app-file-drop/commit/bae2ef59a239561ea2ed43fa4991696057cf0707))
+* **fix:** adapt tests to query-client update ([54f6592](https://github.com/graasp/graasp-app-file-drop/commit/54f6592104503bb1635dd1deccede60d56d6230f))
+* **fix:** fix handling errors tests ([1c410a3](https://github.com/graasp/graasp-app-file-drop/commit/1c410a3aed94ea53a877fab7eb8c3a3217356cc0))
+* **refactor:** ? is shorthand for undefined 😉 ([d61fc9e](https://github.com/graasp/graasp-app-file-drop/commit/d61fc9ec88a6d08805d515dbd665ca59cbabfaf4))
+* **refactor:** port tests to Cypress 12 ([b66417d](https://github.com/graasp/graasp-app-file-drop/commit/b66417d65faa9f2968c966f1f24ad4cb8b3706db))
+
 ### [0.1.5](https://github.com/graasp/graasp-app-file-drop/compare/v0.1.4...v0.1.5) (2022-07-17)
 
 
