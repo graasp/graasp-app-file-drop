@@ -16,6 +16,7 @@ import { useAppDataContext } from '../context/AppDataContext';
 import { useMembersContext } from '../context/MembersContext';
 import FileDashboardUploader from '../main/FileDashboardUploader';
 import AppDataRow from './AppDataRow';
+import AppDataToolbar from './AppDataToolbar';
 
 const useStyles = makeStyles()((theme) => ({
   root: {
@@ -57,6 +58,7 @@ const AppDataTable: FC<AppDataTableProps> = ({ showMember }) => {
           <FileDashboardUploader />
         </Grid>
         <Paper className={classes.root}>
+          <AppDataToolbar />
           <Table className={classes.table} size="small">
             <TableHead>
               <TableRow>

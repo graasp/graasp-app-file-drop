@@ -2,6 +2,7 @@ import { Context, PermissionLevel } from '@graasp/sdk';
 
 import {
   DASHBOARD_UPLOADER_ID,
+  DOWNLOAD_ALL_CYPRESS,
   HEADER_REFRESH_BUTTON_CYPRESS,
   SETTING_HEADER_VISIBILITY_SWITCH_CYPRESS,
   TABLE_CELL_FILE_ACTION_DOWNLOAD_CYPRESS,
@@ -89,6 +90,12 @@ describe('<BuilderView />', () => {
           TABLE_CELL_FILE_ACTION_DOWNLOAD_CYPRESS,
         )}`,
       ).click();
+    });
+    it('downloads all files as a ZIP archive', () => {
+      cy.get(dataCyWrapper(DOWNLOAD_ALL_CYPRESS)).click();
+
+      cy.log('**confirm downloaded ZIP**');
+      // TODO: Complete this test. See https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/testing-dom__download/cypress/e2e/utils.js
     });
   });
   describe('Settings', () => {

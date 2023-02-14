@@ -47,6 +47,7 @@ const configureUppy = ({
     endpoint: `${apiHost}/${API_ROUTES.buildUploadFilesRoute(itemId)}`,
     withCredentials: true,
     formData: true,
+    allowedMetaFields: [],
     headers: {
       authorization: `Bearer ${token}`,
     },

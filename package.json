@@ -32,6 +32,7 @@
     "file-saver": "~2.0.5",
     "i18next": "~22.4.9",
     "immutable": "4.1.0",
+    "jszip": "~3.10.1",
     "lodash.isobject": "~3.0.2",
     "lodash.isstring": "~4.0.1",
     "qs": "~6.11.0",
@@ -71,7 +72,7 @@
     "@cypress/instrument-cra": "1.4.0",
     "@trivago/prettier-plugin-sort-imports": "4.0.0",
     "@types/dompurify": "2.4.0",
-    "@types/file-saver": "2.0.5",
+    "@types/file-saver": "^2.0.5",
     "@types/i18n": "0.13.6",
     "@types/jest": "29.2.5",
     "@types/lodash.isobject": "3.0.7",
@@ -115,6 +116,7 @@
     "ts-loader": "9.4.2",
     "uglifyjs-webpack-plugin": "~2.2.0",
     "wait-on": "7.0.1",
+    "webpack": "~5.75.0",
     "webpack-cli": "~5.0.1"
   },
   "release": {

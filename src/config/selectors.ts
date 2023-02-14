@@ -16,3 +16,4 @@ export const TABLE_CELL_FILE_USER_CYPRESS = 'tableCellFileUser';
 export const SETTING_HEADER_VISIBILITY_SWITCH_CYPRESS =
   'settingHeaderVisibilitySwitch';
 export const HEADER_REFRESH_BUTTON_CYPRESS = 'headerRefershButton';
+export const DOWNLOAD_ALL_CYPRESS = 'downloadAll';
