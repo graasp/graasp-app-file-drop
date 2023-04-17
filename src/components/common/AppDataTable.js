@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import TableRow from '@material-ui/core/TableRow';
 import Loader from './Loader';
 import FileDashboardUploader from '../main/FileDashboardUploader';
-import { useAppContext, useAppData } from '../context/hooks';
+import { useAppData } from '../context/hooks';
 import { useTranslation } from 'react-i18next';
 import AppDataRow from './AppDataRow';
 import { ROW_NO_FILES_UPLOADED_ID } from '../../config/selectors';
@@ -41,11 +41,9 @@ const useStyles = makeStyles((theme) => ({
 const AppDataTable = ({ showMember }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { data: appContext, isLoading: isAppContextLoading } = useAppContext();
-  const members = appContext?.get('members');
   const { data: appData, isLoading, isSuccess, isError } = useAppData();
 
-  if (isAppContextLoading || isLoading) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -83,12 +81,7 @@ const AppDataTable = ({ showMember }) => {
                   appData
                     .sortBy(({ createdAt }) => createdAt)
                     .map((a) => (
-                      <AppDataRow
-                        key={a.id}
-                        data={a}
-                        showMember={showMember}
-                        member={members.find(({ id }) => id === a.memberId)}
-                      />
+                      <AppDataRow key={a.id} data={a} showMember={showMember} />
                     ))
                 )}
               </TableBody>

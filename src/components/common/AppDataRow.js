@@ -18,14 +18,14 @@ import {
   TABLE_CELL_FILE_USER_CYPRESS,
 } from '../../config/selectors';
 
-const AppDataRow = ({ data, showMember, member }) => {
+const AppDataRow = ({ data, showMember }) => {
   const { t } = useTranslation();
   const context = useContext(Context);
   const memberId = context.get('memberId');
   const permission = context.get('permission');
 
   const renderUsername = () => {
-    return member?.name || t('Anonymous');
+    return data.member?.name || t('Anonymous');
   };
 
   const renderActions = () => {
@@ -34,7 +34,7 @@ const AppDataRow = ({ data, showMember, member }) => {
     // show if app data is from authenticated member
     // or if has at least write permission
     if (
-      data.memberId === memberId ||
+      data.member.id === memberId ||
       [PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(permission)
     ) {
       actions.push(<FileDownloadButton data={data} key="download" />);
@@ -68,7 +68,8 @@ const AppDataRow = ({ data, showMember, member }) => {
         </TableCell>
       )}
       <TableCell data-cy={TABLE_CELL_FILE_NAME_CYPRESS}>
-        {data.data?.name}
+        {/* TODO: use graasp sdk */}
+        {data.data?.s3File?.name}
       </TableCell>
       <TableCell>{renderActions()}</TableCell>
     </TableRow>
@@ -77,29 +78,27 @@ const AppDataRow = ({ data, showMember, member }) => {
 
 AppDataRow.propTypes = {
   showMember: PropTypes.bool.isRequired,
-  member: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-  }),
   data: PropTypes.shape({
     id: PropTypes.string,
-    itemId: PropTypes.string,
-    memberId: PropTypes.string,
+    item: {
+      id: PropTypes.string,
+    },
+    member: { id: PropTypes.string },
     type: PropTypes.string,
     visibility: PropTypes.string,
     createdAt: PropTypes.number,
     creator: PropTypes.string,
     updatedAt: PropTypes.string,
     data: PropTypes.shape({
-      name: PropTypes.string,
-      type: PropTypes.string,
-      extra: PropTypes.shape({}).isRequired,
+      s3File: {
+        name: PropTypes.string,
+      },
     }).isRequired,
   }).isRequired,
 };
 
 AppDataRow.defaultProps = {
   showMember: false,
-  member: null,
 };
 
 export default AppDataRow;
