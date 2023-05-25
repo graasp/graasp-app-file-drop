@@ -1,15 +1,14 @@
-import React, { useContext } from 'react';
 import Header from '../layout/Header';
-import { Context } from '../context/ContextContext';
 import AppDataTable from '../common/AppDataTable';
 import Settings from '../common/Settings';
-import { PERMISSION_LEVELS } from '../../config/constants';
+import { useLocalContext } from '@graasp/apps-query-client';
+import { PermissionLevel } from '@graasp/sdk';
 
 const BuilderView = () => {
-  const context = useContext(Context);
-  switch (context.get('permission')) {
-    case PERMISSION_LEVELS.ADMIN:
-    case PERMISSION_LEVELS.WRITE:
+  const context = useLocalContext();
+  switch (context?.permission) {
+    case PermissionLevel.Admin:
+    case PermissionLevel.Write:
       return (
         <>
           <Header />
@@ -18,7 +17,7 @@ const BuilderView = () => {
         </>
       );
 
-    case PERMISSION_LEVELS.READ:
+    case PermissionLevel.Read:
     default:
       return (
         <>

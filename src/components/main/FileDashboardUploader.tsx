@@ -1,34 +1,35 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
-import { ROUTINES } from '@graasp/apps-query-client';
+import {
+  ROUTINES,
+  TokenContext,
+  useLocalContext,
+} from '@graasp/apps-query-client';
 import { Dashboard } from '@uppy/react';
 import { useTranslation } from 'react-i18next';
 import { FILE_UPLOAD_MAX_FILES } from '../../config/constants';
-import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
-import configureUppy from '../../utils/uppy';
+import { mutations } from '../../config/queryClient';
+import configureUppy, { ConfigureUppyArgs } from '../../utils/uppy';
 import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 import notifier from '../../config/notifier';
-import { Context } from '../context/ContextContext';
-import { TokenContext } from '../context/TokenContext';
+import Uppy from '@uppy/core';
+import { Alert } from '@mui/material';
 
 const { uploadFileRoutine } = ROUTINES;
 
 const FileDashboardUploader = () => {
   const { t } = useTranslation();
-  const context = useContext(Context);
+  const context = useLocalContext();
   const token = useContext(TokenContext);
-  const itemId = context?.get('itemId');
-  const apiHost = context?.get('apiHost');
-  const [uppy, setUppy] = useState(null);
-  const { mutate: onFileUploadComplete } = useMutation(
-    MUTATION_KEYS.FILE_UPLOAD,
-  );
+  const itemId = context?.itemId;
+  const apiHost = context?.apiHost;
+  const [uppy, setUppy] = useState<Uppy>();
+  const { mutate: onFileUploadComplete } = mutations.useUploadAppDataFile();
 
-  const onComplete = (result) => {
+  const onComplete: ConfigureUppyArgs['onComplete'] = (result) => {
     if (!result?.failed.length) {
       onFileUploadComplete({
-        id: itemId,
         data: result.successful
           ?.map(({ response }) => response?.body?.[0])
           .filter(Boolean),
@@ -38,11 +39,11 @@ const FileDashboardUploader = () => {
   };
 
   const onUpload = () => {
-    notifier({ type: uploadFileRoutine.REQUEST });
+    notifier({ type: uploadFileRoutine.REQUEST, payload: '' });
   };
 
-  const onError = (error) => {
-    onFileUploadComplete({ id: itemId, error });
+  const onError: ConfigureUppyArgs['onError'] = (error) => {
+    onFileUploadComplete({ error });
   };
 
   const applyUppy = () => {
@@ -71,9 +72,14 @@ const FileDashboardUploader = () => {
     return null;
   }
 
+  if (!itemId) {
+    return <Alert severity="error">{t('Item is not defined')}</Alert>;
+  }
+
   return (
     <div id={DASHBOARD_UPLOADER_ID}>
       <Dashboard
+        disabled={Boolean(!context?.memberId)}
         uppy={uppy}
         height={200}
         width="100%"
@@ -83,11 +89,7 @@ const FileDashboardUploader = () => {
         })}
         locale={{
           strings: {
-            // Text to show on the droppable area.
-            // `%{browse}` is replaced with a link that opens the system file selection dialog.
-            dropPaste: `${t('Drop here or')} %{browse}`,
-            // Used as the label for the link that opens the system file selection dialog.
-            browse: t('Browse'),
+            dropPasteFiles: 'Drop files here or %{browseFiles}',
           },
         }}
       />

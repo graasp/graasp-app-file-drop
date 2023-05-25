@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
+import { useState } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 import { TABLE_CELL_FILE_ACTION_DELETE_CYPRESS } from '../../config/selectors';
 import DeleteAppDataDialog from '../main/DeleteAppDataDialog';
+import { AppDataRecord } from '@graasp/sdk/frontend';
 
-const DeleteAppDataButton = ({ data }) => {
+type Props = {
+  data: AppDataRecord;
+};
+
+const DeleteAppDataButton = ({ data }: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -32,12 +36,6 @@ const DeleteAppDataButton = ({ data }) => {
       />
     </>
   );
-};
-
-DeleteAppDataButton.propTypes = {
-  data: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default DeleteAppDataButton;

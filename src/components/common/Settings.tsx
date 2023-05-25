@@ -1,71 +1,39 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Modal from '@material-ui/core/Modal';
-import Fab from '@material-ui/core/Fab';
-import Switch from '@material-ui/core/Switch';
-import Tooltip from '@material-ui/core/Tooltip';
-import SettingsIcon from '@material-ui/icons/Settings';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import Fab from '@mui/material/Fab';
+import Switch from '@mui/material/Switch';
+import Tooltip from '@mui/material/Tooltip';
+import SettingsIcon from '@mui/icons-material/Settings';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   SETTINGS_BUTTON_CYPRESS,
   SETTING_HEADER_VISIBILITY_SWITCH_CYPRESS,
 } from '../../config/selectors';
-import Loader from '../common/Loader';
-import { useAppSettings } from '../context/hooks';
 import {
   APP_SETTINGS,
   DEFAULT_HEADER_VISIBLE,
   DEFAULT_PUBLIC_STUDENT_UPLOADS,
 } from '../../config/constants';
+import { Loader } from '@graasp/ui';
+import { Dialog, DialogContent, DialogTitle } from '@mui/material';
+import { AppSetting, UUID } from '@graasp/sdk';
 
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  fab: {
-    margin: theme.spacing(1),
-    position: 'fixed',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-  },
-  paper: {
-    position: 'absolute',
-    width: theme.spacing(50),
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(4),
-    outline: 'none',
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-}));
+const { useAppSettings } = hooks;
 
 const Settings = () => {
   const [open, setOpen] = useState(false);
-  const classes = useStyles();
   const { t } = useTranslation();
   const { data: settings, isLoading } = useAppSettings();
-  const { mutate: postAppSetting } = useMutation(
-    MUTATION_KEYS.POST_APP_SETTING,
-  );
-  const { mutate: patchAppSetting } = useMutation(
-    MUTATION_KEYS.PATCH_APP_SETTING,
-  );
+  const { mutate: postAppSetting } = mutations.usePostAppSetting();
+  const { mutate: patchAppSetting } = mutations.usePatchAppSetting();
 
-  const saveSettings = (originalSetting, newSetting) => {
-    if (originalSetting?.id) {
-      patchAppSetting(newSetting);
+  const saveSetting = (
+    id: UUID | undefined,
+    newSetting: Partial<AppSetting>,
+  ) => {
+    if (id) {
+      patchAppSetting({ id, ...newSetting });
     } else {
       postAppSetting(newSetting);
     }
@@ -73,28 +41,26 @@ const Settings = () => {
 
   const handleChangeHeaderVisibility = () => {
     const key = APP_SETTINGS.HEADER_VISIBLE;
-    const originalSetting = settings.find(({ name }) => name === key) ?? {
-      name: key,
-    };
+    const originalSetting = settings?.find(({ name }) => name === key);
     const settingsToChange = {
-      ...originalSetting,
+      name: key,
       data: {
         [key]: !originalSetting?.data?.[key] ?? !DEFAULT_HEADER_VISIBLE,
       },
     };
-    saveSettings(originalSetting, settingsToChange);
+    saveSetting(originalSetting?.id, settingsToChange);
   };
 
   const handleChangeStudentUploadVisibility = () => {
     const key = APP_SETTINGS.PUBLIC_STUDENT_UPLOADS;
-    const originalSetting = settings.find(({ name }) => name === key);
+    const originalSetting = settings?.find(({ name }) => name === key);
     const settingsToChange = {
-      ...originalSetting,
+      name: key,
       data: {
         [key]: !originalSetting?.data?.[key] ?? !DEFAULT_PUBLIC_STUDENT_UPLOADS,
       },
     };
-    saveSettings(originalSetting, settingsToChange);
+    saveSetting(originalSetting?.id, settingsToChange);
   };
 
   const handleClose = () => {
@@ -121,7 +87,7 @@ const Settings = () => {
       <Switch
         color="primary"
         checked={
-          headerVisible?.data[APP_SETTINGS.HEADER_VISIBLE] ??
+          Boolean(headerVisible?.data[APP_SETTINGS.HEADER_VISIBLE]) ??
           DEFAULT_HEADER_VISIBLE
         }
         onChange={handleChangeHeaderVisibility}
@@ -134,8 +100,9 @@ const Settings = () => {
       <Switch
         color="primary"
         checked={
-          publicStudentUploads?.data[APP_SETTINGS.PUBLIC_STUDENT_UPLOADS] ??
-          DEFAULT_PUBLIC_STUDENT_UPLOADS
+          Boolean(
+            publicStudentUploads?.data[APP_SETTINGS.PUBLIC_STUDENT_UPLOADS],
+          ) ?? DEFAULT_PUBLIC_STUDENT_UPLOADS
         }
         onChange={handleChangeStudentUploadVisibility}
         value={APP_SETTINGS.PUBLIC_STUDENT_UPLOADS}
@@ -145,11 +112,12 @@ const Settings = () => {
     );
 
     return (
-      <>
+      <DialogContent>
         <FormControlLabel
           control={headerVisibilitySwitch}
           label={t('Show Header to Students')}
         />
+        <br />
         <Tooltip
           title={t(
             'When enabled, student uploads will be visible to other students. Teacher uploads are always visible to all students.',
@@ -160,7 +128,7 @@ const Settings = () => {
             label={t('Student Uploads are Public')}
           />
         </Tooltip>
-      </>
+      </DialogContent>
     );
   };
 
@@ -169,25 +137,26 @@ const Settings = () => {
       <Fab
         color="primary"
         aria-label="Settings"
-        className={classes.fab}
+        sx={{
+          margin: 1,
+          position: 'fixed',
+          bottom: 2,
+          right: 2,
+        }}
         onClick={handleOpen}
         data-cy={SETTINGS_BUTTON_CYPRESS}
       >
         <SettingsIcon />
       </Fab>
-      <Modal
+      <Dialog
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
         open={open}
         onClose={handleClose}
       >
-        <div style={getModalStyle()} className={classes.paper}>
-          <Typography variant="h5" id="modal-title">
-            {t('Settings')}
-          </Typography>
-          {renderModalContent()}
-        </div>
-      </Modal>
+        <DialogTitle>{t('Settings')}</DialogTitle>
+        {renderModalContent()}
+      </Dialog>
     </>
   );
 };

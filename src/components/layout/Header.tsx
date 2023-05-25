@@ -1,36 +1,21 @@
-import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import AppBar from '@material-ui/core/AppBar';
-import Typography from '@material-ui/core/Typography';
-import Toolbar from '@material-ui/core/Toolbar';
-import { IconButton, makeStyles, Tooltip } from '@material-ui/core';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import WarningIcon from '@material-ui/icons/Warning';
-import { ReactComponent as Logo } from '../../resources/logo.svg';
-import { Context } from '../context/ContextContext';
-import { PERMISSION_LEVELS } from '../../config/constants';
+import AppBar from '@mui/material/AppBar';
+import Typography from '@mui/material/Typography';
+import Toolbar from '@mui/material/Toolbar';
+import { IconButton, Tooltip } from '@mui/material';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import WarningIcon from '@mui/icons-material/Warning';
 import { queryClient, HOOK_KEYS } from '../../config/queryClient';
 import { HEADER_REFRESH_BUTTON_CYPRESS } from '../../config/selectors';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  logo: {
-    height: '48px',
-    marginRight: theme.spacing(2),
-  },
-}));
+import { useLocalContext } from '@graasp/apps-query-client';
+import { GraaspLogo } from '@graasp/ui';
+import { PermissionLevel } from '@graasp/sdk';
 
 const Header = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
-  const context = useContext(Context);
-  const permission = context.get('permission');
-  const standalone = context.get('standalone');
+  const context = useLocalContext();
+  const permission = context.permission ?? PermissionLevel.Read;
+  const standalone = context.standalone;
 
   const handleRefresh = () => {
     const itemId = context.get('itemId');
@@ -49,9 +34,7 @@ const Header = () => {
       );
     }
 
-    if (
-      [PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(permission)
-    ) {
+    if ([PermissionLevel.Write, PermissionLevel.Admin].includes(permission)) {
       return [
         <IconButton
           onClick={handleRefresh}
@@ -68,8 +51,12 @@ const Header = () => {
     <header>
       <AppBar position="static">
         <Toolbar>
-          <Logo className={classes.logo} />
-          <Typography variant="h6" color="inherit" className={classes.grow}>
+          <GraaspLogo height={40} sx={{ fill: 'white' }} />
+          <Typography
+            variant="h6"
+            color="inherit"
+            sx={{ marginLeft: 1, flexGrow: 1 }}
+          >
             {t('File Drop')}
           </Typography>
           {renderViewButtons()}

@@ -1,7 +1,23 @@
-import Uppy from '@uppy/core';
+import Uppy, { ProgressCallback } from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
 import { FILE_UPLOAD_MAX_FILES } from '../config/constants';
 import { API_ROUTES } from '../config/queryClient';
+import { UUID } from '@graasp/sdk';
+import { UploadResult } from '@uppy/core';
+import { UppyFile } from '@uppy/core';
+import { UploadCallback } from '@uppy/core';
+
+export type ConfigureUppyArgs = {
+  apiHost: string,
+  itemId: UUID,
+  token: string,
+  onComplete?: (result: UploadResult) => void,
+  onProgress?: ProgressCallback,
+  onFileAdded?: (files: UppyFile) => void,
+  onFilesAdded?: (files: UppyFile[]) => void,
+  onError?: (e: Error | UppyFile | undefined) => void,
+  onUpload?: UploadCallback
+}
 
 const configureUppy = ({
   apiHost,
@@ -13,7 +29,7 @@ const configureUppy = ({
   onFilesAdded,
   onError,
   onUpload,
-}) => {
+}: ConfigureUppyArgs) => {
   const uppy = new Uppy({
     restrictions: { maxNumberOfFiles: FILE_UPLOAD_MAX_FILES },
     autoProceed: true,
@@ -23,7 +39,7 @@ const configureUppy = ({
     endpoint: `${apiHost}/${API_ROUTES.buildUploadFilesRoute(itemId)}`,
     withCredentials: true,
     formData: true,
-    metaFields: [],
+    allowedMetaFields: [],
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -37,9 +53,13 @@ const configureUppy = ({
     onFilesAdded?.(files);
   });
 
-  uppy.on('upload', onUpload);
+  if (onUpload) {
+    uppy.on('upload', onUpload);
+  }
 
-  uppy.on('progress', onProgress);
+  if (onProgress) {
+    uppy.on('progress', onProgress);
+  }
 
   uppy.on('complete', (result) => {
     onComplete?.(result);

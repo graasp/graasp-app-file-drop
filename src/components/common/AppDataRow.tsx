@@ -1,14 +1,9 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import { useTranslation } from 'react-i18next';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import { VISIBILITIES } from '../../config/settings';
-import { Context } from '../context/ContextContext';
-import { PERMISSION_LEVELS } from '../../config/constants';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import FileDownloadButton from './FileDownloadButton';
 import DeleteAppDataButton from './DeleteAppDataButton';
 import {
@@ -17,10 +12,18 @@ import {
   TABLE_CELL_FILE_NAME_CYPRESS,
   TABLE_CELL_FILE_USER_CYPRESS,
 } from '../../config/selectors';
+import { useLocalContext } from '@graasp/apps-query-client';
+import { AppDataVisibility, PermissionLevel } from '@graasp/sdk';
+import { AppDataRecord } from '@graasp/sdk/frontend';
 
-const AppDataRow = ({ data, showMember }) => {
+type Props = {
+  data: AppDataRecord;
+  showMember?: boolean;
+};
+
+const AppDataRow = ({ data, showMember = false }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const context = useContext(Context);
+  const context = useLocalContext();
   const memberId = context.get('memberId');
   const permission = context.get('permission');
 
@@ -35,12 +38,12 @@ const AppDataRow = ({ data, showMember }) => {
     // or if has at least write permission
     if (
       data.member.id === memberId ||
-      [PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(permission)
+      [PermissionLevel.Write, PermissionLevel.Admin].includes(permission)
     ) {
       actions.push(<FileDownloadButton data={data} key="download" />);
       actions.push(<DeleteAppDataButton data={data} key="delete" />);
     }
-    if (visibility === VISIBILITIES.ITEM) {
+    if (visibility === AppDataVisibility.Item) {
       actions.push(
         <Tooltip
           key="visibility"
@@ -69,36 +72,19 @@ const AppDataRow = ({ data, showMember }) => {
       )}
       <TableCell data-cy={TABLE_CELL_FILE_NAME_CYPRESS}>
         {/* TODO: use graasp sdk */}
-        {data.data?.s3File?.name}
+        {
+          (
+            data.data?.toJS() as {
+              s3File: {
+                name: string;
+              };
+            }
+          )?.s3File?.name
+        }
       </TableCell>
       <TableCell>{renderActions()}</TableCell>
     </TableRow>
   );
-};
-
-AppDataRow.propTypes = {
-  showMember: PropTypes.bool.isRequired,
-  data: PropTypes.shape({
-    id: PropTypes.string,
-    item: {
-      id: PropTypes.string,
-    },
-    member: { id: PropTypes.string },
-    type: PropTypes.string,
-    visibility: PropTypes.string,
-    createdAt: PropTypes.number,
-    creator: PropTypes.string,
-    updatedAt: PropTypes.string,
-    data: PropTypes.shape({
-      s3File: {
-        name: PropTypes.string,
-      },
-    }).isRequired,
-  }).isRequired,
-};
-
-AppDataRow.defaultProps = {
-  showMember: false,
 };
 
 export default AppDataRow;

@@ -1,5 +1,3 @@
-import { REACT_APP_MOCK_API } from './env';
-
 export const APP_NAME = 'Graasp';
 
 export const ENV = {
@@ -24,16 +22,7 @@ export const DEFAULT_LANG = 'en';
 export const HEADER_HEIGHT = 64;
 export const FILE_UPLOAD_MAX_FILES = 5;
 
-export const DEFAULT_PERMISSION = 'read';
-
-export const MOCK_API = REACT_APP_MOCK_API === 'true';
-
-// todo: use from graasp constants
-export const PERMISSION_LEVELS = {
-  WRITE: 'write',
-  READ: 'read',
-  ADMIN: 'admin',
-};
+export const MOCK_API = process.env.REACT_APP_ENABLE_MOCK_API === 'true';
 
 export const APP_DATA_TYPES = {
   FILE: 'file',
@@ -46,3 +35,13 @@ export const APP_SETTINGS = {
 
 export const DEFAULT_HEADER_VISIBLE = false;
 export const DEFAULT_PUBLIC_STUDENT_UPLOADS = false;
+
+export const REACT_APP_API_HOST =
+  process.env.REACT_APP_API_HOST ?? 'http://localhost:3000';
+
+export const REACT_APP_GRAASP_APP_KEY = process.env.REACT_APP_GRAASP_APP_KEY;
+
+
+export const MAX_NUM_FILES = 10;
+// ten megabytes times 1024 kilobytes/megabyte * 1024 bytes/kilobyte
+export const MAX_FILE_SIZE = 10 * 1024 * 1024;

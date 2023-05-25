@@ -1,4 +1,4 @@
-const downloadHelper = async (blob, name) => {
+const downloadHelper = async (blob: Blob, name: string) => {
   const link = document.createElement('a');
   link.href = window.URL.createObjectURL(blob);
   link.download = name;
