@@ -2,29 +2,14 @@ import { List } from 'immutable';
 
 import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
-import { AppSetting } from '@graasp/apps-query-client';
+import { AppSettingRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
-import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
-import {
-  DeleteAppSettingType,
-  PatchAppSettingType,
-  PostAppSettingType,
-} from '../../types/appSettings';
+import { hooks } from '../../config/queryClient';
 
-export type AppSettingContextType = {
-  postAppSetting: (payload: PostAppSettingType) => void;
-  patchAppSetting: (payload: PatchAppSettingType) => void;
-  deleteAppSetting: (payload: DeleteAppSettingType) => void;
-  appSettingArray: List<AppSetting>;
-};
+export type AppSettingContextType = List<AppSettingRecord>;
 
-const defaultContextValue = {
-  postAppSetting: () => null,
-  patchAppSetting: () => null,
-  deleteAppSetting: () => null,
-  appSettingArray: List<AppSetting>(),
-};
+const defaultContextValue = List<AppSettingRecord>();
 
 const AppSettingContext =
   createContext<AppSettingContextType>(defaultContextValue);
@@ -32,30 +17,9 @@ const AppSettingContext =
 export const AppSettingProvider: FC<PropsWithChildren> = ({ children }) => {
   const appSetting = hooks.useAppSettings();
 
-  const { mutate: postAppSetting } = useMutation<
-    unknown,
-    unknown,
-    PostAppSettingType
-  >(MUTATION_KEYS.POST_APP_SETTING);
-  const { mutate: patchAppSetting } = useMutation<
-    unknown,
-    unknown,
-    PatchAppSettingType
-  >(MUTATION_KEYS.PATCH_APP_SETTING);
-  const { mutate: deleteAppSetting } = useMutation<
-    unknown,
-    unknown,
-    DeleteAppSettingType
-  >(MUTATION_KEYS.DELETE_APP_SETTING);
-
   const contextValue: AppSettingContextType = useMemo(
-    () => ({
-      postAppSetting,
-      patchAppSetting,
-      deleteAppSetting,
-      appSettingArray: appSetting.data || List<AppSetting>(),
-    }),
-    [appSetting.data, deleteAppSetting, patchAppSetting, postAppSetting],
+    () => appSetting.data || List<AppSettingRecord>(),
+    [appSetting.data],
   );
 
   if (appSetting.isLoading) {

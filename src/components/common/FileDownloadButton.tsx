@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 
-import { Api, AppData, useLocalContext } from '@graasp/apps-query-client';
+import { Api, useLocalContext } from '@graasp/apps-query-client';
+import { AppDataRecord } from '@graasp/sdk/frontend';
 
 import ArrowDownward from '@mui/icons-material/ArrowDownward';
 import IconButton from '@mui/material/IconButton';
@@ -10,7 +11,7 @@ import { TABLE_CELL_FILE_ACTION_DOWNLOAD_CYPRESS } from '../../config/selectors'
 import downloadHelper from './utils';
 
 interface FileDownloadButtonProps {
-  data: AppData;
+  data: AppDataRecord;
 }
 
 const FileDownloadButton: FC<FileDownloadButtonProps> = ({ data }) => {
@@ -25,7 +26,10 @@ const FileDownloadButton: FC<FileDownloadButtonProps> = ({ data }) => {
         apiHost: context?.get('apiHost'),
         token,
       });
-      downloadHelper(file, data.data.name as string);
+      downloadHelper(
+        file,
+        (data.data.toJS() as { s3File: { name: string } }).s3File.name,
+      );
     }
   };
   if (isSuccess) {

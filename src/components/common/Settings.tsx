@@ -3,7 +3,7 @@ import { makeStyles } from 'tss-react/mui';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { AppSetting } from '@graasp/apps-query-client';
+import { AppSetting } from '@graasp/sdk';
 
 import SettingsIcon from '@mui/icons-material/Settings';
 import Fab from '@mui/material/Fab';
@@ -18,6 +18,7 @@ import {
   DEFAULT_HEADER_VISIBLE,
   DEFAULT_PUBLIC_STUDENT_UPLOADS,
 } from '../../config/constants';
+import { mutations } from '../../config/queryClient';
 import {
   SETTINGS_BUTTON_CYPRESS,
   SETTING_HEADER_VISIBILITY_SWITCH_CYPRESS,
@@ -58,11 +59,10 @@ const Settings: FC = () => {
   const [open, setOpen] = useState(false);
   const { classes } = useStyles();
   const { t } = useTranslation();
-  const {
-    appSettingArray: settings,
-    postAppSetting,
-    patchAppSetting,
-  } = useAppSettingContext();
+  const settings = useAppSettingContext();
+
+  const { mutate: postAppSetting } = mutations.usePostAppSetting();
+  const { mutate: patchAppSetting } = mutations.usePatchAppSetting();
 
   interface NewSetting {
     id?: AppSetting['id'];

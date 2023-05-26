@@ -14,10 +14,10 @@ const App: FC = () => {
 
   const renderContent = (): JSX.Element => {
     switch (context?.get('context')) {
-      case Context.BUILDER:
+      case Context.Builder:
         return <BuilderView />;
 
-      case Context.PLAYER:
+      case Context.Player:
       default:
         return <PlayerView />;
     }

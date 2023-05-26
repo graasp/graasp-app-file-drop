@@ -1,7 +1,9 @@
 /// <reference types="cypress" />
+// eslint-disable-next-line import/no-unresolved
 import { mount } from 'cypress/react18';
 
-import { Database, LocalContext, Member } from '@graasp/apps-query-client';
+import { Database, LocalContext } from '@graasp/apps-query-client';
+import { Member } from '@graasp/sdk';
 
 declare global {
   namespace Cypress {

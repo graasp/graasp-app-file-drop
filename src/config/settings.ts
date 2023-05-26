@@ -10,9 +10,4 @@ export const MAX_NUM_FILES = 10;
 // ten megabytes times 1024 kilobytes/megabyte * 1024 bytes/kilobyte
 export const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
-export const VISIBILITIES = {
-  MEMBER: 'member',
-  ITEM: 'item',
-};
-
 export const DEFAULT_LOCAL_CONTEXT = {};

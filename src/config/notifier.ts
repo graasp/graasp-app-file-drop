@@ -42,6 +42,7 @@ export default ({ type, payload }: NotifierInt): void => {
   if (payload?.error && message) {
     toast.error(i18n.t('UPLOAD_FILES_ERROR_MESSAGE'));
   }
+
   // success notification
   else if (message) {
     toast.success(i18n.t('UPLOAD_FILES_SUCCESS_MESSAGE'));

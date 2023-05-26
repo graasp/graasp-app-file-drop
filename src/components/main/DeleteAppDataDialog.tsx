@@ -1,6 +1,6 @@
 import { makeStyles } from 'tss-react/mui';
 
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Button from '@mui/material/Button';
@@ -10,8 +10,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import { mutations } from '../../config/queryClient';
 import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
-import { useAppDataContext } from '../context/AppDataContext';
 
 const useStyles = makeStyles()(() => ({
   confirmDeleteButton: {
@@ -32,7 +32,7 @@ const DeleteAppDataDialog: FC<DeleteAppDataDialogProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const { deleteAppData } = useAppDataContext();
+  const { mutate: deleteAppData } = mutations.useDeleteAppData();
 
   const { classes } = useStyles();
 
