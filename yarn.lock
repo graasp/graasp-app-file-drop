@@ -2398,9 +2398,9 @@ __metadata:
 
 "@graasp/apps-query-client@github:graasp/graasp-apps-query-client.git#44-app-key-typeorm":
   version: 1.0.0
-  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=f6b2a422611e3addec387b24f576948e60634d9d"
+  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=b36fbdd5272b4cce6a0f39539ca4299ce765a621"
   dependencies:
-    "@graasp/sdk": "github:graasp/graasp-sdk.git#v1.0.0-rc1"
+    "@graasp/sdk": 1.0.0-rc1
     axios: 0.27.2
     http-status-codes: 2.2.0
     immutable: 4.3.0
@@ -2412,7 +2412,7 @@ __metadata:
     "@tanstack/react-query-devtools": ^4.28.0
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 0bffbf6d57197fb1cb22d1d3292f677cdc79bb55f952f2bf28c245ca12f4d47aa7a2c43966d199d30ca281d0884ddc13103608234e973a8973149352576e25ac
+  checksum: 359a1b12e79b76e5af54057cd55b5e33aec164f7faac7297c9c480dbb9040ea745957ffe745e03031ee60bab90c62fa5cef6f11aae22de4001a7d635c9b7d369
   languageName: node
   linkType: hard
 
@@ -2426,25 +2426,6 @@ __metadata:
     http-errors: ^1.7.1
     sanitize-html: ^2.10.0
   checksum: 30042c1716fb55a18e8230db6934add149639cabf00d1ac27d4e163a5381f906bdc36a0a38f5454b6d12ca2020adccd7d5784888e59887adc2b3db7929059f68
-  languageName: node
-  linkType: hard
-
-"@graasp/sdk@github:graasp/graasp-sdk.git#v1.0.0-rc1":
-  version: 1.0.0-rc1
-  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=147e42a4710ab6f6377ec14b2ebafc760f4ff46e"
-  dependencies:
-    "@fastify/secure-session": 5.3.0
-    "@graasp/etherpad-api": 2.1.1
-    aws-sdk: 2.1370.0
-    fastify: 4.17.0
-    fluent-json-schema: 4.1.0
-    immutable: 4.3.0
-    js-cookie: 3.0.5
-    qs: 6.11.1
-    typeorm: 0.3.15
-    uuid: 9.0.0
-    validator: 13.9.0
-  checksum: 84fb685145decf6b83cedd7dc2cbd7a2bd44d488e12fe2e8d5c2a07208e6258ff19aa9026929e2e1456eeb5bde0d260905ac6a9b580214ae40826659e568d5bb
   languageName: node
   linkType: hard
 
