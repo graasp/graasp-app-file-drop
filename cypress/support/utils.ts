@@ -23,13 +23,13 @@ export const deleteFile = ({ id }): void => {
 };
 
 export const checkRow = (
-  { id, createdAt, data: { name }, creator }: AppData,
+  { id, createdAt, data: { s3File }, creator }: AppData,
   checkMember = false,
 ): void => {
   const rowSelector = `#${buildTableRowId(id)}`;
   cy.get(
     `${rowSelector} ${dataCyWrapper(TABLE_CELL_FILE_NAME_CYPRESS)}`,
-  ).should('have.text', name);
+  ).should('have.text', (s3File as { name: string })?.name);
   cy.get(
     `${rowSelector} ${dataCyWrapper(TABLE_CELL_FILE_ACTION_DELETE_CYPRESS)}`,
   ).should('exist');
@@ -41,7 +41,7 @@ export const checkRow = (
       `${rowSelector} ${dataCyWrapper(TABLE_CELL_FILE_USER_CYPRESS)}`,
     ).should(
       'have.text',
-      Object.values(MEMBERS).find(({ id: idT }) => idT === creator)?.name ??
+      Object.values(MEMBERS).find(({ id: idT }) => idT === creator!.id)?.name ??
         'Anonymous',
     );
   }

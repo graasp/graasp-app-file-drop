@@ -1,4 +1,4 @@
-import { Member } from '@graasp/apps-query-client';
+import { Member, MemberType } from '@graasp/sdk';
 
 export const MEMBERS: { [key: string]: Member } = {
   ANNA: {
@@ -6,12 +6,18 @@ export const MEMBERS: { [key: string]: Member } = {
     name: 'anna',
     email: 'anna.test@graasp.org',
     extra: {},
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    type: MemberType.Individual,
   },
   BOB: {
     id: '1f0a2774-a965-4b97-afb4-bccc3796e060',
     name: 'bob',
     email: 'bob.test@graasp.org',
     extra: {},
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    type: MemberType.Individual,
   },
 };
 

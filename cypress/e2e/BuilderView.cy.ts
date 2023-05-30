@@ -22,9 +22,10 @@ describe('<BuilderView />', () => {
       cy.setUpApi({
         database: { appData: [MOCK_APP_DATA, MOCK_STUDENT_APP_DATA] },
         appContext: {
-          memberId: MOCK_APP_DATA.creator,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          memberId: MOCK_APP_DATA.creator!.id,
           permission: PermissionLevel.Admin,
-          context: Context.BUILDER,
+          context: Context.Builder,
         },
       });
       cy.visit('/');
@@ -56,9 +57,9 @@ describe('<BuilderView />', () => {
       cy.setUpApi({
         database: { appData: [MOCK_APP_DATA, MOCK_STUDENT_APP_DATA] },
         appContext: {
-          memberId: MOCK_APP_DATA.creator,
+          memberId: MOCK_APP_DATA.creator!.id,
           permission: PermissionLevel.Admin,
-          context: Context.BUILDER,
+          context: Context.Builder,
         },
       });
       cy.visit('/');
@@ -75,9 +76,9 @@ describe('<BuilderView />', () => {
       cy.setUpApi({
         database: { appData: [MOCK_APP_DATA] },
         appContext: {
-          memberId: MOCK_APP_DATA.creator,
+          memberId: MOCK_APP_DATA.creator!.id,
           permission: PermissionLevel.Admin,
-          context: Context.BUILDER,
+          context: Context.Builder,
         },
       });
       cy.visit('/');
@@ -103,9 +104,9 @@ describe('<BuilderView />', () => {
       cy.setUpApi({
         database: { appData: [MOCK_APP_DATA] },
         appContext: {
-          memberId: MOCK_APP_DATA.creator,
+          memberId: MOCK_APP_DATA.creator!.id,
           permission: PermissionLevel.Admin,
-          context: Context.BUILDER,
+          context: Context.Builder,
         },
       });
       cy.visit('/');
@@ -122,9 +123,9 @@ describe('<BuilderView />', () => {
       cy.setUpApi({
         database: { appData: [data] },
         appContext: {
-          memberId: creator,
+          memberId: creator!.id,
           permission: PermissionLevel.Admin,
-          context: Context.BUILDER,
+          context: Context.Builder,
         },
         errors: { deleteAppDataShouldThrow: true },
       });

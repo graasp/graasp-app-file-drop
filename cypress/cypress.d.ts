@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-// eslint-disable-next-line import/no-unresolved
 import { mount } from 'cypress/react18';
 
 import { Database, LocalContext } from '@graasp/apps-query-client';
