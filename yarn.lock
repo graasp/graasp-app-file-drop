@@ -2476,6 +2476,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graasp/sdk@github:graasp/graasp-sdk":
+  version: 1.0.0-rc1
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=147e42a4710ab6f6377ec14b2ebafc760f4ff46e"
+  dependencies:
+    "@fastify/secure-session": 5.3.0
+    "@graasp/etherpad-api": 2.1.1
+    aws-sdk: 2.1370.0
+    fastify: 4.17.0
+    fluent-json-schema: 4.1.0
+    immutable: 4.3.0
+    js-cookie: 3.0.5
+    qs: 6.11.1
+    typeorm: 0.3.15
+    uuid: 9.0.0
+    validator: 13.9.0
+  checksum: 84fb685145decf6b83cedd7dc2cbd7a2bd44d488e12fe2e8d5c2a07208e6258ff19aa9026929e2e1456eeb5bde0d260905ac6a9b580214ae40826659e568d5bb
+  languageName: node
+  linkType: hard
+
 "@graasp/sdk@github:graasp/graasp-sdk.git#typeorm":
   version: 0.12.0
   resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=9ac0388f92d3e7e43374ae2530b689c53de2c62f"

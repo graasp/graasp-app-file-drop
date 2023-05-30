@@ -7,7 +7,7 @@
     "airbnb",
     "plugin:cypress/recommended",
     "plugin:@typescript-eslint/recommended",
-    // "prettier",
+    "prettier",
     "plugin:react/recommended"
   ],
   "globals": {
@@ -22,11 +22,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-     "react", "react-hooks",
-     "@typescript-eslint", 
-  "prettier"
-],
+  "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
     "react/no-array-index-key": "off",
     "react/jsx-props-no-spreading": "off",
@@ -34,10 +30,6 @@
     "react/require-default-props": "off",
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/ban-ts-comment": "off",
-    "implicit-arrow-linebreak":"off",
-    "function-paren-newline":"off",
-    "object-curly-newline":"off",
-    "brace-style":"off",
     "import/no-import-module-exports": "off",
     "import/no-extraneous-dependencies": [
       "error",
@@ -65,7 +57,6 @@
     "global-require": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "operator-linebreak": "off",
     "comma-dangle": "off",
     "@typescript-eslint/comma-dangle": "off",
     "react/jsx-one-expression-per-line": "off",
