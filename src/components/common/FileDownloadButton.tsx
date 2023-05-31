@@ -29,6 +29,7 @@ const FileDownloadButton: FC<FileDownloadButtonProps> = ({ data }) => {
 
       // this might happen because of mock server
       if (!(file instanceof Blob)) {
+        // eslint-disable-next-line no-console
         console.error('file is not a blob');
       } else {
         downloadHelper(
