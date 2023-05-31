@@ -37,7 +37,7 @@ const AppDataToolbar: FC = () => {
   }
 
   const getFile = async (id: AppData['id']): Promise<Blob> =>
-    Api.getFileContent({
+    Api.getAppDataFile({
       id,
       apiHost,
       token,

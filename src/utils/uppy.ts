@@ -44,7 +44,7 @@ const configureUppy = ({
   });
 
   uppy.use(XHRUpload, {
-    endpoint: `${apiHost}/${API_ROUTES.buildUploadFilesRoute(itemId)}`,
+    endpoint: `${apiHost}/${API_ROUTES.buildUploadAppDataFilesRoute(itemId)}`,
     withCredentials: true,
     formData: true,
     allowedMetaFields: [],

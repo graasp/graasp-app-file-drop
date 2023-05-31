@@ -11,10 +11,8 @@ const {
   queryClient,
   QueryClientProvider,
   hooks,
-  useMutation,
   ReactQueryDevtools,
   API_ROUTES,
-  MUTATION_KEYS,
   mutations,
 } = configureQueryClient({
   notifier: (data) => {
@@ -37,9 +35,7 @@ export {
   queryClient,
   QueryClientProvider,
   hooks,
-  useMutation,
   ReactQueryDevtools,
   API_ROUTES,
-  MUTATION_KEYS,
   mutations,
 };

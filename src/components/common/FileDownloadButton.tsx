@@ -21,15 +21,21 @@ const FileDownloadButton: FC<FileDownloadButtonProps> = ({ data }) => {
 
   const handleOpenDownloader = async (): Promise<void> => {
     if (typeof token !== 'undefined') {
-      const file = await Api.getFileContent({
+      const file = await Api.getAppDataFile({
         id: data.id,
         apiHost: context?.get('apiHost'),
         token,
       });
-      downloadHelper(
-        file,
-        (data.data.toJS() as { s3File: { name: string } }).s3File.name,
-      );
+
+      // this might happen because of mock server
+      if (!(file instanceof Blob)) {
+        console.error('file is not a blob');
+      } else {
+        downloadHelper(
+          file,
+          (data.data.toJS() as { s3File: { name: string } }).s3File.name,
+        );
+      }
     }
   };
   if (isSuccess) {

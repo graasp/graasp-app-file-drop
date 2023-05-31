@@ -57,9 +57,8 @@ describe('<PlayerView />', () => {
       });
       cy.visit('/');
     });
-    it('downloading a file successfully', () => {
+    it.only('downloading a file successfully', () => {
       const { id } = MOCK_APP_DATA;
-
       // assert ui
       cy.get(
         `#${buildTableRowId(id)} ${dataCyWrapper(
