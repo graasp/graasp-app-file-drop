@@ -1,11 +1,10 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
 import { withContext, withToken } from '@graasp/apps-query-client';
-import { Loader, PRIMARY_COLOR, theme as graaspTheme } from '@graasp/ui';
+import { Loader, theme } from '@graasp/ui';
 
-import { CssBaseline, ThemeProvider, createTheme, styled } from '@mui/material';
-import { grey, orange, pink } from '@mui/material/colors';
+import { CssBaseline, ThemeProvider, styled } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
 
 import i18nConfig from '../config/i18n';
@@ -21,56 +20,6 @@ import {
 } from '../config/queryClient';
 import { showErrorToast } from '../utils/toasts';
 import App from './App';
-
-// declare the module to enable theme modification
-declare module '@mui/material/styles' {
-  interface Theme {
-    status: {
-      danger: { background: string; color: string };
-    };
-  }
-
-  // allow configuration using `createTheme`
-  interface ThemeOptions {
-    status?: {
-      danger?: { background: string; color: string };
-    };
-  }
-
-  interface PaletteOptions {
-    default: string;
-  }
-}
-
-const theme = createTheme({
-  ...graaspTheme,
-  palette: {
-    primary: {
-      light: '#7373db',
-      main: PRIMARY_COLOR,
-      dark: '#383893',
-    },
-    secondary: pink,
-    default: grey['500'],
-    background: {
-      paper: '#fff',
-    },
-  },
-  typography: {
-    h2: {
-      fontSize: '2rem',
-    },
-    h3: {
-      fontSize: '1.8rem',
-    },
-  },
-  status: {
-    danger: {
-      background: orange['400'],
-      color: '#fff',
-    },
-  },
-});
 
 const RootDiv = styled('div')({
   flexGrow: 1,

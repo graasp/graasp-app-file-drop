@@ -1,10 +1,13 @@
 import saveAs from 'file-saver';
 import { t } from 'i18next';
+import { List } from 'immutable';
 import JSZip from 'jszip';
 
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 
-import { Api, AppData, useLocalContext } from '@graasp/apps-query-client';
+import { Api, useLocalContext } from '@graasp/apps-query-client';
+import { AppData } from '@graasp/sdk';
+import { AppDataRecord } from '@graasp/sdk/frontend';
 
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -21,7 +24,7 @@ import { useAppDataContext } from '../context/AppDataContext';
 const zip = new JSZip();
 
 const AppDataToolbar: FC = () => {
-  const { appDataArray } = useAppDataContext();
+  const appDataArray = useAppDataContext();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,17 +37,20 @@ const AppDataToolbar: FC = () => {
   }
 
   const getFile = async (id: AppData['id']): Promise<Blob> =>
-    Api.getFileContent({
+    Api.getAppDataFile({
       id,
       apiHost,
       token,
     });
 
-  const getAllFiles = async (appDataFiles: AppData[]): Promise<void> => {
+  const getAllFiles = async (
+    appDataFiles: List<AppDataRecord>,
+  ): Promise<void> => {
     await Promise.all(
       appDataFiles.map(async (appDataFile) => {
         const name: string =
-          (appDataFile.data?.name as string) ?? appDataFile.id;
+          (appDataFile.data?.toJS() as { s3File: { name: string } })?.s3File
+            ?.name ?? appDataFile.id;
         await getFile(appDataFile.id).then((file) => zip.file(name, file));
       }),
     );
@@ -55,7 +61,7 @@ const AppDataToolbar: FC = () => {
       setIsLoading(true);
       const appDataFiles = appDataArray.filter(({ type }) => type === 'file');
       if (!appDataFiles.isEmpty()) {
-        getAllFiles(appDataFiles.toArray())
+        getAllFiles(appDataFiles)
           .then(() => {
             zip.generateAsync({ type: 'blob' }).then((archive) => {
               const d = new Date();

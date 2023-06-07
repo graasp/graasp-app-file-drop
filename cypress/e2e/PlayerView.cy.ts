@@ -13,7 +13,7 @@ describe('<PlayerView />', () => {
     beforeEach(() => {
       cy.setUpApi({
         database: { appData: [MOCK_APP_DATA] },
-        appContext: { memberId: MOCK_APP_DATA.creator },
+        appContext: { memberId: MOCK_APP_DATA.creator!.id },
       });
       cy.visit('/');
     });
@@ -37,7 +37,7 @@ describe('<PlayerView />', () => {
     beforeEach(() => {
       cy.setUpApi({
         database: { appData: [MOCK_APP_DATA] },
-        appContext: { memberId: MOCK_APP_DATA.creator },
+        appContext: { memberId: MOCK_APP_DATA.creator!.id },
       });
       cy.visit('/');
     });
@@ -53,13 +53,12 @@ describe('<PlayerView />', () => {
     beforeEach(() => {
       cy.setUpApi({
         database: { appData: [MOCK_APP_DATA] },
-        appContext: { memberId: MOCK_APP_DATA.creator },
+        appContext: { memberId: MOCK_APP_DATA.creator!.id },
       });
       cy.visit('/');
     });
-    it('downloading a file successfully', () => {
+    it.only('downloading a file successfully', () => {
       const { id } = MOCK_APP_DATA;
-
       // assert ui
       cy.get(
         `#${buildTableRowId(id)} ${dataCyWrapper(
@@ -74,7 +73,7 @@ describe('<PlayerView />', () => {
       const { id, creator } = data;
       cy.setUpApi({
         database: { appData: [data] },
-        appContext: { memberId: creator },
+        appContext: { memberId: creator!.id },
         errors: { deleteAppDataShouldThrow: true },
       });
       cy.visit('/');

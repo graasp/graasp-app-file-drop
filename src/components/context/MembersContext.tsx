@@ -1,22 +1,24 @@
 import { List } from 'immutable';
 
-import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
+import React, { createContext, useMemo } from 'react';
 
-import { Member } from '@graasp/apps-query-client';
+import { MemberRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
 import { hooks } from '../../config/queryClient';
 
-export type MembersContextType = List<Member>;
+const defaultContextValue = List<MemberRecord>();
+const MembersContext = createContext(defaultContextValue);
 
-const defaultContextValue = List<Member>();
-const MembersContext = createContext<MembersContextType>(defaultContextValue);
-
-export const MembersProvider: FC<PropsWithChildren> = ({ children }) => {
+export const MembersProvider = ({
+  children,
+}: {
+  children: JSX.Element;
+}): JSX.Element => {
   const appContext = hooks.useAppContext();
 
   const members = useMemo(() => {
-    const updatedMembers = List(appContext.data?.get('members'));
+    const updatedMembers = appContext.data?.get('members');
 
     return updatedMembers ?? defaultContextValue;
   }, [appContext.data]);
@@ -32,5 +34,5 @@ export const MembersProvider: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-export const useMembersContext = (): MembersContextType =>
-  React.useContext<MembersContextType>(MembersContext);
+export const useMembersContext = (): List<MemberRecord> =>
+  React.useContext(MembersContext);

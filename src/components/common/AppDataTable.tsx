@@ -1,6 +1,4 @@
-import { makeStyles } from 'tss-react/mui';
-
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Grid from '@mui/material/Grid';
@@ -18,48 +16,24 @@ import FileDashboardUploader from '../main/FileDashboardUploader';
 import AppDataRow from './AppDataRow';
 import AppDataToolbar from './AppDataToolbar';
 
-const useStyles = makeStyles()((theme) => ({
-  root: {
-    marginTop: theme.spacing(3),
-    overflowX: 'auto',
-  },
-  main: {
-    textAlign: 'center',
-    padding: theme.spacing(1),
-  },
-  button: {
-    marginTop: theme.spacing(3),
-  },
-  table: {
-    minWidth: 700,
-  },
-  message: {
-    padding: theme.spacing(1),
-    backgroundColor: theme.status.danger.background[500],
-    color: theme.status.danger.color,
-    marginBottom: theme.spacing(2),
-  },
-}));
-
 interface AppDataTableProps {
   showMember: boolean;
 }
 
 const AppDataTable: FC<AppDataTableProps> = ({ showMember }) => {
-  const { classes } = useStyles();
   const { t } = useTranslation();
   const members = useMembersContext();
-  const { appDataArray: appData } = useAppDataContext();
+  const appData = useAppDataContext();
 
   return (
     <Grid container spacing={0}>
-      <Grid item xs={12} className={classes.main}>
-        <Grid item xs={12} className={classes.main}>
+      <Grid item xs={12} p={1} textAlign="center">
+        <Grid item xs={12} p={1} textAlign="center">
           <FileDashboardUploader />
         </Grid>
-        <Paper className={classes.root}>
+        <Paper sx={{ margin: 2, overflowX: 'auto' }}>
           <AppDataToolbar />
-          <Table className={classes.table} size="small">
+          <Table sx={{ minWidth: 700 }} size="small">
             <TableHead>
               <TableRow>
                 <TableCell>{t('Date')}</TableCell>
@@ -87,7 +61,7 @@ const AppDataTable: FC<AppDataTableProps> = ({ showMember }) => {
                       key={a.id}
                       data={a}
                       showMember={showMember}
-                      member={members.find(({ id }) => id === a.memberId)}
+                      member={members.find(({ id }) => id === a.member.id)}
                     />
                   ))
               )}

@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { AppData, Member, useLocalContext } from '@graasp/apps-query-client';
+import { useLocalContext } from '@graasp/apps-query-client';
 import { PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
+import { AppDataRecord, MemberRecord } from '@graasp/sdk/frontend';
 
 import Visibility from '@mui/icons-material/Visibility';
 import IconButton from '@mui/material/IconButton';
@@ -21,16 +22,19 @@ import DeleteAppDataButton from './DeleteAppDataButton';
 import FileDownloadButton from './FileDownloadButton';
 
 interface AppDataRowProps {
-  data: AppData;
+  data: AppDataRecord;
   showMember: boolean;
-  member?: Member;
+  member?: MemberRecord;
 }
 
 const AppDataRow: FC<AppDataRowProps> = ({ data, showMember, member }) => {
   const { t } = useTranslation();
   const context = useLocalContext();
   const { permission, memberId } = context;
-  const { memberId: dataMemberId, visibility } = data;
+  const {
+    member: { id: dataMemberId },
+    visibility,
+  } = data;
 
   const username = member?.name || t('Anonymous');
 
@@ -67,7 +71,9 @@ const AppDataRow: FC<AppDataRowProps> = ({ data, showMember, member }) => {
   };
 
   // TODO: find better way to do this...
-  const filename: string = (data.data?.name as string) ?? t('Anonymous');
+  const filename: string =
+    (data.data.toJS() as { s3File: { name: string } })?.s3File?.name ??
+    t('Anonymous');
 
   return (
     <TableRow id={buildTableRowId(data.id)}>

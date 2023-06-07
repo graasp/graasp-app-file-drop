@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 
-import { AppData } from '@graasp/apps-query-client';
+import { AppData } from '@graasp/sdk';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';

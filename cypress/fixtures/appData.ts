@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-import { AppData } from '@graasp/apps-query-client';
+import { AppData } from '@graasp/sdk';
 
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
 import { AppDataVisibility } from '../../src/types/appData';
@@ -16,17 +16,19 @@ export const MOCK_FILE = 'files/img.png';
 export const MOCK_APP_DATA: AppData = {
   id: mockAppDataId,
   data: {
-    name: 'my file',
-    type: 'file',
-    extra: {
-      file: 'some/path',
+    s3File: {
+      name: 'my file',
+      type: 'file',
+      extra: {
+        file: 'some/path',
+      },
     },
   },
-  memberId: CURRENT_MEMBER.id,
-  creator: CURRENT_MEMBER.id,
-  itemId: MOCK_SERVER_ITEM.id,
-  createdAt: new Date('2020-01-01').toISOString(),
-  updatedAt: new Date('2020-01-01').toISOString(),
+  member: CURRENT_MEMBER,
+  creator: CURRENT_MEMBER,
+  item: MOCK_SERVER_ITEM,
+  createdAt: new Date('2020-01-01'),
+  updatedAt: new Date('2020-01-01'),
   type: APP_DATA_TYPES.FILE,
   visibility: AppDataVisibility.MEMBER,
 };
@@ -35,17 +37,19 @@ const mockAppDataId2 = v4();
 export const MOCK_STUDENT_APP_DATA: AppData = {
   id: mockAppDataId2,
   data: {
-    name: 'my student file',
-    type: 'file',
-    extra: {
-      file: 'some/path',
+    s3File: {
+      name: 'my student file',
+      type: 'file',
+      extra: {
+        file: 'some/path',
+      },
     },
   },
-  memberId: MEMBERS.BOB.id,
-  creator: MEMBERS.BOB.id,
-  itemId: MOCK_SERVER_ITEM.id,
-  createdAt: new Date('2020-01-01').toISOString(),
-  updatedAt: new Date('2020-01-01').toISOString(),
+  member: MEMBERS.BOB,
+  creator: MEMBERS.BOB,
+  item: MOCK_SERVER_ITEM,
+  createdAt: new Date('2020-01-01'),
+  updatedAt: new Date('2020-01-01'),
   type: APP_DATA_TYPES.FILE,
   visibility: AppDataVisibility.MEMBER,
 };

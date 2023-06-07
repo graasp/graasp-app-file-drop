@@ -1,7 +1,8 @@
 /// <reference types="cypress" />
 import { mount } from 'cypress/react18';
 
-import { Database, LocalContext, Member } from '@graasp/apps-query-client';
+import { Database, LocalContext } from '@graasp/apps-query-client';
+import { Member } from '@graasp/sdk';
 
 declare global {
   namespace Cypress {
