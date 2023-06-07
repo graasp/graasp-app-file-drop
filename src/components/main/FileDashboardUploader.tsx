@@ -14,7 +14,7 @@ import { hooks, mutations } from '../../config/queryClient';
 import { DASHBOARD_UPLOADER_ID } from '../../config/selectors';
 import configureUppy from '../../utils/uppy';
 
-const { uploadFileRoutine } = ROUTINES;
+const { uploadAppDataFileRoutine } = ROUTINES;
 
 const FileDashboardUploader: FC = () => {
   const { t } = useTranslation();
@@ -35,7 +35,7 @@ const FileDashboardUploader: FC = () => {
   };
 
   const onUpload = (): void => {
-    notifier({ type: uploadFileRoutine.REQUEST });
+    notifier({ type: uploadAppDataFileRoutine.REQUEST });
   };
 
   const onError = (error: Error): void => {
