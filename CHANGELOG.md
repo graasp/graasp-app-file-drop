@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-rc.1](https://github.com/graasp/graasp-app-file-drop/compare/v0.2.0...v1.0.0-rc.1) (2023-06-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* apply new changes for typeorm ([#45](https://github.com/graasp/graasp-app-file-drop/issues/45))
+
+### Features
+
+* apply new changes for typeorm ([#45](https://github.com/graasp/graasp-app-file-drop/issues/45)) ([79f8c6a](https://github.com/graasp/graasp-app-file-drop/commit/79f8c6a6acbf8a851e03887a2ee11109a9bb98d2))
+
+
+### chore
+
+* release 1.0.0-rc.1 ([a631c8b](https://github.com/graasp/graasp-app-file-drop/commit/a631c8b5340ca26c235ba93dc039e653f091ddd2))
+
 ## [0.2.0](https://github.com/graasp/graasp-app-file-drop/compare/v0.1.5...v0.2.0) (2023-02-14)
 
 
