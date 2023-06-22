@@ -4810,10 +4810,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:4.29.11":
-  version: 4.29.11
-  resolution: "@tanstack/query-core@npm:4.29.11"
-  checksum: 2a17223f34e99e17d564a15206668eb79324da72e630a47cf41690f92fb091a8669bdc89e9ab1b0d8f0e3e8f579529cfb0aa6f10b4fc58ea81cc7e5caede9229
+"@tanstack/query-core@npm:4.29.15":
+  version: 4.29.15
+  resolution: "@tanstack/query-core@npm:4.29.15"
+  checksum: dc99d59a14acf47abdea9c80b038a1ad18531d309b98a91e89f7717f395f5b2ff54f73f6b6dcb3ac66f70f8b410827be5b06eb6f2bceff261287753829e606af
   languageName: node
   linkType: hard
 
@@ -4832,11 +4832,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:4.29.12":
-  version: 4.29.12
-  resolution: "@tanstack/react-query@npm:4.29.12"
+"@tanstack/react-query@npm:4.29.15":
+  version: 4.29.15
+  resolution: "@tanstack/react-query@npm:4.29.15"
   dependencies:
-    "@tanstack/query-core": 4.29.11
+    "@tanstack/query-core": 4.29.15
     use-sync-external-store: ^1.2.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -4847,7 +4847,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: aea231af648688c5eafdbbda0667034221cca8b77e00690ab54950b7cc0296d14646931aee44fc5f18d5ce4d683b5d234b053eed5c0a5c340bbbacdab873a70b
+  checksum: de703806af4efd124f89f03f25d917c7f74329c1df82d2f293ff6fbd6bb259f656f9634203fcef5d2da3920c09dc35046aa9f1e84de3ed2ba84b44bb822b4784
   languageName: node
   linkType: hard
 
@@ -11183,7 +11183,7 @@ __metadata:
     "@mui/material": 5.13.3
     "@sentry/react": ~7.54.0
     "@sentry/tracing": ~7.54.0
-    "@tanstack/react-query": 4.29.12
+    "@tanstack/react-query": 4.29.15
     "@tanstack/react-query-devtools": 4.29.15
     "@trivago/prettier-plugin-sort-imports": 4.1.1
     "@types/file-saver": ^2.0.5
