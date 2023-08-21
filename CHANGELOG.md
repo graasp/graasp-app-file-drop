@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/graasp/graasp-app-file-drop/compare/v1.0.0-rc.1...v1.0.0) (2023-08-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @emotion/react to v11.11.1 ([fc4b890](https://github.com/graasp/graasp-app-file-drop/commit/fc4b8909a5906f6b3dbfdd5ffacdbf23f140d22d))
+* **deps:** update dependency @graasp/sdk to v1.0.0 ([18e429a](https://github.com/graasp/graasp-app-file-drop/commit/18e429ab2759d3da6c8ee861b0b63045549d23a6))
+* **deps:** update dependency @graasp/ui to v3.0.0 ([#70](https://github.com/graasp/graasp-app-file-drop/issues/70)) ([af375cd](https://github.com/graasp/graasp-app-file-drop/commit/af375cdf61d55ac32006652ab92f7e4907eb648c))
+* **deps:** update dependency @tanstack/react-query to v4.29.15 ([153a47e](https://github.com/graasp/graasp-app-file-drop/commit/153a47ed1e49812bfc01b301f85cf8506a4041e3))
+* **deps:** update dependency i18next to v23 ([#66](https://github.com/graasp/graasp-app-file-drop/issues/66)) ([7f33747](https://github.com/graasp/graasp-app-file-drop/commit/7f337473bfa69670b7ca10387a665e56ac847f27))
+* **deps:** update dependency react-router-dom to v6.14.1 ([#54](https://github.com/graasp/graasp-app-file-drop/issues/54)) ([e8496c7](https://github.com/graasp/graasp-app-file-drop/commit/e8496c7b138681a6aa731b016323c68c95c7b416))
+* **deps:** update dependency tss-react to v4.8.6 ([e6b670f](https://github.com/graasp/graasp-app-file-drop/commit/e6b670ffccedb8841abfb29558b48c7021c1102e))
+* **deps:** update mui (non-major) ([c94046e](https://github.com/graasp/graasp-app-file-drop/commit/c94046e91707df8157c845acbf8607f266b7ac28))
+* **deps:** update sentry packages to ~7.57.0 ([#57](https://github.com/graasp/graasp-app-file-drop/issues/57)) ([a4cd4c5](https://github.com/graasp/graasp-app-file-drop/commit/a4cd4c5c49219742af74f73309e00bb645f68883))
+* **deps:** update uppy packages ([#71](https://github.com/graasp/graasp-app-file-drop/issues/71)) ([fa45aec](https://github.com/graasp/graasp-app-file-drop/commit/fa45aec4e780b7873f90811977494db50dd9c006))
+
 ## [1.0.0-rc.1](https://github.com/graasp/graasp-app-file-drop/compare/v0.2.0...v1.0.0-rc.1) (2023-06-07)
 
 
