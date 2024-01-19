@@ -7,7 +7,7 @@ import { hooks } from '../../config/queryClient';
 
 export type AppDataContextType = AppData[];
 
-const defaultContextValue: AppData[] = [];
+const defaultContextValue: AppDataContextType = [];
 
 const AppDataContext = createContext<AppDataContextType>(defaultContextValue);
 

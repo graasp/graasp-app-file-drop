@@ -3,6 +3,7 @@ import { v4 } from 'uuid';
 import type { Database, LocalContext } from '@graasp/apps-query-client';
 import {
   AppItemType,
+  CompleteMember,
   Context,
   ItemType,
   Member,
@@ -22,14 +23,14 @@ export const mockContext: LocalContext = {
   memberId: 'mock-member-id',
 };
 
-export const mockMembers: Member[] = [
+export const mockMembers: CompleteMember[] = [
   {
     id: mockContext.memberId || '',
     name: 'current-member',
     email: 'current@graasp.org',
     extra: {},
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     type: MemberType.Individual,
   },
   {
@@ -37,8 +38,8 @@ export const mockMembers: Member[] = [
     name: 'mock-member-2',
     email: 'other-member@graasp.org',
     extra: {},
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     type: MemberType.Individual,
   },
 ];
@@ -55,17 +56,14 @@ const mockItem: AppItemType = {
       url: 'myurl',
     },
   },
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
   type: ItemType.APP,
 };
 
-const now = new Date();
+const now = new Date().toISOString();
 
-const buildDatabase = (
-  appContext: Partial<LocalContext>,
-  members?: Member[],
-): Database => ({
+const buildDatabase = (members?: CompleteMember[]): Database => ({
   appData: [
     {
       data: {

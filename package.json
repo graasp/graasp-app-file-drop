@@ -107,7 +107,7 @@
     "nyc": "15.1.0",
     "prettier": "2.8.8",
     "standard-version": "9.5.0",
-    "typescript": "^5.0.4",
+    "typescript": "5.3.3",
     "wait-on": "7.0.1"
   },
   "release": {
