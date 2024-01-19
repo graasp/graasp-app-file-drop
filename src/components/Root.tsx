@@ -1,7 +1,6 @@
 import { I18nextProvider } from 'react-i18next';
 
 import {
-  GraaspContextDevTool,
   WithLocalContext,
   WithTokenContext,
   useObjectState,
@@ -22,7 +21,7 @@ import {
   hooks,
   queryClient,
 } from '../config/queryClient';
-import { mockContext as defaultMockContext, mockMembers } from '../data/db';
+import { mockContext as defaultMockContext } from '../data/db';
 import { showErrorToast } from '../utils/toasts';
 import App from './App';
 
@@ -32,7 +31,7 @@ const RootDiv = styled('div')({
 });
 
 const Root = (): JSX.Element => {
-  const [mockContext, setMockContext] = useObjectState(defaultMockContext);
+  const [mockContext] = useObjectState(defaultMockContext);
 
   return (
     <RootDiv>
@@ -59,13 +58,6 @@ const Root = (): JSX.Element => {
                   }}
                 >
                   <App />
-                  {process.env.NODE_ENV === 'development' && (
-                    <GraaspContextDevTool
-                      members={mockMembers}
-                      context={mockContext}
-                      setContext={setMockContext}
-                    />
-                  )}
                 </WithTokenContext>
               </WithLocalContext>
               {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
