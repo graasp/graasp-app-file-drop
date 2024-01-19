@@ -29,6 +29,7 @@ if (MOCK_API) {
       dbName: window.Cypress ? 'graasp-app-cypress' : undefined,
       appContext: window.Cypress ? window.appContext : mockContext,
       database: window.Cypress ? window.database : buildDatabase(mockMembers),
+      errors: window.apiErrors,
     },
     MockSolution.MirageJS,
   );
