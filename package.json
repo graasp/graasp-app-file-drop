@@ -2,7 +2,7 @@
   "name": "graasp-app-file-drop",
   "version": "1.0.0",
   "private": true,
-  "author": "React EPFL",
+  "author": "Graasp",
   "contributors": [
     "Juan Carlos Farah",
     "André Nogueira",
@@ -14,8 +14,8 @@
   "dependencies": {
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
-    "@graasp/apps-query-client": "2.0.0-rc.1",
-    "@graasp/sdk": "1.0.0",
+    "@graasp/apps-query-client": "3.4.1",
+    "@graasp/sdk": "3.4.1",
     "@graasp/ui": "3.0.0",
     "@mui/icons-material": "5.11.16",
     "@mui/lab": "5.0.0-alpha.134",
@@ -32,7 +32,6 @@
     "@uppy/xhr-upload": "3.2.0",
     "file-saver": "~2.0.5",
     "i18next": "~23.2.0",
-    "immutable": "4.3.0",
     "jszip": "~3.10.1",
     "lodash.isobject": "~3.0.2",
     "lodash.isstring": "~4.0.1",

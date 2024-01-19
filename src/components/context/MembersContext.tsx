@@ -1,13 +1,11 @@
-import { List } from 'immutable';
-
 import React, { createContext, useMemo } from 'react';
 
-import { MemberRecord } from '@graasp/sdk/frontend';
+import { Member } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
 import { hooks } from '../../config/queryClient';
 
-const defaultContextValue = List<MemberRecord>();
+const defaultContextValue: Member[] = [];
 const MembersContext = createContext(defaultContextValue);
 
 export const MembersProvider = ({
@@ -18,7 +16,7 @@ export const MembersProvider = ({
   const appContext = hooks.useAppContext();
 
   const members = useMemo(() => {
-    const updatedMembers = appContext.data?.get('members');
+    const updatedMembers = appContext.data?.members;
 
     return updatedMembers ?? defaultContextValue;
   }, [appContext.data]);
@@ -34,5 +32,5 @@ export const MembersProvider = ({
   );
 };
 
-export const useMembersContext = (): List<MemberRecord> =>
+export const useMembersContext = (): Member[] =>
   React.useContext(MembersContext);

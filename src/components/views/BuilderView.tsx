@@ -9,7 +9,7 @@ import Header from '../layout/Header';
 
 const BuilderView: FC = () => {
   const context = useLocalContext();
-  switch (context.get('permission')) {
+  switch (context.permission) {
     case PermissionLevel.Admin:
     case PermissionLevel.Write:
       return (

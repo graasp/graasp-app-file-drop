@@ -10,7 +10,7 @@ const PlayerView: FC = () => {
   const context = useLocalContext();
   const { standalone } = context;
   const header = standalone ? <Header /> : null;
-  switch (context.get('permission')) {
+  switch (context.permission) {
     case PermissionLevel.Admin:
     case PermissionLevel.Write:
       return (

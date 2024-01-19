@@ -17,8 +17,6 @@ import Typography from '@mui/material/Typography';
 import { queryClient } from '../../config/queryClient';
 import { HEADER_REFRESH_BUTTON_CYPRESS } from '../../config/selectors';
 
-// import { ReactComponent as Logo } from '../../resources/logo.svg';
-
 const useStyles = makeStyles()(() => ({
   root: {
     flexGrow: 1,

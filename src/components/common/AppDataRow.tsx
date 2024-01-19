@@ -2,8 +2,12 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useLocalContext } from '@graasp/apps-query-client';
-import { PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
-import { AppDataRecord, MemberRecord } from '@graasp/sdk/frontend';
+import {
+  AppData,
+  Member,
+  PermissionLevel,
+  PermissionLevelCompare,
+} from '@graasp/sdk';
 
 import Visibility from '@mui/icons-material/Visibility';
 import IconButton from '@mui/material/IconButton';
@@ -22,9 +26,9 @@ import DeleteAppDataButton from './DeleteAppDataButton';
 import FileDownloadButton from './FileDownloadButton';
 
 interface AppDataRowProps {
-  data: AppDataRecord;
+  data: AppData;
   showMember: boolean;
-  member?: MemberRecord;
+  member?: Member;
 }
 
 const AppDataRow: FC<AppDataRowProps> = ({ data, showMember, member }) => {
@@ -72,8 +76,7 @@ const AppDataRow: FC<AppDataRowProps> = ({ data, showMember, member }) => {
 
   // TODO: find better way to do this...
   const filename: string =
-    (data.data.toJS() as { s3File: { name: string } })?.s3File?.name ??
-    t('Anonymous');
+    (data.data as { s3File: { name: string } })?.s3File?.name ?? t('Anonymous');
 
   return (
     <TableRow id={buildTableRowId(data.id)}>
