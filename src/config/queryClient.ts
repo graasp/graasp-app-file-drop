@@ -19,6 +19,7 @@ const {
   GRAASP_APP_KEY: REACT_APP_GRAASP_APP_KEY,
   notifier: (data) => {
     // todo: use toasts
+    // eslint-disable-next-line no-console
     console.log('notifier: ', data);
   },
   keepPreviousData: true,

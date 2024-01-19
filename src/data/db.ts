@@ -6,7 +6,6 @@ import {
   CompleteMember,
   Context,
   ItemType,
-  Member,
   MemberType,
   PermissionLevel,
 } from '@graasp/sdk';

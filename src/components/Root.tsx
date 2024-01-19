@@ -46,7 +46,7 @@ const Root = (): JSX.Element => {
                 LoadingComponent={<Loader />}
                 useGetLocalContext={hooks.useGetLocalContext}
                 useAutoResize={hooks.useAutoResize}
-                onError={(_err) => {
+                onError={() => {
                   showErrorToast(CONTEXT_FETCHING_ERROR_MESSAGE);
                 }}
                 defaultValue={window.Cypress ? window.appContext : mockContext}
@@ -54,7 +54,7 @@ const Root = (): JSX.Element => {
                 <WithTokenContext
                   LoadingComponent={<Loader />}
                   useAuthToken={hooks.useAuthToken}
-                  onError={(_err) => {
+                  onError={() => {
                     showErrorToast(TOKEN_REQUEST_ERROR_MESSAGE);
                   }}
                 >
