@@ -1,23 +1,19 @@
-name: Deploy to development environment
+name: Deploy to staging environment
 
 # Controls when the action will run
 on:
-  # Triggers the workflow on push events only for the main branch
-  push:
-    branches:
-      - main
-
-  # Allows to run the workflow manually from the Actions tab
-  workflow_dispatch:
+  # Triggers the workflow on repository-dispatch event
+  repository_dispatch:
+    types: [staging-deployment]
 
 jobs:
   deploy-app:
-    name: Deploy to dev
+    name: Deploy to staging
     runs-on: ubuntu-latest
-    environment: development
+    environment: staging
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Yarn install and Cache dependencies
         uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
@@ -25,8 +21,8 @@ jobs:
       - name: Yarn build
         # Set environment variables required to perform the build. These are only available to this step
         env:
-          REACT_APP_API_HOST: ${{ secrets.REACT_APP_API_HOST_DEV }}
           REACT_APP_GRAASP_APP_KEY: ${{ secrets.APP_KEY }}
+          REACT_APP_API_HOST: ${{ secrets.REACT_APP_API_HOST_STAGE }}
         run: yarn build
         shell: bash
 
@@ -37,8 +33,8 @@ jobs:
           build-folder: 'build'
           graasp-app-id: ${{ secrets.APP_ID }}
           version: 'latest'
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-          aws-region: ${{ secrets.APPS_AWS_REGION }}
-          aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_APPS_DEV }}
-          cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_DEV }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_STAGE }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGE }}
+          aws-region: ${{ vars.APPS_AWS_REGION_STAGE }}
+          aws-s3-bucket-name: ${{ vars.AWS_S3_BUCKET_NAME_APPS_STAGE }}
+          cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_STAGE }}
