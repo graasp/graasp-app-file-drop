@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useLocalContext } from '@graasp/apps-query-client';
 import {
-  AppData,
+  AppDataVisibility,
   Member,
   PermissionLevel,
   PermissionLevelCompare,
@@ -20,12 +20,12 @@ import {
   TABLE_CELL_FILE_USER_CYPRESS,
   buildTableRowId,
 } from '../../config/selectors';
-import { AppDataVisibility } from '../../types/appData';
+import { AppDataFile } from '../../types/appData';
 import DeleteAppDataButton from './DeleteAppDataButton';
 import FileDownloadButton from './FileDownloadButton';
 
 interface AppDataRowProps {
-  data: AppData<{ s3File: { name: string } }>;
+  data: AppDataFile;
   showMember: boolean;
   member?: Member;
 }
@@ -60,7 +60,7 @@ const AppDataRow = ({
       actions.push(<FileDownloadButton data={data} key="download" />);
       actions.push(<DeleteAppDataButton data={data} key="delete" />);
     }
-    if (visibility === AppDataVisibility.ITEM) {
+    if (visibility === AppDataVisibility.Item) {
       actions.push(
         <Tooltip
           key="visibility"

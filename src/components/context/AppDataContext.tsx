@@ -1,20 +1,23 @@
-import React, { FC, PropsWithChildren, createContext } from 'react';
+import { PropsWithChildren, createContext, useContext } from 'react';
 
-import { AppData } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
+import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { hooks } from '../../config/queryClient';
+import { AppDataFile, AppDataFileT } from '../../types/appData';
 
-export type AppDataContextType = AppData[];
+export type AppDataContextType = AppDataFile[];
 
 const defaultContextValue: AppDataContextType = [];
 
 const AppDataContext = createContext<AppDataContextType>(defaultContextValue);
 
-export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
-  const appData = hooks.useAppData();
+export const AppDataProvider = ({
+  children,
+}: PropsWithChildren): JSX.Element => {
+  const appData = hooks.useAppData<AppDataFileT>({ type: APP_DATA_TYPES.FILE });
 
-  const contextValue: AppDataContextType = appData.data || defaultContextValue;
+  const contextValue: AppDataContextType = appData.data ?? defaultContextValue;
 
   if (appData.isLoading) {
     return <Loader />;
@@ -28,4 +31,4 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const useAppDataContext = (): AppDataContextType =>
-  React.useContext<AppDataContextType>(AppDataContext);
+  useContext<AppDataContextType>(AppDataContext);

@@ -2,6 +2,7 @@ import { v4 } from 'uuid';
 
 import type { Database, LocalContext } from '@graasp/apps-query-client';
 import {
+  AppDataVisibility,
   AppItemType,
   CompleteMember,
   Context,
@@ -12,7 +13,6 @@ import {
 
 import { APP_DATA_TYPES } from '../config/appDataTypes';
 import { REACT_APP_API_HOST } from '../config/env';
-import { AppDataVisibility } from '../types/appData';
 
 export const mockContext: LocalContext = {
   apiHost: REACT_APP_API_HOST,
@@ -77,7 +77,7 @@ const buildDatabase = (members?: CompleteMember[]): Database => ({
       creator: mockMembers[0],
       member: mockMembers[0],
       item: mockItem,
-      visibility: AppDataVisibility.MEMBER,
+      visibility: AppDataVisibility.Member,
     },
   ],
   appActions: [],
