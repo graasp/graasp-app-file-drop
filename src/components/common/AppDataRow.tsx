@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useLocalContext } from '@graasp/apps-query-client';
@@ -26,12 +25,16 @@ import DeleteAppDataButton from './DeleteAppDataButton';
 import FileDownloadButton from './FileDownloadButton';
 
 interface AppDataRowProps {
-  data: AppData;
+  data: AppData<{ s3File: { name: string } }>;
   showMember: boolean;
   member?: Member;
 }
 
-const AppDataRow: FC<AppDataRowProps> = ({ data, showMember, member }) => {
+const AppDataRow = ({
+  data,
+  showMember,
+  member,
+}: AppDataRowProps): JSX.Element => {
   const { t } = useTranslation();
   const context = useLocalContext();
   const { permission, memberId } = context;
@@ -74,9 +77,7 @@ const AppDataRow: FC<AppDataRowProps> = ({ data, showMember, member }) => {
     return actions;
   };
 
-  // TODO: find better way to do this...
-  const filename: string =
-    (data.data as { s3File: { name: string } })?.s3File?.name ?? t('Anonymous');
+  const filename: string = data.data?.s3File?.name ?? t('Anonymous');
 
   return (
     <TableRow id={buildTableRowId(data.id)}>

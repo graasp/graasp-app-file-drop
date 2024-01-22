@@ -116,7 +116,7 @@ describe('<BuilderView />', () => {
       cy.get(dataCyWrapper(SETTING_HEADER_VISIBILITY_SWITCH_CYPRESS)).click();
     });
   });
-  describe.only('Handling errors', () => {
+  describe('Handling errors', () => {
     it('Fail to delete a file still shows app data', () => {
       const data = MOCK_APP_DATA;
       const { id, creator } = data;
