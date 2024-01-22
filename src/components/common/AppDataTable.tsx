@@ -43,7 +43,7 @@ const AppDataTable: FC<AppDataTableProps> = ({ showMember }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {appData.isEmpty() ? (
+              {!appData.length ? (
                 <TableRow>
                   <TableCell
                     id={ROW_NO_FILES_UPLOADED_ID}
@@ -55,7 +55,9 @@ const AppDataTable: FC<AppDataTableProps> = ({ showMember }) => {
                 </TableRow>
               ) : (
                 appData
-                  .sortBy(({ createdAt }) => createdAt)
+                  .toSorted(({ createdAt: a }, { createdAt: b }) =>
+                    a > b ? 1 : -1,
+                  )
                   .map((a) => (
                     <AppDataRow
                       key={a.id}

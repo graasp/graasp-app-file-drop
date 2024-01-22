@@ -1,13 +1,11 @@
 import saveAs from 'file-saver';
 import { t } from 'i18next';
-import { List } from 'immutable';
 import JSZip from 'jszip';
 
 import { FC, useState } from 'react';
 
 import { Api, useLocalContext } from '@graasp/apps-query-client';
 import { AppData } from '@graasp/sdk';
-import { AppDataRecord } from '@graasp/sdk/frontend';
 
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -43,14 +41,12 @@ const AppDataToolbar: FC = () => {
       token,
     });
 
-  const getAllFiles = async (
-    appDataFiles: List<AppDataRecord>,
-  ): Promise<void> => {
+  const getAllFiles = async (appDataFiles: AppData[]): Promise<void> => {
     await Promise.all(
       appDataFiles.map(async (appDataFile) => {
         const name: string =
-          (appDataFile.data?.toJS() as { s3File: { name: string } })?.s3File
-            ?.name ?? appDataFile.id;
+          (appDataFile.data as { s3File: { name: string } })?.s3File?.name ??
+          appDataFile.id;
         await getFile(appDataFile.id).then((file) => zip.file(name, file));
       }),
     );
@@ -60,7 +56,7 @@ const AppDataToolbar: FC = () => {
     if (!isLoading) {
       setIsLoading(true);
       const appDataFiles = appDataArray.filter(({ type }) => type === 'file');
-      if (!appDataFiles.isEmpty()) {
+      if (!appDataFiles.length) {
         getAllFiles(appDataFiles)
           .then(() => {
             zip.generateAsync({ type: 'blob' }).then((archive) => {

@@ -1,15 +1,13 @@
-import { List } from 'immutable';
-
 import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
-import { AppSettingRecord } from '@graasp/sdk/frontend';
+import { AppSetting } from '@graasp/sdk';
 import { Loader } from '@graasp/ui';
 
 import { hooks } from '../../config/queryClient';
 
-export type AppSettingContextType = List<AppSettingRecord>;
+export type AppSettingContextType = AppSetting[];
 
-const defaultContextValue = List<AppSettingRecord>();
+const defaultContextValue: AppSetting[] = [];
 
 const AppSettingContext =
   createContext<AppSettingContextType>(defaultContextValue);
@@ -18,7 +16,7 @@ export const AppSettingProvider: FC<PropsWithChildren> = ({ children }) => {
   const appSetting = hooks.useAppSettings();
 
   const contextValue: AppSettingContextType = useMemo(
-    () => appSetting.data || List<AppSettingRecord>(),
+    () => appSetting.data || [],
     [appSetting.data],
   );
 

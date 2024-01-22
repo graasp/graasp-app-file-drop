@@ -13,7 +13,7 @@ const App: FC = () => {
   const context = useLocalContext();
 
   const renderContent = (): JSX.Element => {
-    switch (context?.get('context')) {
+    switch (context.context) {
       case Context.Builder:
         return <BuilderView />;
 

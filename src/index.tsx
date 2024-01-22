@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { mockApi } from '@graasp/apps-query-client';
+import { MockSolution, mockApi } from '@graasp/apps-query-client';
 
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
@@ -24,13 +24,15 @@ Sentry.init({
 // setup mocked api for cypress or standalone app
 /* istanbul ignore next */
 if (MOCK_API) {
-  mockApi({
-    appContext: window.Cypress ? window.appContext : mockContext,
-    database: window.Cypress
-      ? window.database
-      : buildDatabase(mockContext, mockMembers),
-    errors: window.apiErrors,
-  });
+  mockApi(
+    {
+      dbName: window.Cypress ? 'graasp-app-cypress' : undefined,
+      appContext: window.Cypress ? window.appContext : mockContext,
+      database: window.Cypress ? window.database : buildDatabase(mockMembers),
+      errors: window.apiErrors,
+    },
+    MockSolution.MirageJS,
+  );
 }
 
 const root = ReactDOM.createRoot(

@@ -2,17 +2,17 @@ import { v4 } from 'uuid';
 
 import type { Database, LocalContext } from '@graasp/apps-query-client';
 import {
+  AppDataVisibility,
   AppItemType,
+  CompleteMember,
   Context,
   ItemType,
-  Member,
   MemberType,
   PermissionLevel,
 } from '@graasp/sdk';
 
 import { APP_DATA_TYPES } from '../config/appDataTypes';
 import { REACT_APP_API_HOST } from '../config/env';
-import { AppDataVisibility } from '../types/appData';
 
 export const mockContext: LocalContext = {
   apiHost: REACT_APP_API_HOST,
@@ -22,14 +22,14 @@ export const mockContext: LocalContext = {
   memberId: 'mock-member-id',
 };
 
-export const mockMembers: Member[] = [
+export const mockMembers: CompleteMember[] = [
   {
     id: mockContext.memberId || '',
     name: 'current-member',
     email: 'current@graasp.org',
     extra: {},
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     type: MemberType.Individual,
   },
   {
@@ -37,8 +37,8 @@ export const mockMembers: Member[] = [
     name: 'mock-member-2',
     email: 'other-member@graasp.org',
     extra: {},
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     type: MemberType.Individual,
   },
 ];
@@ -55,17 +55,14 @@ const mockItem: AppItemType = {
       url: 'myurl',
     },
   },
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
   type: ItemType.APP,
 };
 
-const now = new Date();
+const now = new Date().toISOString();
 
-const buildDatabase = (
-  appContext: Partial<LocalContext>,
-  members?: Member[],
-): Database => ({
+const buildDatabase = (members?: CompleteMember[]): Database => ({
   appData: [
     {
       data: {
@@ -80,7 +77,7 @@ const buildDatabase = (
       creator: mockMembers[0],
       member: mockMembers[0],
       item: mockItem,
-      visibility: AppDataVisibility.MEMBER,
+      visibility: AppDataVisibility.Member,
     },
   ],
   appActions: [],
