@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/graasp/graasp-app-file-drop/compare/v1.0.0...v2.0.0) (2024-01-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove immutable ([#88](https://github.com/graasp/graasp-app-file-drop/issues/88))
+
+### Features
+
+* remove immutable ([#88](https://github.com/graasp/graasp-app-file-drop/issues/88)) ([ec45e23](https://github.com/graasp/graasp-app-file-drop/commit/ec45e232ee1be9054a890000e43150ffc9a5201f))
+
+
+### Bug Fixes
+
+* fix deploy workflow ([#92](https://github.com/graasp/graasp-app-file-drop/issues/92)) ([538f942](https://github.com/graasp/graasp-app-file-drop/commit/538f942a2b644d85b6b116b1e3a384d2c8427872))
+* fix dev deploy ([#93](https://github.com/graasp/graasp-app-file-drop/issues/93)) ([d1b12bc](https://github.com/graasp/graasp-app-file-drop/commit/d1b12bc2e6e12161ab881c57e425a4e627531ffb))
+
 ## [1.0.0](https://github.com/graasp/graasp-app-file-drop/compare/v1.0.0-rc.1...v1.0.0) (2023-08-03)
 
 
