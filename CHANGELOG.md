@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/graasp/graasp-app-file-drop/compare/v2.0.0...v2.1.0) (2024-02-15)
+
+
+### Features
+
+* add spanish translations ([#95](https://github.com/graasp/graasp-app-file-drop/issues/95)) ([8187705](https://github.com/graasp/graasp-app-file-drop/commit/81877054141da5ae84dcd204845ac0010a0abd26))
+
 ## [2.0.0](https://github.com/graasp/graasp-app-file-drop/compare/v1.0.0...v2.0.0) (2024-01-22)
 
 
