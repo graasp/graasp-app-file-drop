@@ -30,7 +30,7 @@
     "UPLOAD_FILES_ERROR_MESSAGE": "Se produjo un error al cargar los archivos.",
     "UPLOADED_FILES_TOOLBAR": "Archivos subidos",
     "DOWNLOAD_ALL": "Descargar todo",
-    "ERROR_DOWNLOAD_ALL": "Error al descargar todos los archivos subidos:\n{{ razón }}",
+    "ERROR_DOWNLOAD_ALL": "Error al descargar todos los archivos subidos:\n{{ reason }}",
     "FILE_REQUEST_FAILED": "La solicitud a la API falló."
   }
 }
