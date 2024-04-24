@@ -1,5 +1,5 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["local>graasp/renovate-config:app"],
-  "reviewers": ["swouf", "pyphilia"]
+  "extends": ["github>graasp/renovate-config:app"],
+  "reviewers": ["swouf", "pyphilia", "spaenleh"]
 }
