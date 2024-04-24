@@ -11,22 +11,20 @@ import { checkRow, deleteFile } from '../support/utils';
 describe('<PlayerView />', () => {
   describe('Upload a file', () => {
     beforeEach(() => {
-      cy.setUpApi({
-        database: { appData: [MOCK_APP_DATA] },
-        appContext: { memberId: MOCK_APP_DATA.creator!.id },
-      });
+      cy.setUpApi(
+        { appData: [MOCK_APP_DATA] },
+        { memberId: MOCK_APP_DATA.creator?.id },
+      );
       cy.visit('/');
     });
 
     it('uploading a file does not crash', () => {
+      cy.fixture(MOCK_FILE, null).as('fileToUpload');
       // bug: for some reason miragejs interfers with uppy in cypress
       // which always results in a successful requests and stops
-      cy.get(`#${DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`).attachFile(
-        MOCK_FILE,
-        {
-          subjectType: 'drag-n-drop',
-        },
-      );
+      cy.get(`#${DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`)
+        .first()
+        .selectFile('@fileToUpload', { force: true });
     });
 
     it('show already saved data', () => {
@@ -35,10 +33,10 @@ describe('<PlayerView />', () => {
   });
   describe('Delete a file', () => {
     beforeEach(() => {
-      cy.setUpApi({
-        database: { appData: [MOCK_APP_DATA] },
-        appContext: { memberId: MOCK_APP_DATA.creator!.id },
-      });
+      cy.setUpApi(
+        { appData: [MOCK_APP_DATA] },
+        { memberId: MOCK_APP_DATA.creator?.id },
+      );
       cy.visit('/');
     });
     it('deleting a file successfully', () => {
@@ -51,10 +49,10 @@ describe('<PlayerView />', () => {
   });
   describe('Download a file', () => {
     beforeEach(() => {
-      cy.setUpApi({
-        database: { appData: [MOCK_APP_DATA] },
-        appContext: { memberId: MOCK_APP_DATA.creator!.id },
-      });
+      cy.setUpApi(
+        { appData: [MOCK_APP_DATA] },
+        { memberId: MOCK_APP_DATA.creator?.id },
+      );
       cy.visit('/');
     });
     it('downloading a file successfully', () => {
@@ -71,11 +69,11 @@ describe('<PlayerView />', () => {
     it('Fail to delete a file still shows app data', () => {
       const data = MOCK_APP_DATA;
       const { id, creator } = data;
-      cy.setUpApi({
-        database: { appData: [data] },
-        appContext: { memberId: creator!.id },
-        errors: { deleteAppDataShouldThrow: true },
-      });
+      cy.setUpApi(
+        { appData: [data] },
+        { memberId: creator?.id },
+        { deleteAppDataShouldThrow: true },
+      );
       cy.visit('/');
 
       deleteFile({ id });

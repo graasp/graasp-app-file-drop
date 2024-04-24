@@ -1,11 +1,4 @@
-import saveAs from 'file-saver';
-import { t } from 'i18next';
-import JSZip from 'jszip';
-
 import { FC, useState } from 'react';
-
-import { Api, useLocalContext } from '@graasp/apps-query-client';
-import { AppData } from '@graasp/sdk';
 
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -13,6 +6,13 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+
+import { Api, useLocalContext } from '@graasp/apps-query-client';
+import { AppData } from '@graasp/sdk';
+
+import saveAs from 'file-saver';
+import { t } from 'i18next';
+import JSZip from 'jszip';
 
 import { hooks } from '../../config/queryClient';
 import { DOWNLOAD_ALL_CYPRESS } from '../../config/selectors';

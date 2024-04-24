@@ -1,5 +1,11 @@
 import { useTranslation } from 'react-i18next';
 
+import Visibility from '@mui/icons-material/Visibility';
+import IconButton from '@mui/material/IconButton';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import Tooltip from '@mui/material/Tooltip';
+
 import { useLocalContext } from '@graasp/apps-query-client';
 import {
   AppDataVisibility,
@@ -7,12 +13,6 @@ import {
   PermissionLevel,
   PermissionLevelCompare,
 } from '@graasp/sdk';
-
-import Visibility from '@mui/icons-material/Visibility';
-import IconButton from '@mui/material/IconButton';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import Tooltip from '@mui/material/Tooltip';
 
 import {
   TABLE_CELL_FILE_CREATED_AT_CYPRESS,

@@ -19,27 +19,25 @@ import { checkRow, deleteFile, openSettings } from '../support/utils';
 describe('<BuilderView />', () => {
   describe('Upload a file', () => {
     beforeEach(() => {
-      cy.setUpApi({
-        database: { appData: [MOCK_APP_DATA, MOCK_STUDENT_APP_DATA] },
-        appContext: {
+      cy.setUpApi(
+        { appData: [MOCK_APP_DATA, MOCK_STUDENT_APP_DATA] },
+        {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           memberId: MOCK_APP_DATA.creator!.id,
           permission: PermissionLevel.Admin,
           context: Context.Builder,
         },
-      });
+      );
       cy.visit('/');
     });
 
     it('uploading a file does not crash', () => {
+      cy.fixture(MOCK_FILE, null).as('fileToUpload');
       // bug: for some reason miragejs interfers with uppy
       // which always results in a successful requests and stops
-      cy.get(`#${DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`).attachFile(
-        MOCK_FILE,
-        {
-          subjectType: 'drag-n-drop',
-        },
-      );
+      cy.get(`#${DASHBOARD_UPLOADER_ID} .uppy-Dashboard-input`)
+        .first()
+        .selectFile('@fileToUpload', { force: true });
     });
 
     it('show already saved data', () => {
@@ -54,14 +52,14 @@ describe('<BuilderView />', () => {
   });
   describe('Delete a file', () => {
     beforeEach(() => {
-      cy.setUpApi({
-        database: { appData: [MOCK_APP_DATA, MOCK_STUDENT_APP_DATA] },
-        appContext: {
-          memberId: MOCK_APP_DATA.creator!.id,
+      cy.setUpApi(
+        { appData: [MOCK_APP_DATA, MOCK_STUDENT_APP_DATA] },
+        {
+          memberId: MOCK_APP_DATA.creator?.id,
           permission: PermissionLevel.Admin,
           context: Context.Builder,
         },
-      });
+      );
       cy.visit('/');
     });
     it('deleting a file successfully', () => {
@@ -73,14 +71,14 @@ describe('<BuilderView />', () => {
   });
   describe('Download a file', () => {
     beforeEach(() => {
-      cy.setUpApi({
-        database: { appData: [MOCK_APP_DATA] },
-        appContext: {
-          memberId: MOCK_APP_DATA.creator!.id,
+      cy.setUpApi(
+        { appData: [MOCK_APP_DATA] },
+        {
+          memberId: MOCK_APP_DATA.creator?.id,
           permission: PermissionLevel.Admin,
           context: Context.Builder,
         },
-      });
+      );
       cy.visit('/');
     });
     it('downloading a file successfully', () => {
@@ -101,14 +99,14 @@ describe('<BuilderView />', () => {
   });
   describe('Settings', () => {
     beforeEach(() => {
-      cy.setUpApi({
-        database: { appData: [MOCK_APP_DATA] },
-        appContext: {
-          memberId: MOCK_APP_DATA.creator!.id,
+      cy.setUpApi(
+        { appData: [MOCK_APP_DATA] },
+        {
+          memberId: MOCK_APP_DATA.creator?.id,
           permission: PermissionLevel.Admin,
           context: Context.Builder,
         },
-      });
+      );
       cy.visit('/');
     });
     it('Show Header to Students', () => {
@@ -120,15 +118,15 @@ describe('<BuilderView />', () => {
     it('Fail to delete a file still shows app data', () => {
       const data = MOCK_APP_DATA;
       const { id, creator } = data;
-      cy.setUpApi({
-        database: { appData: [data] },
-        appContext: {
-          memberId: creator!.id,
+      cy.setUpApi(
+        { appData: [data] },
+        {
+          memberId: creator?.id,
           permission: PermissionLevel.Admin,
           context: Context.Builder,
         },
-        errors: { deleteAppDataShouldThrow: true },
-      });
+        { deleteAppDataShouldThrow: true },
+      );
       cy.visit('/');
 
       deleteFile({ id });

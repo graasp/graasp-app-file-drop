@@ -1,5 +1,3 @@
-import { makeStyles } from 'tss-react/mui';
-
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +7,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+
+import { makeStyles } from 'tss-react/mui';
 
 import { mutations } from '../../config/queryClient';
 import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';

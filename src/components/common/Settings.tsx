@@ -1,9 +1,5 @@
-import { makeStyles } from 'tss-react/mui';
-
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { AppSetting } from '@graasp/sdk';
 
 import SettingsIcon from '@mui/icons-material/Settings';
 import Fab from '@mui/material/Fab';
@@ -12,6 +8,10 @@ import Modal from '@mui/material/Modal';
 import Switch from '@mui/material/Switch';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+
+import { AppSetting } from '@graasp/sdk';
+
+import { makeStyles } from 'tss-react/mui';
 
 import { APP_SETTINGS_TYPES } from '../../config/appSettingTypes';
 import {

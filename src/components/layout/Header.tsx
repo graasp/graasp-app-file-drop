@@ -1,10 +1,5 @@
-import { makeStyles } from 'tss-react/mui';
-
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { useLocalContext } from '@graasp/apps-query-client';
-import { PermissionLevel } from '@graasp/sdk';
 
 import Refresh from '@mui/icons-material/Refresh';
 import Warning from '@mui/icons-material/Warning';
@@ -13,6 +8,11 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+
+import { useLocalContext } from '@graasp/apps-query-client';
+import { PermissionLevel } from '@graasp/sdk';
+
+import { makeStyles } from 'tss-react/mui';
 
 import { queryClient } from '../../config/queryClient';
 import { HEADER_REFRESH_BUTTON_CYPRESS } from '../../config/selectors';
