@@ -7165,13 +7165,13 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-cypress@npm:~2.13.0":
-  version: 2.13.3
-  resolution: "eslint-plugin-cypress@npm:2.13.3"
+  version: 2.13.4
+  resolution: "eslint-plugin-cypress@npm:2.13.4"
   dependencies:
-    globals: "npm:^11.12.0"
+    globals: "npm:^13.20.0"
   peerDependencies:
     eslint: ">= 3.2.1"
-  checksum: e2086f6cd469d35d6b87abff89c5e416bd750da22aadf1eac41b642bec6a80133384be88b3eaf887f25c07ed96a1b8397f74df52930d57b0a4c526e274d6fedd
+  checksum: 9f6cccda19cf6e9ac0ce54f85aad9ac8ec59d69b980c7679fcf2c245a86e43a83d7ce29b2d13127add15b83dbce6a93f3bd2187047b1976b8296446bf2c8157e
   languageName: node
   linkType: hard
 
@@ -8308,7 +8308,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^11.1.0, globals@npm:^11.12.0":
+"globals@npm:^11.1.0":
   version: 11.12.0
   resolution: "globals@npm:11.12.0"
   checksum: 9f054fa38ff8de8fa356502eb9d2dae0c928217b8b5c8de1f09f5c9b6c8a96d8b9bd3afc49acbcd384a98a81fea713c859e1b09e214c60509517bb8fc2bc13c2
@@ -8321,6 +8321,15 @@ __metadata:
   dependencies:
     type-fest: "npm:^0.20.2"
   checksum: 9df85cde2f0dce6ac9b3a5e08bec109d2f3b38ddd055a83867e0672c55704866d53ce6a4265859fa630624baadd46f50ca38602a13607ad86be853a8c179d3e7
+  languageName: node
+  linkType: hard
+
+"globals@npm:^13.20.0":
+  version: 13.24.0
+  resolution: "globals@npm:13.24.0"
+  dependencies:
+    type-fest: "npm:^0.20.2"
+  checksum: 62c5b1997d06674fc7191d3e01e324d3eda4d65ac9cc4e78329fa3b5c4fd42a0e1c8722822497a6964eee075255ce21ccf1eec2d83f92ef3f06653af4d0ee28e
   languageName: node
   linkType: hard
 
