@@ -1,7 +1,7 @@
+import { toast } from 'react-toastify';
+
 import isObject from 'lodash.isobject';
 import isString from 'lodash.isstring';
-
-import { toast } from 'react-toastify';
 
 import {
   FAILED_TO_FETCH_MESSAGE_PRETTY,

@@ -12,7 +12,7 @@ import {
 } from '../../src/config/selectors';
 import { MEMBERS } from '../fixtures/members';
 
-export const deleteFile = ({ id }): void => {
+export const deleteFile = ({ id }: { id: string }): void => {
   cy.get(
     `#${buildTableRowId(id)} ${dataCyWrapper(
       TABLE_CELL_FILE_ACTION_DELETE_CYPRESS,
@@ -41,7 +41,7 @@ export const checkRow = (
       `${rowSelector} ${dataCyWrapper(TABLE_CELL_FILE_USER_CYPRESS)}`,
     ).should(
       'have.text',
-      Object.values(MEMBERS).find(({ id: idT }) => idT === creator!.id)?.name ??
+      Object.values(MEMBERS).find(({ id: idT }) => idT === creator?.id)?.name ??
         'Anonymous',
     );
   }

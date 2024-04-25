@@ -1,6 +1,6 @@
-import { v4 } from 'uuid';
-
 import { AppData, AppDataVisibility } from '@graasp/sdk';
+
+import { v4 } from 'uuid';
 
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
 import { CURRENT_MEMBER, MEMBERS } from './members';

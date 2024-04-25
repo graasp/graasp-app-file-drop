@@ -1,8 +1,8 @@
 import { configureQueryClient } from '@graasp/apps-query-client';
 
-import { MOCK_API, REACT_APP_API_HOST, REACT_APP_GRAASP_APP_KEY } from './env';
+import { API_HOST, GRAASP_APP_KEY, MOCK_API } from './env';
 
-if (!REACT_APP_GRAASP_APP_KEY) {
+if (!GRAASP_APP_KEY) {
   throw new Error('GRAASP_APP_KEY should be defined');
 }
 
@@ -15,8 +15,8 @@ const {
   QUERY_KEYS,
   mutations,
 } = configureQueryClient({
-  API_HOST: REACT_APP_API_HOST,
-  GRAASP_APP_KEY: REACT_APP_GRAASP_APP_KEY,
+  API_HOST,
+  GRAASP_APP_KEY,
   notifier: (data) => {
     // todo: use toasts
     // eslint-disable-next-line no-console

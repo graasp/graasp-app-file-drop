@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
 
-import { AppData } from '@graasp/sdk';
-
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
+
+import { AppData } from '@graasp/sdk';
 
 import { TABLE_CELL_FILE_ACTION_DELETE_CYPRESS } from '../../config/selectors';
 import DeleteAppDataDialog from '../main/DeleteAppDataDialog';

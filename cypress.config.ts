@@ -1,26 +1,27 @@
+import registerCodeCoverage from '@cypress/code-coverage/task';
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
   video: false,
+
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
+    env: {
+      VITE_API_HOST: process.env.VITE_API_HOST,
+      VITE_ENABLE_MOCK_API: process.env.VITE_ENABLE_MOCK_API,
+      VITE_GRAASP_APP_KEY: process.env.VITE_GRAASP_APP_KEY,
+    },
+    retries: { runMode: 1, openMode: 0 },
     setupNodeEvents(on, config) {
-      require('@cypress/code-coverage/task')(on, config);
+      registerCodeCoverage(on, config);
       return config;
     },
-    baseUrl: `http://localhost:${process.env.PORT || 3000}`,
+    baseUrl: `http://localhost:${process.env.VITE_PORT || 4001}`,
   },
+
   component: {
     devServer: {
-      framework: 'create-react-app',
-      bundler: 'webpack',
+      framework: 'react',
+      bundler: 'vite',
     },
-  },
-  env: {
-    REACT_APP_API_HOST: 'http://localhost:3000',
-    REACT_APP_ENABLE_MOCK_API: 'true',
-    REACT_APP_GRAASP_APP_KEY: 'my-ke',
-    REACT_APP_VERSION: process.env.REACT_APP_VERSION,
   },
 });

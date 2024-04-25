@@ -1,14 +1,14 @@
 import { I18nextProvider } from 'react-i18next';
 
+import { CssBaseline, ThemeProvider, styled } from '@mui/material';
+import { StyledEngineProvider } from '@mui/material/styles';
+
 import {
   WithLocalContext,
   WithTokenContext,
   useObjectState,
 } from '@graasp/apps-query-client';
 import { Loader, theme } from '@graasp/ui';
-
-import { CssBaseline, ThemeProvider, styled } from '@mui/material';
-import { StyledEngineProvider } from '@mui/material/styles';
 
 import i18nConfig from '../config/i18n';
 import {

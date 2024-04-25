@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
-import { Api, useLocalContext } from '@graasp/apps-query-client';
-import { AppData } from '@graasp/sdk';
-
 import ArrowDownward from '@mui/icons-material/ArrowDownward';
 import IconButton from '@mui/material/IconButton';
+
+import { Api, useLocalContext } from '@graasp/apps-query-client';
+import { AppData } from '@graasp/sdk';
 
 import { hooks } from '../../config/queryClient';
 import { TABLE_CELL_FILE_ACTION_DOWNLOAD_CYPRESS } from '../../config/selectors';
