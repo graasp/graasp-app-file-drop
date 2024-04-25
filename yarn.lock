@@ -2106,13 +2106,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:3.10.7":
-  version: 3.10.7
-  resolution: "@cypress/code-coverage@npm:3.10.7"
+"@cypress/code-coverage@npm:3.10.9":
+  version: 3.10.9
+  resolution: "@cypress/code-coverage@npm:3.10.9"
   dependencies:
     "@cypress/webpack-preprocessor": "npm:^5.11.0"
     chalk: "npm:4.1.2"
-    dayjs: "npm:1.10.7"
+    dayjs: "npm:1.11.9"
     debug: "npm:4.3.4"
     execa: "npm:4.1.0"
     globby: "npm:11.0.4"
@@ -2121,7 +2121,7 @@ __metadata:
     nyc: "npm:15.1.0"
   peerDependencies:
     cypress: "*"
-  checksum: 9747195d24105f7eddc717b783b0678eccea38df32e65b6aa3e895dbe5bfc1e05aa953699715f3f46483b7d8923dbd443ba2bd069abbeacc65c213be63c49208
+  checksum: 9d9fc9f4fb45f0b3b8c696013c5b9bf8265d0f0f60b522d0b0b9b3507c6106947cb4e8d843a8f0b163f701b5fe544e5c177de50f566fc7c2c9f782023605262a
   languageName: node
   linkType: hard
 
@@ -3620,18 +3620,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query-devtools@npm:4.29.15":
-  version: 4.29.15
-  resolution: "@tanstack/react-query-devtools@npm:4.29.15"
+"@tanstack/react-query-devtools@npm:4.29.25":
+  version: 4.29.25
+  resolution: "@tanstack/react-query-devtools@npm:4.29.25"
   dependencies:
     "@tanstack/match-sorter-utils": "npm:^8.7.0"
     superjson: "npm:^1.10.0"
     use-sync-external-store: "npm:^1.2.0"
   peerDependencies:
-    "@tanstack/react-query": 4.29.15
+    "@tanstack/react-query": 4.29.25
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 33dab2dcb5b1808883e128b88447a12915827aeb1a265759e5317e2fb0d2cbda7f1233505c0c697a47d08b277a26e5fdb0580ec19e9fe5b119f524e0711e9caa
+  checksum: fee57876e8eee557c4c7cf590c1db76b2987170544a0cff8cb04048ff0c33a01c9061329bdf3c1f8b0c19c812a838833fe8249dcdb3aa6b172c2febeefd3bf46
   languageName: node
   linkType: hard
 
@@ -3776,16 +3776,16 @@ __metadata:
   linkType: hard
 
 "@types/file-saver@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "@types/file-saver@npm:2.0.5"
-  checksum: a31d6ee2abf99598647139f8f35b37b6e1bacf6c7ddf05c66651b9b0e6e53381aa0e8ed13f37faa6e496e0eb1da87c97e6c70fd589d5b83b0c95c57cb64ce92a
+  version: 2.0.7
+  resolution: "@types/file-saver@npm:2.0.7"
+  checksum: c3d1cd80eab1214767922cabac97681f3fb688e82b74890450d70deaca49537949bbc96d80d363d91e8f0a4752c7164909cc8902d9721c5c4809baafc42a3801
   languageName: node
   linkType: hard
 
-"@types/i18n@npm:0.13.6":
-  version: 0.13.6
-  resolution: "@types/i18n@npm:0.13.6"
-  checksum: f1caf1d55a98e8bcc6deb06ca97cce7a26c90a9ee25097c68e3c4e10950bdab28588c7967c42218639dc78338d79a2ead9df6338c287904154d770fd3e709420
+"@types/i18n@npm:0.13.12":
+  version: 0.13.12
+  resolution: "@types/i18n@npm:0.13.12"
+  checksum: 37fafabce4973ac0be008c5401bd159397dbaa2dab720323d1624a0580c1dce3416186981417c7d6558b90dd44947ccdb2ec4da663894ffba57a6239a5d4f4d2
   languageName: node
   linkType: hard
 
@@ -3815,12 +3815,12 @@ __metadata:
   linkType: hard
 
 "@types/jest@npm:^29.5.1":
-  version: 29.5.3
-  resolution: "@types/jest@npm:29.5.3"
+  version: 29.5.12
+  resolution: "@types/jest@npm:29.5.12"
   dependencies:
     expect: "npm:^29.0.0"
     pretty-format: "npm:^29.0.0"
-  checksum: e8b4eda3ba379b21fcd5c2d1d531ec94f636676f1690f06ff3f7b8dc199c2cec711d4c4e122175f05d50040e5dec69f3c13ef88bd825f0b1a1ac1332eb072c12
+  checksum: 312e8dcf92cdd5a5847d6426f0940829bca6fe6b5a917248f3d7f7ef5d85c9ce78ef05e47d2bbabc40d41a930e0e36db2d443d2610a9e3db9062da2d5c904211
   languageName: node
   linkType: hard
 
@@ -3937,12 +3937,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.2.6":
-  version: 18.2.6
-  resolution: "@types/react-dom@npm:18.2.6"
+"@types/react-dom@npm:18.2.25":
+  version: 18.2.25
+  resolution: "@types/react-dom@npm:18.2.25"
   dependencies:
     "@types/react": "npm:*"
-  checksum: dbdf98d127db58130f3e4394f23a6b4b200703049579e97a4e6049c0f47f871c7731cec37e2067afb62cc7c5486bd1b151fc0ef672b9ea7369c40d811592b948
+  checksum: 0e45856a2fdbf09e74632b132b3af773c6b18fc2ab0bd04595c9f2bcc0bb04d5e732ac8156d145b712dedab7484a8fe9dce5cf720a5437b5d26099c7060c7ba4
   languageName: node
   linkType: hard
 
@@ -3984,14 +3984,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.13":
-  version: 18.2.13
-  resolution: "@types/react@npm:18.2.13"
+"@types/react@npm:18.2.79":
+  version: 18.2.79
+  resolution: "@types/react@npm:18.2.79"
   dependencies:
     "@types/prop-types": "npm:*"
-    "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 80812af6710c3ae54793c32a808534311c423595be8f412870ca841c5bae4ad183d8593cfbd53a5fde80042442fd7537868e7e36a2347f6227eb73d9a0cdfb1a
+  checksum: 2ef833e7d0a5c226beddbbe090811582371f6ae5e2f092a3d9f47cc6087c8bce0b96ee33e351de6d1d470f0a0ec5892d971933f841ef31538c1821681fc6569e
   languageName: node
   linkType: hard
 
@@ -4040,9 +4039,9 @@ __metadata:
   linkType: hard
 
 "@types/uuid@npm:^9.0.1":
-  version: 9.0.2
-  resolution: "@types/uuid@npm:9.0.2"
-  checksum: 1754bcf3444e1e3aeadd6e774fc328eb53bc956665e2e8fb6ec127aa8e1f43d9a224c3d22a9a6233dca8dd81a12dc7fed4d84b8876dd5ec82d40f574f7ff8b68
+  version: 9.0.8
+  resolution: "@types/uuid@npm:9.0.8"
+  checksum: b8c60b7ba8250356b5088302583d1704a4e1a13558d143c549c408bf8920535602ffc12394ede77f8a8083511b023704bc66d1345792714002bfa261b17c5275
   languageName: node
   linkType: hard
 
@@ -4544,15 +4543,15 @@ __metadata:
   linkType: hard
 
 "@vitest/browser@npm:^1.3.0":
-  version: 1.5.1
-  resolution: "@vitest/browser@npm:1.5.1"
+  version: 1.5.2
+  resolution: "@vitest/browser@npm:1.5.2"
   dependencies:
-    "@vitest/utils": "npm:1.5.1"
+    "@vitest/utils": "npm:1.5.2"
     magic-string: "npm:^0.30.5"
     sirv: "npm:^2.0.4"
   peerDependencies:
     playwright: "*"
-    vitest: 1.5.1
+    vitest: 1.5.2
     webdriverio: "*"
   peerDependenciesMeta:
     playwright:
@@ -4561,7 +4560,7 @@ __metadata:
       optional: true
     webdriverio:
       optional: true
-  checksum: da0f202372e6fabd42192ca63b1c3bc7cd1a9d572e896ab1ed25043ea0561d6923e160e6ed0b0f07e4516c44a7c8be60f722e836013ce683b0654c80260cbfc0
+  checksum: 1a39d784447d1ff2cf11edd082c934e57692943859741b1c0b5be05e4431ea5df11af00f160d6702b23ea425fee1415d2366e5e080468f83eff4847e2ee4eaab
   languageName: node
   linkType: hard
 
@@ -4616,6 +4615,18 @@ __metadata:
     loupe: "npm:^2.3.7"
     pretty-format: "npm:^29.7.0"
   checksum: cdc277c88246c6b41749db5d4fdfe7ddb9df12d60b02887db52c905c046186f67eaf61169ab2b78c2e35c7d58c8ffdd653e09e5ed8e6272db9885c4bd2e321fb
+  languageName: node
+  linkType: hard
+
+"@vitest/utils@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@vitest/utils@npm:1.5.2"
+  dependencies:
+    diff-sequences: "npm:^29.6.3"
+    estree-walker: "npm:^3.0.3"
+    loupe: "npm:^2.3.7"
+    pretty-format: "npm:^29.7.0"
+  checksum: 74fb0a32973038b00b6ca427cf387c07ff879342e6ea980420b3a9b6d74b0332cdcc9db184ad842584099ac956987bddcdc49001ed648deb49b8f54416570ff0
   languageName: node
   linkType: hard
 
@@ -5309,7 +5320,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer@npm:^5.5.0, buffer@npm:^5.6.0":
+"buffer@npm:^5.5.0, buffer@npm:^5.7.1":
   version: 5.7.1
   resolution: "buffer@npm:5.7.1"
   dependencies:
@@ -5817,9 +5828,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"concurrently@npm:8.2.0":
-  version: 8.2.0
-  resolution: "concurrently@npm:8.2.0"
+"concurrently@npm:8.2.2":
+  version: 8.2.2
+  resolution: "concurrently@npm:8.2.2"
   dependencies:
     chalk: "npm:^4.1.2"
     date-fns: "npm:^2.30.0"
@@ -5833,7 +5844,7 @@ __metadata:
   bin:
     conc: dist/bin/concurrently.js
     concurrently: dist/bin/concurrently.js
-  checksum: 2ee313c485ebdb7098ec9acdb7eddf48bb0c7db89354f1be975b3496d7d527ab51d76d9c58df232228939d2c4770309824ebe972dac09ee6c72694c9fd4b4000
+  checksum: dcb1aa69d9c611a7bda9d4fc0fe1e388f971d1744acec7e0d52dffa2ef55743f1266ec9292f414c5789b9f61734b3fce772bd005d4de9564a949fb121b97bae1
   languageName: node
   linkType: hard
 
@@ -6248,9 +6259,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:13.6.3":
-  version: 13.6.3
-  resolution: "cypress@npm:13.6.3"
+"cypress@npm:13.6.6":
+  version: 13.6.6
+  resolution: "cypress@npm:13.6.6"
   dependencies:
     "@cypress/request": "npm:^3.0.0"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -6259,7 +6270,7 @@ __metadata:
     arch: "npm:^2.2.0"
     blob-util: "npm:^2.0.2"
     bluebird: "npm:^3.7.2"
-    buffer: "npm:^5.6.0"
+    buffer: "npm:^5.7.1"
     cachedir: "npm:^2.3.0"
     chalk: "npm:^4.1.0"
     check-more-types: "npm:^2.24.0"
@@ -6277,7 +6288,7 @@ __metadata:
     figures: "npm:^3.2.0"
     fs-extra: "npm:^9.1.0"
     getos: "npm:^3.2.1"
-    is-ci: "npm:^3.0.0"
+    is-ci: "npm:^3.0.1"
     is-installed-globally: "npm:~0.4.0"
     lazy-ass: "npm:^1.6.0"
     listr2: "npm:^3.8.3"
@@ -6296,7 +6307,7 @@ __metadata:
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 9ec41974d3e6cb4a293ff1df88f742287650416d4061b5d44484aa98e78da254f190efb2bdfa79090db84eadc7a94c164de28e65ee1a106f8b213967022da2de
+  checksum: c86cc38fa25f04575d496fbf26edf8c738f2c98b0faeced9788ec691293424336f6be180f597256d38124df9ce75daddd42a015127af76d8f8df9eb071e3d90e
   languageName: node
   linkType: hard
 
@@ -6353,10 +6364,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:1.10.7":
-  version: 1.10.7
-  resolution: "dayjs@npm:1.10.7"
-  checksum: cc753567c493faf165f7b0f48d73856927d98c9fddb2316db5ef5e41466d6540cdd8f18e7ba2818c6038049fdc70d3041526d1df174cdadebb7478d4daa3dd3e
+"dayjs@npm:1.11.9":
+  version: 1.11.9
+  resolution: "dayjs@npm:1.11.9"
+  checksum: 7bee5a13653049ae166d4ee7f17fd1b3cd31ec8699b2bae1dee6262431d8d5815a4a9f12eaf48d1879a98d993c014a9a9098ed75aa6a041efe9bccc080a687cd
   languageName: node
   linkType: hard
 
@@ -8315,7 +8326,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": "npm:19.3.0"
     "@commitlint/config-conventional": "npm:19.2.2"
-    "@cypress/code-coverage": "npm:3.10.7"
+    "@cypress/code-coverage": "npm:3.10.9"
     "@cypress/instrument-cra": "npm:1.4.0"
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:11.11.0"
@@ -8328,16 +8339,16 @@ __metadata:
     "@sentry/react": "npm:~7.57.0"
     "@sentry/tracing": "npm:~7.57.0"
     "@tanstack/react-query": "npm:4.29.15"
-    "@tanstack/react-query-devtools": "npm:4.29.15"
+    "@tanstack/react-query-devtools": "npm:4.29.25"
     "@trivago/prettier-plugin-sort-imports": "npm:4.1.1"
     "@types/file-saver": "npm:^2.0.5"
-    "@types/i18n": "npm:0.13.6"
+    "@types/i18n": "npm:0.13.12"
     "@types/jest": "npm:^29.5.1"
     "@types/lodash.isobject": "npm:3.0.9"
     "@types/lodash.isstring": "npm:4.0.9"
     "@types/node": "npm:^20.12.7"
-    "@types/react": "npm:18.2.13"
-    "@types/react-dom": "npm:18.2.6"
+    "@types/react": "npm:18.2.79"
+    "@types/react-dom": "npm:18.2.25"
     "@types/uuid": "npm:^9.0.1"
     "@typescript-eslint/eslint-plugin": "npm:5.62.0"
     "@typescript-eslint/parser": "npm:5.62.0"
@@ -8350,9 +8361,9 @@ __metadata:
     "@uppy/xhr-upload": "npm:3.2.0"
     "@vitejs/plugin-react": "npm:^4.2.1"
     "@vitest/browser": "npm:^1.3.0"
-    concurrently: "npm:8.2.0"
+    concurrently: "npm:8.2.2"
     cross-env: "npm:7.0.3"
-    cypress: "npm:13.6.3"
+    cypress: "npm:13.6.6"
     cypress-file-upload: "npm:5.0.8"
     env-cmd: "npm:10.1.0"
     eslint: "npm:^8.41.0"
@@ -8909,7 +8920,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-ci@npm:^3.0.0":
+"is-ci@npm:^3.0.1":
   version: 3.0.1
   resolution: "is-ci@npm:3.0.1"
   dependencies:
