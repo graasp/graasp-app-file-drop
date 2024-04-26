@@ -35,7 +35,7 @@
     "@uppy/react": "3.3.0",
     "@uppy/xhr-upload": "3.6.4",
     "file-saver": "~2.0.5",
-    "i18next": "~23.2.0",
+    "i18next": "~23.11.0",
     "jszip": "~3.10.1",
     "lodash.isobject": "~3.0.2",
     "lodash.isstring": "~4.0.1",

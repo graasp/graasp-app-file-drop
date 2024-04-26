@@ -1790,7 +1790,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.23.9":
+"@babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.23.9":
   version: 7.24.4
   resolution: "@babel/runtime@npm:7.24.4"
   dependencies:
@@ -8316,7 +8316,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:~4.6.0"
     file-saver: "npm:~2.0.5"
     husky: "npm:~8.0.3"
-    i18next: "npm:~23.2.0"
+    i18next: "npm:~23.11.0"
     jszip: "npm:~3.10.1"
     lodash.isobject: "npm:~3.0.2"
     lodash.isstring: "npm:~4.0.1"
@@ -8621,12 +8621,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:~23.2.0":
-  version: 23.2.11
-  resolution: "i18next@npm:23.2.11"
+"i18next@npm:~23.11.0":
+  version: 23.11.2
+  resolution: "i18next@npm:23.11.2"
   dependencies:
-    "@babel/runtime": "npm:^7.22.5"
-  checksum: b193a83ddee6d815e57977787402178e4339a75ef0d199fe3d790dfddcb89a87630013d73e2b154108cbcedee7799e2c4c1273d3d9dafb871949f0498b924e7f
+    "@babel/runtime": "npm:^7.23.2"
+  checksum: f2e01ae14f1304ff6d14d29331f5645c98ccadf3aeeb23a57816735e1a606509b95f40b2425ba707a362b03a703013ce56333173fe8c895ae8e56cfa21d5e50e
   languageName: node
   linkType: hard
 
