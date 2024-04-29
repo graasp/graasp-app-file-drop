@@ -131,7 +131,7 @@
     "not op_mini all"
   ],
   "resolutions": {
-    "@graasp/sdk": "3.4.1"
+    "@graasp/sdk": "3.10.0"
   },
   "packageManager": "yarn@4.0.2",
   "nyc": {

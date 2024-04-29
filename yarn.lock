@@ -2502,6 +2502,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@faker-js/faker@npm:8.4.0":
+  version: 8.4.0
+  resolution: "@faker-js/faker@npm:8.4.0"
+  checksum: f9253d0b4846ab0fd769cd78be88c4ea24741d9201cccb0038b3627ac21041a2aef150b0f843b2f63d5a056737bec28bcdf493e0b72201a892df4423be0dff79
+  languageName: node
+  linkType: hard
+
 "@floating-ui/core@npm:^1.0.0":
   version: 1.6.0
   resolution: "@floating-ui/core@npm:1.6.0"
@@ -2567,15 +2574,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:3.4.1":
-  version: 3.4.1
-  resolution: "@graasp/sdk@npm:3.4.1"
+"@graasp/sdk@npm:3.10.0":
+  version: 3.10.0
+  resolution: "@graasp/sdk@npm:3.10.0"
   dependencies:
-    date-fns: "npm:3.2.0"
+    "@faker-js/faker": "npm:8.4.0"
     js-cookie: "npm:3.0.5"
-    uuid: "npm:9.0.1"
     validator: "npm:13.11.0"
-  checksum: 6bf2d3fbb28d61a457a534628620982a656258ab2e5c101294da8e7e4327eacff526378983c4e06a85f0115e0547325f9dbece793f7f4bc6129aa8909a42a24b
+  peerDependencies:
+    date-fns: ^3
+    uuid: ^9
+  checksum: 4a2353869d4bdbcd5e9fac19cf11adf2a63a25864eedb8be938b788d3028844ebf28565d6164c84b7ff5b4da56e6821071d0623f4793c6ff590ae45866edd239
   languageName: node
   linkType: hard
 
@@ -6470,13 +6479,6 @@ __metadata:
     es-errors: "npm:^1.3.0"
     is-data-view: "npm:^1.0.1"
   checksum: 96f34f151bf02affb7b9f98762fb7aca1dd5f4553cb57b80bce750ca609c15d33ca659568ef1d422f7e35680736cbccb893a3d4b012760c758c1446bbdc4c6db
-  languageName: node
-  linkType: hard
-
-"date-fns@npm:3.2.0":
-  version: 3.2.0
-  resolution: "date-fns@npm:3.2.0"
-  checksum: 2f36cb9165a066ae90c0b6f0c25b3c70eb75bc52e64ba6dd8680964ebda144851a244ff4ed0b2afb4a6bab796a1af6a0e6c7c2814529d04c72fa434f931d4e81
   languageName: node
   linkType: hard
 
