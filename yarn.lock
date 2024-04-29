@@ -8718,7 +8718,7 @@ __metadata:
     react-dom: "npm:18.3.1"
     react-i18next: "npm:12.3.1"
     react-router-dom: "npm:6.23.0"
-    react-toastify: "npm:9.1.3"
+    react-toastify: "npm:10.0.5"
     standard-version: "npm:9.5.0"
     stylis-plugin-rtl: "npm:^2.1.1"
     tss-react: "npm:4.9.7"
@@ -12185,15 +12185,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-toastify@npm:9.1.3":
-  version: 9.1.3
-  resolution: "react-toastify@npm:9.1.3"
+"react-toastify@npm:10.0.5":
+  version: 10.0.5
+  resolution: "react-toastify@npm:10.0.5"
   dependencies:
-    clsx: "npm:^1.1.1"
+    clsx: "npm:^2.1.0"
   peerDependencies:
-    react: ">=16"
-    react-dom: ">=16"
-  checksum: 10/12667aa10e6cf3f74be2e3c704c2d5570dd7de66fff89ae38fbfab1122e9a9f632de1cb712fe44a9a60b8ecca7590578157cb4ca6c4e8105a8cf80936a94e181
+    react: ">=18"
+    react-dom: ">=18"
+  checksum: 10/6630f4b6d6902d827efd5e66c09df693c7ab8abeeb6ef24d880080f47b636614ef9cc251dd5e6564d49fe2f6f25f720ce0f7ef72cd4b0cd58a65b7c4b8052fac
   languageName: node
   linkType: hard
 
