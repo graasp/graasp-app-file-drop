@@ -8730,7 +8730,7 @@ __metadata:
     react-toastify: "npm:10.0.5"
     standard-version: "npm:9.5.0"
     stylis-plugin-rtl: "npm:^2.1.1"
-    tss-react: "npm:4.9.7"
+    tss-react: "npm:4.9.10"
     typescript: "npm:5.4.5"
     uuid: "npm:^9.0.0"
     vite: "npm:^5.1.3"
@@ -13725,9 +13725,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tss-react@npm:4.9.7":
-  version: 4.9.7
-  resolution: "tss-react@npm:4.9.7"
+"tss-react@npm:4.9.10":
+  version: 4.9.10
+  resolution: "tss-react@npm:4.9.10"
   dependencies:
     "@emotion/cache": "npm:*"
     "@emotion/serialize": "npm:*"
@@ -13742,7 +13742,7 @@ __metadata:
       optional: true
     "@mui/material":
       optional: true
-  checksum: 10/e58d78b4f7babf4b1b2af6e216f7c82f20bce09cf9f415ec24b9d6ae56c0d05ad6af0f31c3592c24f7606c0d5a574a5a6c1cd1086ce03b2fbd5bc08ee83e7183
+  checksum: 10/5c316cc787acf2aeb4235ac1cb304b27684adb8546cb73d11dac5de5b3044956ef441790bf5bd79ee3c0063b7e7231d001e6d5e0f973625505fb93ff7009670d
   languageName: node
   linkType: hard
 
