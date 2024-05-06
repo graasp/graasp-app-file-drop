@@ -1913,9 +1913,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:3.12.38":
-  version: 3.12.38
-  resolution: "@cypress/code-coverage@npm:3.12.38"
+"@cypress/code-coverage@npm:3.12.39":
+  version: 3.12.39
+  resolution: "@cypress/code-coverage@npm:3.12.39"
   dependencies:
     "@cypress/webpack-preprocessor": "npm:^6.0.0"
     chalk: "npm:4.1.2"
@@ -1932,7 +1932,7 @@ __metadata:
     babel-loader: ^8.3 || ^9
     cypress: "*"
     webpack: ^4 || ^5
-  checksum: 10/9ab38647496a70ffc39448ff19d627fa05d8bffee98f3bdb50b8efec402a84757347f8547c6d8992921eb149e4c638cc76d237d9b60cd9229b36d4b5e395e089
+  checksum: 10/f045265ab942aa6f48d9ecedc4626f85f8db863b7e52edc699f07276c4acf89eb619fbf2472ef2e12028dba21b743f8984bf41568cdc0ad1eff75387ba9afe65
   languageName: node
   linkType: hard
 
@@ -4132,11 +4132,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:^20.12.7":
-  version: 20.12.8
-  resolution: "@types/node@npm:20.12.8"
+  version: 20.12.9
+  resolution: "@types/node@npm:20.12.9"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 10/1feab4c8cb08588eea10811ed4d02485a5cde47fdf92e7b3193fc9f8ee39ea556f6e3124dc6d5378354466ed5f7e5fbe5e20f625908de40ea37560368a50f72c
+  checksum: 10/289445d9cfe49ad21fe55d25ccad44d786a616a96118916332a7d5d338632329fc8a281d486afd0929934641fa55b82ca23171a120b37d6f540d400df6d2ca68
   languageName: node
   linkType: hard
 
@@ -8783,7 +8783,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": "npm:19.3.0"
     "@commitlint/config-conventional": "npm:19.2.2"
-    "@cypress/code-coverage": "npm:3.12.38"
+    "@cypress/code-coverage": "npm:3.12.39"
     "@cypress/instrument-cra": "npm:1.4.0"
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
