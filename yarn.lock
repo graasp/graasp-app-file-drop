@@ -8843,7 +8843,7 @@ __metadata:
     lodash.isstring: "npm:~4.0.1"
     npm-run-all2: "npm:6.1.2"
     nyc: "npm:15.1.0"
-    prettier: "npm:2.8.8"
+    prettier: "npm:3.2.5"
     qs: "npm:6.12.1"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
@@ -11879,12 +11879,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.8.8":
-  version: 2.8.8
-  resolution: "prettier@npm:2.8.8"
+"prettier@npm:3.2.5":
+  version: 3.2.5
+  resolution: "prettier@npm:3.2.5"
   bin:
-    prettier: bin-prettier.js
-  checksum: 10/00cdb6ab0281f98306cd1847425c24cbaaa48a5ff03633945ab4c701901b8e96ad558eb0777364ffc312f437af9b5a07d0f45346266e8245beaf6247b9c62b24
+    prettier: bin/prettier.cjs
+  checksum: 10/d509f9da0b70e8cacc561a1911c0d99ec75117faed27b95cc8534cb2349667dee6351b0ca83fa9d5703f14127faa52b798de40f5705f02d843da133fc3aa416a
   languageName: node
   linkType: hard
 
