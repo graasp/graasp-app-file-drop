@@ -13,3 +13,6 @@ export const CONTEXT_FETCHING_ERROR_MESSAGE =
 export const TOKEN_REQUEST_ERROR_MESSAGE =
   'An error occurred while requesting the token.';
 export const UNEXPECTED_ERROR_MESSAGE = 'An unexpected error has occurred.';
+
+export const UNEXPECTED_WARNING_MESSAGE =
+  'An unexpected problem has occured. Your experience may be degraded.';

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -14,15 +14,21 @@ import saveAs from 'file-saver';
 import { t } from 'i18next';
 import JSZip from 'jszip';
 
+import { APP_DATA_TYPES } from '@/config/appDataTypes';
+
 import { hooks } from '../../config/queryClient';
 import { DOWNLOAD_ALL_CYPRESS } from '../../config/selectors';
-import { showErrorToast } from '../../utils/toasts';
+import { showErrorToast, showWarningToast } from '../../utils/toasts';
 import { useAppDataContext } from '../context/AppDataContext';
 
 const zip = new JSZip();
 
 const AppDataToolbar: FC = () => {
   const appDataArray = useAppDataContext();
+  const appDataFiles = useMemo(
+    () => appDataArray.filter(({ type }) => type === APP_DATA_TYPES.FILE),
+    [appDataArray],
+  );
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -41,9 +47,9 @@ const AppDataToolbar: FC = () => {
       token,
     });
 
-  const getAllFiles = async (appDataFiles: AppData[]): Promise<void> => {
+  const getAllFiles = async (currentAppDataFiles: AppData[]): Promise<void> => {
     await Promise.all(
-      appDataFiles.map(async (appDataFile) => {
+      currentAppDataFiles.map(async (appDataFile) => {
         const name: string =
           (appDataFile.data as { s3File: { name: string } })?.s3File?.name ??
           appDataFile.id;
@@ -55,8 +61,7 @@ const AppDataToolbar: FC = () => {
   const handleDownloadAll = async (): Promise<void> => {
     if (!isLoading) {
       setIsLoading(true);
-      const appDataFiles = appDataArray.filter(({ type }) => type === 'file');
-      if (!appDataFiles.length) {
+      if (appDataFiles.length) {
         getAllFiles(appDataFiles)
           .then(() => {
             zip.generateAsync({ type: 'blob' }).then((archive) => {
@@ -70,6 +75,9 @@ const AppDataToolbar: FC = () => {
               t('ERROR_DOWNLOAD_ALL', { reason: reason.toString() }),
             ),
           );
+      } else {
+        setIsLoading(false);
+        showWarningToast(t('WARNING_NO_FILE_TO_DOWNLOAD'));
       }
     }
   };
@@ -89,6 +97,7 @@ const AppDataToolbar: FC = () => {
           <IconButton
             onClick={handleDownloadAll}
             data-cy={DOWNLOAD_ALL_CYPRESS}
+            disabled={appDataFiles.length === 0}
           >
             <FileDownloadIcon color="primary" />
           </IconButton>

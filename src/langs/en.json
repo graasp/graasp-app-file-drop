@@ -31,6 +31,7 @@
     "UPLOADED_FILES_TOOLBAR": "Uploaded files",
     "DOWNLOAD_ALL": "Download all",
     "ERROR_DOWNLOAD_ALL": "Error in downloading all the uploaded files:\n{{ reason }}",
-    "FILE_REQUEST_FAILED": "The request to the API failed."
+    "FILE_REQUEST_FAILED": "The request to the API failed.",
+    "WARNING_NO_FILE_TO_DOWNLOAD": "The are no files to download."
   }
 }
