@@ -8,6 +8,7 @@ import {
   FAILED_TO_FETCH_MESSAGE_RAW,
   SUCCESS_MESSAGE,
   UNEXPECTED_ERROR_MESSAGE,
+  UNEXPECTED_WARNING_MESSAGE,
 } from '../config/messages';
 
 type Payload = {
@@ -34,6 +35,22 @@ const showErrorToast = (payload: string | Payload): void => {
   });
 };
 
+const showWarningToast = (payload: string | Payload): void => {
+  let message = UNEXPECTED_WARNING_MESSAGE;
+  if (isString(payload)) {
+    message = payload;
+  } else if (isObject(payload)) {
+    if (payload.message) {
+      ({ message } = payload);
+    }
+  }
+
+  toast.warn(message, {
+    toastId: message,
+    position: 'bottom-right',
+  });
+};
+
 const showSuccessToast = (payload: string | Payload): void => {
   let message = SUCCESS_MESSAGE;
   if (isString(payload)) {
@@ -50,4 +67,4 @@ const showSuccessToast = (payload: string | Payload): void => {
   });
 };
 
-export { showErrorToast, showSuccessToast };
+export { showErrorToast, showWarningToast, showSuccessToast };
