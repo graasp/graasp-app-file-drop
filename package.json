@@ -132,7 +132,7 @@
   "resolutions": {
     "@graasp/sdk": "3.4.1"
   },
-  "packageManager": "yarn@4.2.1",
+  "packageManager": "yarn@4.2.2",
   "nyc": {
     "all": true,
     "include": [
