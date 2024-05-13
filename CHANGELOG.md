@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.1](https://github.com/graasp/graasp-app-file-drop/compare/v3.0.0...v3.0.1) (2024-05-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/react to ~7.114.0 ([#163](https://github.com/graasp/graasp-app-file-drop/issues/163)) ([d2b18c6](https://github.com/graasp/graasp-app-file-drop/commit/d2b18c6f83960f2b3095f41621d07803bbf9f758))
+* **deps:** update dependency i18next to v23.11.4 ([#168](https://github.com/graasp/graasp-app-file-drop/issues/168)) ([8f20db8](https://github.com/graasp/graasp-app-file-drop/commit/8f20db8de83907808482ede72d3f332744efde4a))
+* **deps:** update dependency react-router-dom to v6.23.1 ([#169](https://github.com/graasp/graasp-app-file-drop/issues/169)) ([0c35691](https://github.com/graasp/graasp-app-file-drop/commit/0c356913d84d00450ba02b3e1ff49f5d80f2c368))
+* **deps:** update mui (non-major) to v5.15.17 ([#165](https://github.com/graasp/graasp-app-file-drop/issues/165)) ([132cde2](https://github.com/graasp/graasp-app-file-drop/commit/132cde264de2315a478142ef96d430289ff27568))
+* **deps:** update uppy packages ([#162](https://github.com/graasp/graasp-app-file-drop/issues/162)) ([c2782d4](https://github.com/graasp/graasp-app-file-drop/commit/c2782d4f01de8e7f60fde1b9f21e58b06496aeb0))
+
 ## [3.0.0](https://github.com/graasp/graasp-app-file-drop/compare/v2.0.0...v3.0.0) (2024-05-07)
 
 
