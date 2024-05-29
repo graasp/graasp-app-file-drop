@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.2](https://github.com/graasp/graasp-app-file-drop/compare/v3.0.1...v3.0.2) (2024-05-29)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/apps-query-client to v3.4.15 ([#175](https://github.com/graasp/graasp-app-file-drop/issues/175)) ([7eb1f59](https://github.com/graasp/graasp-app-file-drop/commit/7eb1f5916aef944783cbc54572109d322763023a))
+* **deps:** update dependency @graasp/ui to v4.18.0 ([#174](https://github.com/graasp/graasp-app-file-drop/issues/174)) ([0ec9b1d](https://github.com/graasp/graasp-app-file-drop/commit/0ec9b1d9f55aa5b8a872f893f099aa74988640a2))
+* **deps:** update dependency @graasp/ui to v4.18.2 ([#177](https://github.com/graasp/graasp-app-file-drop/issues/177)) ([50d7329](https://github.com/graasp/graasp-app-file-drop/commit/50d7329320b392656bab51ec3692820cf07a1a48))
+* **deps:** update dependency @sentry/react to ~7.115.0 ([#179](https://github.com/graasp/graasp-app-file-drop/issues/179)) ([4f6c9ac](https://github.com/graasp/graasp-app-file-drop/commit/4f6c9acded27f69bdba43f247cbb07ff74ebcbae))
+* **deps:** update dependency @sentry/react to v8 ([#171](https://github.com/graasp/graasp-app-file-drop/issues/171)) ([4605671](https://github.com/graasp/graasp-app-file-drop/commit/46056716936915a018b8621f706c45a7cd334699))
+* **deps:** update dependency i18next to v23.11.5 ([#183](https://github.com/graasp/graasp-app-file-drop/issues/183)) ([cba31b4](https://github.com/graasp/graasp-app-file-drop/commit/cba31b433dda86f9dab4827cf0ed159de998654f))
+* **deps:** update dependency react-i18next to v14.1.2 ([#184](https://github.com/graasp/graasp-app-file-drop/issues/184)) ([c74b800](https://github.com/graasp/graasp-app-file-drop/commit/c74b800c41344eb2f1bb951c5ecb54043e5622b2))
+* **deps:** update mui (non-major) to v5.15.18 ([#178](https://github.com/graasp/graasp-app-file-drop/issues/178)) ([3cd704f](https://github.com/graasp/graasp-app-file-drop/commit/3cd704fc842c5ff8c2497687dd57e6d13492a705))
+* **deps:** update uppy packages ([#173](https://github.com/graasp/graasp-app-file-drop/issues/173)) ([45e3df9](https://github.com/graasp/graasp-app-file-drop/commit/45e3df93c475936bd1739164481ba7ca0c8ef06e))
+
 ## [3.0.1](https://github.com/graasp/graasp-app-file-drop/compare/v3.0.0...v3.0.1) (2024-05-13)
 
 
