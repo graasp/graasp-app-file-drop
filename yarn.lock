@@ -2341,6 +2341,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@faker-js/faker@npm:8.4.1":
+  version: 8.4.1
+  resolution: "@faker-js/faker@npm:8.4.1"
+  checksum: 10/5983c2ea64f26055ad6648de748878e11ebe2fb751e3c7435ae141cdffabc2dccfe4c4f49da69a3d2add71e21b415c683ac5fba196fab0d5ed6779fbec436c80
+  languageName: node
+  linkType: hard
+
 "@floating-ui/core@npm:^1.0.0":
   version: 1.6.1
   resolution: "@floating-ui/core@npm:1.6.1"
@@ -2406,15 +2413,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:3.4.1":
-  version: 3.4.1
-  resolution: "@graasp/sdk@npm:3.4.1"
+"@graasp/sdk@npm:4.8.1":
+  version: 4.8.1
+  resolution: "@graasp/sdk@npm:4.8.1"
   dependencies:
-    date-fns: "npm:3.2.0"
+    "@faker-js/faker": "npm:8.4.1"
+    filesize: "npm:10.1.1"
     js-cookie: "npm:3.0.5"
-    uuid: "npm:9.0.1"
     validator: "npm:13.11.0"
-  checksum: 10/6bf2d3fbb28d61a457a534628620982a656258ab2e5c101294da8e7e4327eacff526378983c4e06a85f0115e0547325f9dbece793f7f4bc6129aa8909a42a24b
+  peerDependencies:
+    date-fns: ^3
+    uuid: ^9
+  checksum: 10/01dc8fb9f64877add864990b4b8db91728a6e1912976be7bb3d60b85f84733a96f76fa89851bf4b66f45104d1343e26f73fe210d99423a9641990cbcfcb24083
   languageName: node
   linkType: hard
 
@@ -6396,13 +6406,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:3.2.0":
-  version: 3.2.0
-  resolution: "date-fns@npm:3.2.0"
-  checksum: 10/2f36cb9165a066ae90c0b6f0c25b3c70eb75bc52e64ba6dd8680964ebda144851a244ff4ed0b2afb4a6bab796a1af6a0e6c7c2814529d04c72fa434f931d4e81
-  languageName: node
-  linkType: hard
-
 "date-fns@npm:^2.30.0":
   version: 2.30.0
   resolution: "date-fns@npm:2.30.0"
@@ -7919,6 +7922,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"filesize@npm:10.1.1":
+  version: 10.1.1
+  resolution: "filesize@npm:10.1.1"
+  checksum: 10/3d4d05930ec3de16d9cb8c8f4061df1218d3eac4d69521deb3f768cbe7451ff82fe4af3bbf562e1f3a491b96c42e445d65af3cefec90a5deff0ec302dda42ede
+  languageName: node
+  linkType: hard
+
 "fill-range@npm:^7.0.1":
   version: 7.0.1
   resolution: "fill-range@npm:7.0.1"
@@ -8541,7 +8551,7 @@ __metadata:
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
     "@graasp/apps-query-client": "npm:3.4.15"
-    "@graasp/sdk": "npm:4.8.0"
+    "@graasp/sdk": "npm:4.8.1"
     "@graasp/ui": "npm:4.19.1"
     "@mui/icons-material": "npm:5.15.19"
     "@mui/lab": "npm:5.0.0-alpha.170"
