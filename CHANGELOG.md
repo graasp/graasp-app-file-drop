@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.3](https://github.com/graasp/graasp-app-file-drop/compare/v3.0.2...v3.0.3) (2024-05-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/ui to v4.19.1 ([#186](https://github.com/graasp/graasp-app-file-drop/issues/186)) ([4f189dc](https://github.com/graasp/graasp-app-file-drop/commit/4f189dc92228377210144da0baf7314471b8949e))
+* **deps:** update dependency @sentry/react to ~8.7.0 ([#188](https://github.com/graasp/graasp-app-file-drop/issues/188)) ([3018b6c](https://github.com/graasp/graasp-app-file-drop/commit/3018b6ca4d9745ee6688925377b5a4c81933e5a2))
+* **deps:** update mui (non-major) to v5.15.19 ([#185](https://github.com/graasp/graasp-app-file-drop/issues/185)) ([b29a58a](https://github.com/graasp/graasp-app-file-drop/commit/b29a58a16416e960ccd55f23d9aeb91cb62d3df1))
+
 ## [3.0.2](https://github.com/graasp/graasp-app-file-drop/compare/v3.0.1...v3.0.2) (2024-05-29)
 
 
