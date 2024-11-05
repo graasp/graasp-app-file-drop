@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.4](https://github.com/graasp/graasp-app-file-drop/compare/v3.0.3...v3.0.4) (2024-11-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/react to ~8.36.0 ([#195](https://github.com/graasp/graasp-app-file-drop/issues/195)) ([df4e930](https://github.com/graasp/graasp-app-file-drop/commit/df4e9302df5b7b129d50758d069a51e84cca47a9))
+* update deps ([#203](https://github.com/graasp/graasp-app-file-drop/issues/203)) ([dc057cd](https://github.com/graasp/graasp-app-file-drop/commit/dc057cde4c9442f3b5e2cf71c9b384a3e599b095))
+
 ## [3.0.3](https://github.com/graasp/graasp-app-file-drop/compare/v3.0.2...v3.0.3) (2024-05-30)
 
 
