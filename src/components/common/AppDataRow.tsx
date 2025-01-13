@@ -37,25 +37,21 @@ const AppDataRow = ({
 }: AppDataRowProps): JSX.Element => {
   const { t } = useTranslation();
   const context = useLocalContext();
-  const { permission, memberId } = context;
+  const { permission, accountId } = context;
   const {
-    member: { id: dataMemberId },
+    account: { id: dataMemberId },
     visibility,
   } = data;
 
-  const username = member?.name || t('Anonymous');
+  const username = member?.name ?? t('Anonymous');
 
   const renderActions = (): JSX.Element[] => {
-    // const { visibility } = data;
     const actions: JSX.Element[] = [];
     // show if app data is from authenticated member
     // or if has at least write permission
     if (
-      dataMemberId === memberId ||
-      PermissionLevelCompare.gte(
-        permission as PermissionLevel,
-        PermissionLevel.Write,
-      )
+      dataMemberId === accountId ||
+      PermissionLevelCompare.gte(permission, PermissionLevel.Write)
     ) {
       actions.push(<FileDownloadButton data={data} key="download" />);
       actions.push(<DeleteAppDataButton data={data} key="delete" />);

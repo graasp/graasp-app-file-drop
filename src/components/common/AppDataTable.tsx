@@ -63,7 +63,7 @@ const AppDataTable: FC<AppDataTableProps> = ({ showMember }) => {
                       key={a.id}
                       data={a}
                       showMember={showMember}
-                      member={members.find(({ id }) => id === a.member.id)}
+                      member={members.find(({ id }) => id === a.account.id)}
                     />
                   ))
               )}
