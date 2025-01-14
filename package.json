@@ -20,7 +20,7 @@
     "@emotion/styled": "11.11.5",
     "@graasp/apps-query-client": "3.4.15",
     "@graasp/sdk": "^5.6.0",
-    "@graasp/ui": "4.19.3",
+    "@graasp/ui": "5.5.0",
     "@mui/icons-material": "5.15.20",
     "@mui/lab": "5.0.0-alpha.170",
     "@mui/material": "5.15.20",
@@ -130,7 +130,7 @@
     "not op_mini all"
   ],
   "resolutions": {
-    "@graasp/sdk": "3.4.1"
+    "@graasp/sdk": "5.6.0"
   },
   "packageManager": "yarn@4.3.1",
   "nyc": {
