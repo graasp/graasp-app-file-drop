@@ -1,11 +1,12 @@
-import type { Database, LocalContext } from '@graasp/apps-query-client';
+import type { Database } from '@graasp/apps-query-client';
 import {
+  AccountType,
   AppDataVisibility,
   AppItemType,
   CompleteMember,
   Context,
   ItemType,
-  MemberType,
+  LocalContext,
   PermissionLevel,
 } from '@graasp/sdk';
 
@@ -19,18 +20,20 @@ export const mockContext: LocalContext = {
   permission: PermissionLevel.Admin,
   context: Context.Builder,
   itemId: '1234-1234-123456-8123-123456',
-  memberId: 'mock-member-id',
+  accountId: 'mock-member-id',
 };
 
 export const mockMembers: CompleteMember[] = [
   {
-    id: mockContext.memberId || '',
+    id: mockContext.accountId || '',
     name: 'current-member',
     email: 'current@graasp.org',
     extra: {},
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-    type: MemberType.Individual,
+    type: AccountType.Individual,
+    enableSaveActions: true,
+    isValidated: true,
   },
   {
     id: 'mock-member-id-2',
@@ -39,7 +42,9 @@ export const mockMembers: CompleteMember[] = [
     extra: {},
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-    type: MemberType.Individual,
+    type: AccountType.Individual,
+    enableSaveActions: true,
+    isValidated: true,
   },
 ];
 
@@ -58,6 +63,7 @@ const mockItem: AppItemType = {
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
   type: ItemType.APP,
+  lang: 'en',
 };
 
 const now = new Date().toISOString();
@@ -75,12 +81,13 @@ const buildDatabase = (members?: CompleteMember[]): Database => ({
       createdAt: now,
       updatedAt: now,
       creator: mockMembers[0],
-      member: mockMembers[0],
+      account: mockMembers[0],
       item: mockItem,
       visibility: AppDataVisibility.Member,
     },
   ],
   appActions: [],
+  uploadedFiles: [],
   members: members ?? mockMembers,
   appSettings: [],
   items: [mockItem],
