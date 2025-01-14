@@ -13,7 +13,6 @@ import { AppSetting } from '@graasp/sdk';
 
 import { makeStyles } from 'tss-react/mui';
 
-import { APP_SETTINGS_TYPES } from '../../config/appSettingTypes';
 import {
   DEFAULT_HEADER_VISIBLE,
   DEFAULT_PUBLIC_STUDENT_UPLOADS,
@@ -24,6 +23,11 @@ import {
   SETTING_HEADER_VISIBILITY_SWITCH_CYPRESS,
 } from '../../config/selectors';
 import { useAppSettingContext } from '../context/AppSettingContext';
+
+const APP_SETTINGS_TYPES = {
+  HEADER_VISIBLE: 'headerVisible',
+  PUBLIC_STUDENT_UPLOADS: 'publicStudentUploads',
+} as const;
 
 function getModalStyle(): { top: string; left: string; transform: string } {
   const top = 50;
@@ -85,7 +89,7 @@ const Settings: FC = () => {
       ...originalSetting,
       name: key,
       data: {
-        [key]: !originalSetting?.data?.[key] ?? !DEFAULT_HEADER_VISIBLE,
+        [key]: originalSetting?.data?.[key] ?? !DEFAULT_HEADER_VISIBLE,
       },
     };
     saveSettings(settingsToChange);
@@ -98,7 +102,7 @@ const Settings: FC = () => {
       ...originalSetting,
       name: key,
       data: {
-        [key]: !originalSetting?.data?.[key] ?? !DEFAULT_PUBLIC_STUDENT_UPLOADS,
+        [key]: originalSetting?.data?.[key] ?? !DEFAULT_PUBLIC_STUDENT_UPLOADS,
       },
     };
     saveSettings(settingsToChange);

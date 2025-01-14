@@ -1,5 +1,3 @@
-enum APP_DATA_TYPES {
-  FILE = 'file',
-}
-
-export { APP_DATA_TYPES };
+export const APP_DATA_TYPES = {
+  FILE: 'file',
+} as const;

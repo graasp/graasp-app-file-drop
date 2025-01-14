@@ -9086,7 +9086,7 @@ __metadata:
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
     "@graasp/apps-query-client": "npm:3.4.15"
-    "@graasp/sdk": "npm:4.14.1"
+    "@graasp/sdk": "npm:^5.6.0"
     "@graasp/ui": "npm:4.19.3"
     "@mui/icons-material": "npm:5.15.20"
     "@mui/lab": "npm:5.0.0-alpha.170"
