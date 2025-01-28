@@ -4680,9 +4680,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/core@npm:3.13.0":
-  version: 3.13.0
-  resolution: "@uppy/core@npm:3.13.0"
+"@uppy/core@npm:3.13.1":
+  version: 3.13.1
+  resolution: "@uppy/core@npm:3.13.1"
   dependencies:
     "@transloadit/prettier-bytes": "npm:^0.3.4"
     "@uppy/store-default": "npm:^3.2.2"
@@ -4692,13 +4692,13 @@ __metadata:
     namespace-emitter: "npm:^2.0.1"
     nanoid: "npm:^4.0.0"
     preact: "npm:^10.5.13"
-  checksum: 10/45b9f88170e1204b83258b818f2fbcf89ceea78de1b1fb4b4f0351260d3ed54441740d5c74dc2cefd4d1b798a9897e7af21822bc8b1bca4af42fcaefb1e0c72c
+  checksum: 10/abe5b5a83d1764dc8557d7866b5ef416a51e0ed3a906c4493388e86d63f4770b55824495e8423917c13835505f2e466375d8e619b06fc25229c4555b0212fdcc
   languageName: node
   linkType: hard
 
-"@uppy/dashboard@npm:3.9.0":
-  version: 3.9.0
-  resolution: "@uppy/dashboard@npm:3.9.0"
+"@uppy/dashboard@npm:3.9.1":
+  version: 3.9.1
+  resolution: "@uppy/dashboard@npm:3.9.1"
   dependencies:
     "@transloadit/prettier-bytes": "npm:^0.3.4"
     "@uppy/informer": "npm:^3.1.0"
@@ -4714,19 +4714,19 @@ __metadata:
     preact: "npm:^10.5.13"
   peerDependencies:
     "@uppy/core": ^3.13.0
-  checksum: 10/3fe3328584afbe5de2dab511f5ed2a4c7e9cd82a395211c7f84464cffbed42f99e028776f30c421e803609d5d7aefc6a6281a0752d395bca4a9c0be43db3804c
+  checksum: 10/d6713cadedecee38ff6feddc632daf352e0841a5a9944de3a30f65127bfea1810352c68ab5d9a0b856a945dc4f55443f9ea7bf2c6a66dba322c57628707092b1
   languageName: node
   linkType: hard
 
-"@uppy/drag-drop@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@uppy/drag-drop@npm:3.1.0"
+"@uppy/drag-drop@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@uppy/drag-drop@npm:3.1.1"
   dependencies:
-    "@uppy/utils": "npm:^5.7.5"
+    "@uppy/utils": "npm:^5.9.0"
     preact: "npm:^10.5.13"
   peerDependencies:
-    "@uppy/core": ^3.10.0
-  checksum: 10/fe60a51636ff2d7860c8df102d93c847381b776862511753951b301602e8fb1d77d1558b9d80b147697b53fffc181c907773d87e19d5283337650c1c29487858
+    "@uppy/core": ^3.13.1
+  checksum: 10/4cfadfc70a4cef0180bdd0e8d0147738c861cf3032ad27ecfc641dd3e8701b68b49ebde13e9f4139f70106c8f15152999ab282d953dbb14a6ea3c75bd3594c73
   languageName: node
   linkType: hard
 
@@ -4853,15 +4853,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/xhr-upload@npm:3.6.7":
-  version: 3.6.7
-  resolution: "@uppy/xhr-upload@npm:3.6.7"
+"@uppy/xhr-upload@npm:3.6.8":
+  version: 3.6.8
+  resolution: "@uppy/xhr-upload@npm:3.6.8"
   dependencies:
     "@uppy/companion-client": "npm:^3.8.1"
     "@uppy/utils": "npm:^5.9.0"
   peerDependencies:
-    "@uppy/core": ^3.11.3
-  checksum: 10/8898edf8920e331575c471ed5e28e86fb1d32cb8d637e8cb735268dce9fe2485e06bd84fb8aae50ea6299cd109e752d8bb8395e785fc4477c76da81915350f8d
+    "@uppy/core": ^3.13.0
+  checksum: 10/40ae67d5e8526da329e79c1b5e5ca07a90faf05ea0262f43cc297465c3eba394a405ccd4301642dca80b10c58b6a1401ce0c2cf8fb8dfc8f3dfa810805b2380b
   languageName: node
   linkType: hard
 
@@ -8859,13 +8859,13 @@ __metadata:
     "@types/uuid": "npm:^10.0.0"
     "@typescript-eslint/eslint-plugin": "npm:8.19.1"
     "@typescript-eslint/parser": "npm:8.19.1"
-    "@uppy/core": "npm:3.13.0"
-    "@uppy/dashboard": "npm:3.9.0"
-    "@uppy/drag-drop": "npm:3.1.0"
+    "@uppy/core": "npm:3.13.1"
+    "@uppy/dashboard": "npm:3.9.1"
+    "@uppy/drag-drop": "npm:3.1.1"
     "@uppy/file-input": "npm:3.1.2"
     "@uppy/progress-bar": "npm:3.1.1"
     "@uppy/react": "npm:3.4.0"
-    "@uppy/xhr-upload": "npm:3.6.7"
+    "@uppy/xhr-upload": "npm:3.6.8"
     "@vitejs/plugin-react": "npm:^4.3.4"
     "@vitest/browser": "npm:^2.1.8"
     concurrently: "npm:9.1.2"
