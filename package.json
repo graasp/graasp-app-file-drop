@@ -41,7 +41,7 @@
     "lodash.isobject": "~3.0.2",
     "lodash.isstring": "~4.0.1",
     "lucide-react": "^0.471.0",
-    "qs": "6.13.1",
+    "qs": "6.14.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-i18next": "14.1.3",
