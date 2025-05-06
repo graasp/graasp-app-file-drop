@@ -10,7 +10,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
 import { useLocalContext } from '@graasp/apps-query-client';
-import { PermissionLevel } from '@graasp/sdk';
+import { PermissionLevel, PermissionLevelCompare } from '@graasp/sdk';
 
 import { makeStyles } from 'tss-react/mui';
 
@@ -51,8 +51,8 @@ const Header: FC = () => {
       );
     }
 
-    const p = (permission as PermissionLevel) || PermissionLevel.Read;
-    if ([PermissionLevel.Write, PermissionLevel.Admin].includes(p)) {
+    const p = permission || PermissionLevel.Read;
+    if (PermissionLevelCompare.gte(p, PermissionLevel.Write)) {
       return [
         <IconButton
           onClick={handleRefresh}

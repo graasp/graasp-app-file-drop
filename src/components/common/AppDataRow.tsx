@@ -73,7 +73,7 @@ const AppDataRow = ({
     return actions;
   };
 
-  const filename: string = data.data?.s3File?.name ?? t('Anonymous');
+  const filename: string = data.data?.file?.name ?? t('Unknown');
 
   return (
     <TableRow id={buildTableRowId(data.id)}>

@@ -72,7 +72,7 @@ const buildDatabase = (members?: CompleteMember[]): Database => ({
   appData: [
     {
       data: {
-        s3File: {
+        file: {
           name: 'my file',
         },
       },

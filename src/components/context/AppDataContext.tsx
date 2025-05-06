@@ -1,6 +1,6 @@
 import { PropsWithChildren, createContext, useContext } from 'react';
 
-import { Loader } from '@graasp/ui';
+import { CircularProgress } from '@mui/material';
 
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { hooks } from '../../config/queryClient';
@@ -20,7 +20,7 @@ export const AppDataProvider = ({
   const contextValue: AppDataContextType = appData.data ?? defaultContextValue;
 
   if (appData.isLoading) {
-    return <Loader />;
+    return <CircularProgress />;
   }
 
   return (

@@ -51,7 +51,7 @@ const AppDataToolbar: FC = () => {
     await Promise.all(
       currentAppDataFiles.map(async (appDataFile) => {
         const name: string =
-          (appDataFile.data as { s3File: { name: string } })?.s3File?.name ??
+          (appDataFile.data as { file: { name: string } })?.file?.name ??
           appDataFile.id;
         await getFile(appDataFile.id).then((file) => zip.file(name, file));
       }),
