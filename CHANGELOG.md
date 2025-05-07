@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.4](https://github.com/graasp/graasp-app-file-drop/compare/v3.0.3...v3.0.4) (2025-05-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/react to ~8.36.0 ([#195](https://github.com/graasp/graasp-app-file-drop/issues/195)) ([df4e930](https://github.com/graasp/graasp-app-file-drop/commit/df4e9302df5b7b129d50758d069a51e84cca47a9))
+* **deps:** update dependency qs to v6.14.0 ([#218](https://github.com/graasp/graasp-app-file-drop/issues/218)) ([ff10e86](https://github.com/graasp/graasp-app-file-drop/commit/ff10e866a54083c84071c12c1672b56c312b9124))
+* **deps:** update mui (non-major) to v6.4.1 ([#219](https://github.com/graasp/graasp-app-file-drop/issues/219)) ([43a8b02](https://github.com/graasp/graasp-app-file-drop/commit/43a8b02d5a0efa1fe31e0a2e6ddecbbaf9670eff))
+* do not use s3 ([#225](https://github.com/graasp/graasp-app-file-drop/issues/225)) ([021a65a](https://github.com/graasp/graasp-app-file-drop/commit/021a65ae3160ca17a045321311480830dc0e4ea0))
+* remove enums ([#213](https://github.com/graasp/graasp-app-file-drop/issues/213)) ([440a869](https://github.com/graasp/graasp-app-file-drop/commit/440a86908d8c9177ddb4c59f27dfd9a5af8a797e))
+* update deps ([#203](https://github.com/graasp/graasp-app-file-drop/issues/203)) ([dc057cd](https://github.com/graasp/graasp-app-file-drop/commit/dc057cde4c9442f3b5e2cf71c9b384a3e599b095))
+* update deps ([#214](https://github.com/graasp/graasp-app-file-drop/issues/214)) ([914bef4](https://github.com/graasp/graasp-app-file-drop/commit/914bef487e54dd824357340c306346c23ac0d006))
+
 ## [3.0.3](https://github.com/graasp/graasp-app-file-drop/compare/v3.0.2...v3.0.3) (2024-05-30)
 
 
