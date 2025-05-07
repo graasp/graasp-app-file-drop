@@ -1,7 +1,8 @@
 import React, { createContext, useMemo } from 'react';
 
+import { CircularProgress } from '@mui/material';
+
 import { Member } from '@graasp/sdk';
-import { Loader } from '@graasp/ui';
 
 import { hooks } from '../../config/queryClient';
 
@@ -22,7 +23,7 @@ export const MembersProvider = ({
   }, [appContext.data]);
 
   if (appContext.isLoading) {
-    return <Loader />;
+    return <CircularProgress />;
   }
 
   return (

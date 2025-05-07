@@ -34,7 +34,7 @@ const FileDownloadButton: FC<FileDownloadButtonProps> = ({ data }) => {
       } else {
         downloadHelper(
           file,
-          (data.data as { s3File: { name: string } }).s3File.name,
+          (data.data as { file: { name: string } }).file.name,
         );
       }
     }

@@ -1,7 +1,8 @@
 import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
+import { CircularProgress } from '@mui/material';
+
 import { AppSetting } from '@graasp/sdk';
-import { Loader } from '@graasp/ui';
 
 import { hooks } from '../../config/queryClient';
 
@@ -21,7 +22,7 @@ export const AppSettingProvider: FC<PropsWithChildren> = ({ children }) => {
   );
 
   if (appSetting.isLoading) {
-    return <Loader />;
+    return <CircularProgress />;
   }
 
   return (

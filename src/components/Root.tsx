@@ -1,14 +1,18 @@
 import { I18nextProvider } from 'react-i18next';
 
-import { CssBaseline, ThemeProvider, styled } from '@mui/material';
-import { StyledEngineProvider } from '@mui/material/styles';
+import {
+  CircularProgress,
+  CssBaseline,
+  ThemeProvider,
+  styled,
+} from '@mui/material';
+import { StyledEngineProvider, createTheme } from '@mui/material/styles';
 
 import {
   WithLocalContext,
   WithTokenContext,
   useObjectState,
 } from '@graasp/apps-query-client';
-import { Loader, theme } from '@graasp/ui';
 
 import i18nConfig from '../config/i18n';
 import {
@@ -30,6 +34,23 @@ const RootDiv = styled('div')({
   height: '100%',
 });
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#5050d2',
+      main: '#5050d2',
+      dark: '#5050d2',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#fff',
+      main: '#fff',
+      dark: '#fff',
+      contrastText: '#fff',
+    },
+  },
+});
+
 const Root = (): JSX.Element => {
   const [mockContext] = useObjectState(defaultMockContext);
 
@@ -42,7 +63,7 @@ const Root = (): JSX.Element => {
           <I18nextProvider i18n={i18nConfig}>
             <QueryClientProvider client={queryClient}>
               <WithLocalContext
-                LoadingComponent={<Loader />}
+                LoadingComponent={<CircularProgress />}
                 useGetLocalContext={hooks.useGetLocalContext}
                 useAutoResize={hooks.useAutoResize}
                 onError={() => {
@@ -51,7 +72,7 @@ const Root = (): JSX.Element => {
                 defaultValue={window.Cypress ? window.appContext : mockContext}
               >
                 <WithTokenContext
-                  LoadingComponent={<Loader />}
+                  LoadingComponent={<CircularProgress />}
                   useAuthToken={hooks.useAuthToken}
                   onError={() => {
                     showErrorToast(TOKEN_REQUEST_ERROR_MESSAGE);

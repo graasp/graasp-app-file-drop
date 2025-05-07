@@ -15,7 +15,7 @@ export const MOCK_FILE = 'files/img.png';
 export const MOCK_APP_DATA: AppData = {
   id: mockAppDataId,
   data: {
-    s3File: {
+    file: {
       name: 'my file',
       type: 'file',
       extra: {
@@ -36,7 +36,7 @@ const mockAppDataId2 = v4();
 export const MOCK_STUDENT_APP_DATA: AppData = {
   id: mockAppDataId2,
   data: {
-    s3File: {
+    file: {
       name: 'my student file',
       type: 'file',
       extra: {

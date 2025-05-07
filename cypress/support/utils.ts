@@ -23,13 +23,13 @@ export const deleteFile = ({ id }: { id: string }): void => {
 };
 
 export const checkRow = (
-  { id, createdAt, data: { s3File }, creator }: AppData,
+  { id, createdAt, data: { file }, creator }: AppData,
   checkMember = false,
 ): void => {
   const rowSelector = `#${buildTableRowId(id)}`;
   cy.get(
     `${rowSelector} ${dataCyWrapper(TABLE_CELL_FILE_NAME_CYPRESS)}`,
-  ).should('have.text', (s3File as { name: string })?.name);
+  ).should('have.text', (file as { name: string })?.name);
   cy.get(
     `${rowSelector} ${dataCyWrapper(TABLE_CELL_FILE_ACTION_DELETE_CYPRESS)}`,
   ).should('exist');
