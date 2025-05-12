@@ -18,7 +18,7 @@
   "dependencies": {
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.0",
-    "@graasp/apps-query-client": "3.7.4",
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#fix-app-data-download",
     "@graasp/sdk": "^5.13.0",
     "@graasp/stylis-plugin-rtl": "^2.2.0",
     "@mui/icons-material": "6.4.1",
@@ -123,9 +123,6 @@
   },
   "release": {
     "analyzeCommits": "conventional"
-  },
-  "resolutions": {
-    "axios": "0.28.1"
   },
   "browserslist": [
     ">0.2%",
