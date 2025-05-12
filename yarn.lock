@@ -2810,9 +2810,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/apps-query-client@github:graasp/graasp-apps-query-client#fix-app-data-download":
-  version: 3.7.4
-  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=7543427ce8c04d02e99fd8884d42a6ba561b81b1"
+"@graasp/apps-query-client@npm:3.7.5":
+  version: 3.7.5
+  resolution: "@graasp/apps-query-client@npm:3.7.5"
   dependencies:
     "@emotion/react": "npm:11.13.5"
     "@emotion/styled": "npm:11.13.5"
@@ -2834,7 +2834,7 @@ __metadata:
     date-fns: ^3.3.0 || ^4.0.0
     react: ^18.0.0 || ^19.0.0
     react-dom: ^18.0.0 || ^19.0.0
-  checksum: 10/bcf0b9d4ba825197adb9657d50b51376892394891e72662a3f02d3d1f624903b18b34713cc2b32b826755890fe2492879517b65369b412b14dc2a9ea951fae00
+  checksum: 10/f29d6f27f800175505c1ac19cc2eb6366003b1a6373c0648a1f0752d6ae516746189c0378d24f0bd277a0a8f417cf9ae9efabc322c69b35773ac91b46356416e
   languageName: node
   linkType: hard
 
@@ -8833,7 +8833,7 @@ __metadata:
     "@cypress/instrument-cra": "npm:1.4.0"
     "@emotion/react": "npm:11.14.0"
     "@emotion/styled": "npm:11.14.0"
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client#fix-app-data-download"
+    "@graasp/apps-query-client": "npm:3.7.5"
     "@graasp/sdk": "npm:^5.13.0"
     "@graasp/stylis-plugin-rtl": "npm:^2.2.0"
     "@mui/icons-material": "npm:6.4.1"
