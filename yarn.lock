@@ -2118,7 +2118,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/babel-plugin@npm:^11.13.5":
+"@emotion/babel-plugin@npm:^11.12.0, @emotion/babel-plugin@npm:^11.13.5":
   version: 11.13.5
   resolution: "@emotion/babel-plugin@npm:11.13.5"
   dependencies:
@@ -2150,7 +2150,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/cache@npm:^11.13.5, @emotion/cache@npm:^11.14.0":
+"@emotion/cache@npm:^11.13.0, @emotion/cache@npm:^11.13.5, @emotion/cache@npm:^11.14.0":
   version: 11.14.0
   resolution: "@emotion/cache@npm:11.14.0"
   dependencies:
@@ -2200,16 +2200,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:11.13.5":
-  version: 11.13.5
-  resolution: "@emotion/react@npm:11.13.5"
+"@emotion/react@npm:11.13.3":
+  version: 11.13.3
+  resolution: "@emotion/react@npm:11.13.3"
   dependencies:
     "@babel/runtime": "npm:^7.18.3"
-    "@emotion/babel-plugin": "npm:^11.13.5"
-    "@emotion/cache": "npm:^11.13.5"
-    "@emotion/serialize": "npm:^1.3.3"
+    "@emotion/babel-plugin": "npm:^11.12.0"
+    "@emotion/cache": "npm:^11.13.0"
+    "@emotion/serialize": "npm:^1.3.1"
     "@emotion/use-insertion-effect-with-fallbacks": "npm:^1.1.0"
-    "@emotion/utils": "npm:^1.4.2"
+    "@emotion/utils": "npm:^1.4.0"
     "@emotion/weak-memoize": "npm:^0.4.0"
     hoist-non-react-statics: "npm:^3.3.1"
   peerDependencies:
@@ -2217,7 +2217,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10/c85bde9c6144be6f243e44d6834b16df8151b91c5136ea28d9d917155d64d1bbfba000ae98866fd9f5089546f0b0655c20b9e4280cdc5ccf39acc4a2fde37a39
+  checksum: 10/ee70d3afc2e8dd771e6fe176d27dd87a5e21a54e54d871438fd1caa5aa2312d848c6866292fdc65a6ea1c945147c8422bda2d22ed739178af9902dc86d6b298a
   languageName: node
   linkType: hard
 
@@ -2255,7 +2255,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/serialize@npm:^1.3.3":
+"@emotion/serialize@npm:^1.3.0, @emotion/serialize@npm:^1.3.1, @emotion/serialize@npm:^1.3.3":
   version: 1.3.3
   resolution: "@emotion/serialize@npm:1.3.3"
   dependencies:
@@ -2282,23 +2282,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/styled@npm:11.13.5":
-  version: 11.13.5
-  resolution: "@emotion/styled@npm:11.13.5"
+"@emotion/styled@npm:11.13.0":
+  version: 11.13.0
+  resolution: "@emotion/styled@npm:11.13.0"
   dependencies:
     "@babel/runtime": "npm:^7.18.3"
-    "@emotion/babel-plugin": "npm:^11.13.5"
+    "@emotion/babel-plugin": "npm:^11.12.0"
     "@emotion/is-prop-valid": "npm:^1.3.0"
-    "@emotion/serialize": "npm:^1.3.3"
+    "@emotion/serialize": "npm:^1.3.0"
     "@emotion/use-insertion-effect-with-fallbacks": "npm:^1.1.0"
-    "@emotion/utils": "npm:^1.4.2"
+    "@emotion/utils": "npm:^1.4.0"
   peerDependencies:
     "@emotion/react": ^11.0.0-rc.0
     react: ">=16.8.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10/cf6c47f9e9292b817aaec4e34cedc996727318018b621525576a1f541cfb3ecf2443729bfba503d4467d8183ca7732fe817bd7202386f4206a9d218e6e2202d8
+  checksum: 10/5463a0f15fc12a9e20340f52df49461e948c3ae7e2dd763db0ff937b0b96dd4e82eed85cd15e24621efb3b097a095b88b01d60f50cf6f38fe3ab7db6e77f9615
   languageName: node
   linkType: hard
 
@@ -2352,7 +2352,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/utils@npm:^1.4.2":
+"@emotion/utils@npm:^1.4.0, @emotion/utils@npm:^1.4.2":
   version: 1.4.2
   resolution: "@emotion/utils@npm:1.4.2"
   checksum: 10/e5f3b8bca066b3361a7ad9064baeb9d01ed1bf51d98416a67359b62cb3affec6bb0249802c4ed11f4f8030f93cc4b67506909420bdb110adec6983d712897208
@@ -2803,16 +2803,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/apps-query-client@npm:3.7.4":
-  version: 3.7.4
-  resolution: "@graasp/apps-query-client@npm:3.7.4"
+"@graasp/apps-query-client@npm:3.7.3":
+  version: 3.7.3
+  resolution: "@graasp/apps-query-client@npm:3.7.3"
   dependencies:
-    "@emotion/react": "npm:11.13.5"
-    "@emotion/styled": "npm:11.13.5"
-    "@mui/icons-material": "npm:6.1.10"
-    "@mui/material": "npm:6.1.10"
-    axios: "npm:1.7.9"
-    dexie: "npm:4.0.11"
+    "@emotion/react": "npm:11.13.3"
+    "@emotion/styled": "npm:11.13.0"
+    "@mui/icons-material": "npm:6.1.7"
+    "@mui/material": "npm:6.1.7"
+    axios: "npm:1.7.7"
+    dexie: "npm:4.0.10"
     http-status-codes: "npm:2.3.0"
     lodash.debounce: "npm:4.0.8"
     miragejs: "npm:0.1.48"
@@ -2825,9 +2825,9 @@ __metadata:
     "@tanstack/react-query": ^4.28.0
     "@tanstack/react-query-devtools": ^4.28.0
     date-fns: ^3.3.0 || ^4.0.0
-    react: ^18.0.0 || ^19.0.0
-    react-dom: ^18.0.0 || ^19.0.0
-  checksum: 10/bcb547a39397b1cbc8469c61c0f6d9a49534386ff93969b61063ab42df7b186bfb55d6b82c92d10e12da28372da929a6db7f82c08b4d614eda9fc394b39d72de
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  checksum: 10/a6ff4f2fa8635df76e1524d45dc749c8ce628867acaa0fba357851afba0d51296cb795ed5452761ce8a3a9116e6ccee6d579a252ec8abff6123fa8bf36a750a7
   languageName: node
   linkType: hard
 
@@ -3107,7 +3107,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/core-downloads-tracker@npm:^6.1.10":
+"@mui/core-downloads-tracker@npm:^6.1.7":
   version: 6.4.11
   resolution: "@mui/core-downloads-tracker@npm:6.4.11"
   checksum: 10/78f01e6449d01eddd0956e21b1e716353025653689808978be964be0d4ce927f0379fe4e15f387576ebf7d6a4f42451e5f5016f868e332d38ac32fc5a5452be3
@@ -3121,19 +3121,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/icons-material@npm:6.1.10":
-  version: 6.1.10
-  resolution: "@mui/icons-material@npm:6.1.10"
+"@mui/icons-material@npm:6.1.7":
+  version: 6.1.7
+  resolution: "@mui/icons-material@npm:6.1.7"
   dependencies:
     "@babel/runtime": "npm:^7.26.0"
   peerDependencies:
-    "@mui/material": ^6.1.10
+    "@mui/material": ^6.1.7
     "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
     react: ^17.0.0 || ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10/2197f35604d2a6da7ecb756fe1b5097bde690c2383d55b8f19ddfa06c833682834f046c9ba19f26afa6d6811ca878df4b8a8edba4590caf574560ddc17801ef7
+  checksum: 10/f39eafa3cc1c5fe24eccf5b5bc14510b88f5af8098b9713ff67b79f87110dc2b680f5fb02f336c38f9dc6d0f1357fee534f3de0745ed75b976364bcf648a95b6
   languageName: node
   linkType: hard
 
@@ -3185,15 +3185,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/material@npm:6.1.10":
-  version: 6.1.10
-  resolution: "@mui/material@npm:6.1.10"
+"@mui/material@npm:6.1.7":
+  version: 6.1.7
+  resolution: "@mui/material@npm:6.1.7"
   dependencies:
     "@babel/runtime": "npm:^7.26.0"
-    "@mui/core-downloads-tracker": "npm:^6.1.10"
-    "@mui/system": "npm:^6.1.10"
+    "@mui/core-downloads-tracker": "npm:^6.1.7"
+    "@mui/system": "npm:^6.1.7"
     "@mui/types": "npm:^7.2.19"
-    "@mui/utils": "npm:^6.1.10"
+    "@mui/utils": "npm:^6.1.7"
     "@popperjs/core": "npm:^2.11.8"
     "@types/react-transition-group": "npm:^4.4.11"
     clsx: "npm:^2.1.1"
@@ -3204,7 +3204,7 @@ __metadata:
   peerDependencies:
     "@emotion/react": ^11.5.0
     "@emotion/styled": ^11.3.0
-    "@mui/material-pigment-css": ^6.1.10
+    "@mui/material-pigment-css": ^6.1.7
     "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
     react: ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -3217,7 +3217,7 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: 10/fe4ffb69effe29419fd3055a087950f6ceff34528aedca0241b697375241dd4eadc0176ee1113063cb575d8875adbfc2ca75e13e5b17c67078baec17029e3c26
+  checksum: 10/9ced69b6192b02d56f2acef228101f79a80a4cb623efcaa059eaa0aac766e259ed01b57a5205aab58f2cbf97f863af10606fe5a15b1ee1fc8743076ae8cacc20
   languageName: node
   linkType: hard
 
@@ -3377,7 +3377,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/system@npm:^6.1.10":
+"@mui/system@npm:^6.1.7":
   version: 6.4.11
   resolution: "@mui/system@npm:6.4.11"
   dependencies:
@@ -3485,7 +3485,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/utils@npm:^6.1.10, @mui/utils@npm:^6.4.9":
+"@mui/utils@npm:^6.1.7, @mui/utils@npm:^6.4.9":
   version: 6.4.9
   resolution: "@mui/utils@npm:6.4.9"
   dependencies:
@@ -5486,7 +5486,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.7.9, axios@npm:^1.7.9":
+"axios@npm:1.7.7":
+  version: 1.7.7
+  resolution: "axios@npm:1.7.7"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10/7f875ea13b9298cd7b40fd09985209f7a38d38321f1118c701520939de2f113c4ba137832fe8e3f811f99a38e12c8225481011023209a77b0c0641270e20cde1
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.7.9":
   version: 1.7.9
   resolution: "axios@npm:1.7.9"
   dependencies:
@@ -6890,10 +6901,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dexie@npm:4.0.11":
-  version: 4.0.11
-  resolution: "dexie@npm:4.0.11"
-  checksum: 10/52011f03655ce90aa6701f1e0724a10a3fd6b33d6e1ec72ba27b4392f500df54788e6ed23fd692a62eb50a21ab4fe146e08a85ceca19bbeb62e12269b124b4e2
+"dexie@npm:4.0.10":
+  version: 4.0.10
+  resolution: "dexie@npm:4.0.10"
+  checksum: 10/d1902c319e36918545eddfa68f5a404fa6f2e32a8bdc062606aaa955ab44664833acf9f8c163719abe27a752f3b22a44ce6f11071c438510f11e40495db89769
   languageName: node
   linkType: hard
 
@@ -8801,7 +8812,7 @@ __metadata:
     "@cypress/instrument-cra": "npm:1.4.0"
     "@emotion/react": "npm:11.14.0"
     "@emotion/styled": "npm:11.14.0"
-    "@graasp/apps-query-client": "npm:3.7.4"
+    "@graasp/apps-query-client": "npm:3.7.3"
     "@graasp/sdk": "npm:^5.13.0"
     "@graasp/stylis-plugin-rtl": "npm:^2.2.0"
     "@mui/icons-material": "npm:6.4.1"
