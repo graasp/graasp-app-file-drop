@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.5](https://github.com/graasp/graasp-app-file-drop/compare/v3.0.4...v3.0.5) (2025-05-13)
+
+
+### Bug Fixes
+
+* upgrade apps query client to fix download ([#226](https://github.com/graasp/graasp-app-file-drop/issues/226)) ([f21b6e4](https://github.com/graasp/graasp-app-file-drop/commit/f21b6e4dd00e1d46c6a91f40b5675fd0e7f568e6))
+
 ## [3.0.4](https://github.com/graasp/graasp-app-file-drop/compare/v3.0.3...v3.0.4) (2025-05-07)
 
 
