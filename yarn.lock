@@ -1730,6 +1730,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.27.1":
+  version: 7.27.1
+  resolution: "@babel/runtime@npm:7.27.1"
+  checksum: 10/34cefcbf781ea5a4f1b93f8563327b9ac82694bebdae91e8bd9d7f58d084cbe5b9a6e7f94d77076e15b0bcdaa0040a36cb30737584028df6c4673b4c67b2a31d
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.22.15, @babel/template@npm:^7.24.0":
   version: 7.24.0
   resolution: "@babel/template@npm:7.24.0"
@@ -2803,9 +2810,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/apps-query-client@npm:3.7.4":
-  version: 3.7.4
-  resolution: "@graasp/apps-query-client@npm:3.7.4"
+"@graasp/apps-query-client@npm:3.7.5":
+  version: 3.7.5
+  resolution: "@graasp/apps-query-client@npm:3.7.5"
   dependencies:
     "@emotion/react": "npm:11.13.5"
     "@emotion/styled": "npm:11.13.5"
@@ -2827,13 +2834,13 @@ __metadata:
     date-fns: ^3.3.0 || ^4.0.0
     react: ^18.0.0 || ^19.0.0
     react-dom: ^18.0.0 || ^19.0.0
-  checksum: 10/bcb547a39397b1cbc8469c61c0f6d9a49534386ff93969b61063ab42df7b186bfb55d6b82c92d10e12da28372da929a6db7f82c08b4d614eda9fc394b39d72de
+  checksum: 10/f29d6f27f800175505c1ac19cc2eb6366003b1a6373c0648a1f0752d6ae516746189c0378d24f0bd277a0a8f417cf9ae9efabc322c69b35773ac91b46356416e
   languageName: node
   linkType: hard
 
 "@graasp/sdk@npm:^5.13.0":
-  version: 5.13.0
-  resolution: "@graasp/sdk@npm:5.13.0"
+  version: 5.13.1
+  resolution: "@graasp/sdk@npm:5.13.1"
   dependencies:
     "@faker-js/faker": "npm:9.7.0"
     filesize: "npm:10.1.6"
@@ -2841,7 +2848,7 @@ __metadata:
   peerDependencies:
     date-fns: ^3 || ^4.0.0
     uuid: ^9 || ^10 || ^11.0.0
-  checksum: 10/64bea9fd2306e242523cdfc28889283afd7b455ba626f0e4f7592249ef0cee693628cd334be3a885ecb46763110779e072e0c2b0ddd129fcd6711ac510572565
+  checksum: 10/bbdf813a0cc25cb00fdc14f9958892887e049f45a0815315f846d01d028990ce37d8d7ee5c74ee6c6ae395d04656efeb18f1c82a347413bb6b857f7e19ba7e76
   languageName: node
   linkType: hard
 
@@ -3461,7 +3468,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/types@npm:^7.2.19, @mui/types@npm:^7.2.20, @mui/types@npm:^7.2.21":
+"@mui/types@npm:^7.2.19":
+  version: 7.4.2
+  resolution: "@mui/types@npm:7.4.2"
+  dependencies:
+    "@babel/runtime": "npm:^7.27.1"
+  peerDependencies:
+    "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10/0fedf7ed5f8f9fe88df2657a704bf674e5e4b03f726765e7797044fe4ef7504c60b88aa65edaef00e23e412153bf990d5421f125c3865790071899d049fd597b
+  languageName: node
+  linkType: hard
+
+"@mui/types@npm:^7.2.20, @mui/types@npm:^7.2.21":
   version: 7.2.21
   resolution: "@mui/types@npm:7.2.21"
   peerDependencies:
@@ -5486,7 +5507,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.7.9, axios@npm:^1.7.9":
+"axios@npm:1.7.9":
   version: 1.7.9
   resolution: "axios@npm:1.7.9"
   dependencies:
@@ -5494,6 +5515,17 @@ __metadata:
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
   checksum: 10/b7a5f660ea53ba9c2a745bf5ad77ad8bf4f1338e13ccc3f9f09f810267d6c638c03dac88b55dae8dc98b79c57d2d6835be651d58d2af97c174f43d289a9fd007
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.7.9":
+  version: 1.9.0
+  resolution: "axios@npm:1.9.0"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10/a2f90bba56820883879f32a237e2b9ff25c250365dcafd41cec41b3406a3df334a148f90010182dfdadb4b41dc59f6f0b3e8898ff41b666d1157b5f3f4523497
   languageName: node
   linkType: hard
 
@@ -8311,12 +8343,12 @@ __metadata:
   linkType: hard
 
 "follow-redirects@npm:^1.15.6":
-  version: 1.15.6
-  resolution: "follow-redirects@npm:1.15.6"
+  version: 1.15.9
+  resolution: "follow-redirects@npm:1.15.9"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 10/70c7612c4cab18e546e36b991bbf8009a1a41cf85354afe04b113d1117569abf760269409cb3eb842d9f7b03d62826687086b081c566ea7b1e6613cf29030bf7
+  checksum: 10/e3ab42d1097e90d28b913903841e6779eb969b62a64706a3eb983e894a5db000fbd89296f45f08885a0e54cd558ef62e81be1165da9be25a6c44920da10f424c
   languageName: node
   linkType: hard
 
@@ -8801,7 +8833,7 @@ __metadata:
     "@cypress/instrument-cra": "npm:1.4.0"
     "@emotion/react": "npm:11.14.0"
     "@emotion/styled": "npm:11.14.0"
-    "@graasp/apps-query-client": "npm:3.7.4"
+    "@graasp/apps-query-client": "npm:3.7.5"
     "@graasp/sdk": "npm:^5.13.0"
     "@graasp/stylis-plugin-rtl": "npm:^2.2.0"
     "@mui/icons-material": "npm:6.4.1"
