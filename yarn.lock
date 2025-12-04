@@ -10596,11 +10596,11 @@ __metadata:
   linkType: hard
 
 "lucide-react@npm:^0.471.0":
-  version: 0.471.0
-  resolution: "lucide-react@npm:0.471.0"
+  version: 0.471.2
+  resolution: "lucide-react@npm:0.471.2"
   peerDependencies:
     react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10/975fbbbc5b72447e904e3b0491c9da694cbcf708e0f8fe95d609cbba9159759ca494ed7349421091c26bb0e34eb1e9b67019330c68116f0928542fca0e663475
+  checksum: 10/52e0e96e007b2e177299aa3025a0668f8a4c6aff9e2509dbd0d8b22779aa2ffe2bc97076293511a45048634c0c816e49330f4e92f2f21006ba71474b73c42bcb
   languageName: node
   linkType: hard
 
