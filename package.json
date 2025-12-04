@@ -48,7 +48,7 @@
     "react-toastify": "11.0.2",
     "tss-react": "4.9.14",
     "uuid": "^11.0.5",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   },
   "scripts": {
     "dev": "yarn vite",
@@ -91,8 +91,8 @@
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "8.19.1",
     "@typescript-eslint/parser": "8.19.1",
-    "@vitejs/plugin-react": "^4.3.4",
-    "@vitest/browser": "^2.1.8",
+    "@vitejs/plugin-react": "^4.7.0",
+    "@vitest/browser": "^2.1.9",
     "concurrently": "9.1.2",
     "cross-env": "7.0.3",
     "cypress": "13.17.0",
@@ -116,7 +116,7 @@
     "prettier": "3.4.2",
     "standard-version": "9.5.0",
     "typescript": "5.7.3",
-    "vite": "^6.0.7",
+    "vite": "^6.4.1",
     "vite-plugin-checker": "^0.8.0",
     "vite-plugin-istanbul": "^6.0.2",
     "wait-on": "8.0.2"
