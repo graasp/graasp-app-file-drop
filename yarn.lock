@@ -2871,10 +2871,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@faker-js/faker@npm:9.7.0":
-  version: 9.7.0
-  resolution: "@faker-js/faker@npm:9.7.0"
-  checksum: 10/5167cc179bbf5f140b957f600af24772ca8c6e7e42405c312c25a6b4278b851b84bd8e3065f80e667dd4c35dd5aeb0ed490b0b1872f908d58ffae1cef9a5ef72
+"@faker-js/faker@npm:9.9.0":
+  version: 9.9.0
+  resolution: "@faker-js/faker@npm:9.9.0"
+  checksum: 10/b24b1be0fb3090d54abaaa3a814f37d1a7551f1207dcd330a1af2c70f6312a8b95ebb82653577757dd62f4cbbb56caa3c83513053253654dc3e286a05040ecbe
   languageName: node
   linkType: hard
 
@@ -2945,16 +2945,16 @@ __metadata:
   linkType: hard
 
 "@graasp/sdk@npm:^5.13.0":
-  version: 5.13.1
-  resolution: "@graasp/sdk@npm:5.13.1"
+  version: 5.18.2
+  resolution: "@graasp/sdk@npm:5.18.2"
   dependencies:
-    "@faker-js/faker": "npm:9.7.0"
+    "@faker-js/faker": "npm:9.9.0"
     filesize: "npm:10.1.6"
     js-cookie: "npm:3.0.5"
   peerDependencies:
-    date-fns: ^3 || ^4.0.0
-    uuid: ^9 || ^10 || ^11.0.0
-  checksum: 10/bbdf813a0cc25cb00fdc14f9958892887e049f45a0815315f846d01d028990ce37d8d7ee5c74ee6c6ae395d04656efeb18f1c82a347413bb6b857f7e19ba7e76
+    date-fns: ^4.0.0
+    uuid: ^11.0.0
+  checksum: 10/aa975d2e3f4ba2c4cba6b0f37c5258a7f375f2ef5f8d0d540ce9c6b7393e8bc586c5c3377be10dd0e83b1c9412c249e3334bcb7739613f258a6115c46ecdf76f
   languageName: node
   linkType: hard
 
