@@ -24,7 +24,7 @@
     "@mui/icons-material": "6.4.1",
     "@mui/lab": "6.0.0-beta.22",
     "@mui/material": "6.4.1",
-    "@sentry/react": "~8.48.0",
+    "@sentry/react": "~10.73.0",
     "@tanstack/react-query": "4.36.1",
     "@uppy/core": "3.13.0",
     "@uppy/dashboard": "3.9.0",
