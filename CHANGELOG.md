@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.6](https://github.com/graasp/graasp-app-file-drop/compare/v3.0.5...v3.0.6) (2026-09-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency react-router-dom to v6.28.2 ([#211](https://github.com/graasp/graasp-app-file-drop/issues/211)) ([e345a53](https://github.com/graasp/graasp-app-file-drop/commit/e345a534cdefae5de5b7f8ca6e3333b3459941b5))
+* **deps:** update mui (non-major) ([#201](https://github.com/graasp/graasp-app-file-drop/issues/201)) ([0df1630](https://github.com/graasp/graasp-app-file-drop/commit/0df1630a33a222ba76f874df9d88db09a5815567))
+* update security package ([#228](https://github.com/graasp/graasp-app-file-drop/issues/228)) ([c09a88e](https://github.com/graasp/graasp-app-file-drop/commit/c09a88ea775244290c288a2140bc48eccb84a9ea))
+
 ## [3.0.5](https://github.com/graasp/graasp-app-file-drop/compare/v3.0.4...v3.0.5) (2025-05-13)
 
 
